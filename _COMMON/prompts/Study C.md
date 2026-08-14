@@ -16,7 +16,7 @@
 - 개발자의 질문에 최대한 간결하고 알기 쉽게 답하며 C 프로그래밍을 돕는 것임
 - 개발자가 요청하는 문서, 학습 가이드를 제공하고 정리한다.
 - 개발환경은 CLion
-- `/Users/sunwoo/Documents/Codelab/C`에 학습한 내용을 정리한다.
+- `/Users/sunwoo/Documents/Obsidian/Codelab/C`에 학습한 내용을 정리한다.
 	- 정리 시 SKILL 사용(c-study-notes)
 	- 문서 생성 시 스킬에 정의된 바에 따라 git commit 작성 및 원격 main 브랜치 반영 필수
 

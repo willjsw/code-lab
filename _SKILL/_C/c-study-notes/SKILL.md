@@ -1,6 +1,6 @@
 ---
 name: c-study-notes
-description: "Use whenever C-language learning content needs to be recorded, organized, or updated as documentation in the Codelab/C workspace (/Users/sunwoo/Documents/Codelab/C). Triggers on any request like '정리해줘', '문서로 남겨줘', '방금 배운 내용 기록', '기존 문서 업데이트', or after explaining a C concept (pointers, memory, compilation, build, debugging, project layout) in that workspace — even when the user does not say the word '문서'. Writes Korean docs in 명사형 개조체 with mandatory Mermaid diagrams and compilable code blocks, updates the doc index, then commits with the fixed feat-prefixed message format and pushes to remote main."
+description: "Use whenever C-language learning content needs to be recorded, organized, or updated as documentation in the Codelab/C workspace (/Users/sunwoo/Documents/Obsidian/Codelab/C). Triggers on any request like '정리해줘', '문서로 남겨줘', '방금 배운 내용 기록', '기존 문서 업데이트', or after explaining a C concept (pointers, memory, compilation, build, debugging, project layout) in that workspace — even when the user does not say the word '문서'. Writes Korean docs in 명사형 개조체 with mandatory Mermaid diagrams and compilable code blocks, updates the doc index, then commits with the fixed feat-prefixed message format and pushes to remote main."
 license: MIT
 metadata:
   version: 0.1.0
@@ -15,7 +15,7 @@ metadata:
 
 ## Overview
 
-C 학습 과정에서 나온 개념·실험·삽질을 **한국어 학습 문서**로 정리하고, 문서 저장소에 커밋·푸시까지 마무리하는 스킬. 대상 디렉토리는 `/Users/sunwoo/Documents/Codelab/C`.
+C 학습 과정에서 나온 개념·실험·삽질을 **한국어 학습 문서**로 정리하고, 문서 저장소에 커밋·푸시까지 마무리하는 스킬. 대상 디렉토리는 `/Users/sunwoo/Documents/Obsidian/Codelab/C`.
 
 독자는 **Java 기반 경험만 있는 개발자 본인**. 프로그래밍 일반 개념은 이미 알고 있으므로 변수·반복문 같은 기초 설명은 불필요하고, **C에서만 달라지는 지점**(메모리 수동 관리, 포인터, 컴파일·링크 단계, 헤더/소스 분리, 빌드 시스템, 디버깅 도구, 코드 컨벤션)에 문서의 무게를 둠.
 
@@ -80,8 +80,8 @@ flowchart TD
 **문서 생성 전 반드시 기존 문서 존재 여부를 확인.** 미확인 상태의 신규 작성은 중복 문서를 만들어 vault를 오염시킴.
 
 ```bash
-grep -rn "strcspn" /Users/sunwoo/Documents/Codelab/C/docs/
-ls /Users/sunwoo/Documents/Codelab/C/docs/08-syntax/
+grep -rn "strcspn" /Users/sunwoo/Documents/Obsidian/Codelab/C/docs/
+ls /Users/sunwoo/Documents/Obsidian/Codelab/C/docs/08-syntax/
 ```
 
 판정 기준:
@@ -142,7 +142,7 @@ flowchart TD
 ## 디렉토리 규칙
 
 ```
-/Users/sunwoo/Documents/Codelab/C
+/Users/sunwoo/Documents/Obsidian/Codelab/C
 ├── CLAUDE.md                    # 작업 규칙 (이 스킬로 갱신 가능)
 ├── docs/
 │   ├── README.md                # 문서 인덱스 (필수 갱신 대상)
@@ -299,7 +299,11 @@ cc -Wall -Wextra -g -fsanitize=address main.c -o mysh
 
 ## Obsidian 규칙 (필수, 타협 불가)
 
-`/Users/sunwoo/Documents/Codelab` 전체가 **Obsidian vault**. 활성 코어 플러그인 — 그래프 뷰, 백링크, 아웃고잉 링크, 태그 패널, 속성(properties). 문서를 생성·수정할 때마다 **프론트매터 태그와 백링크를 반드시 갱신**. 누락 시 그래프·태그 패널에서 문서가 고립되어 vault 기능 상실.
+`/Users/sunwoo/Documents/Obsidian/Codelab` 전체가 **Obsidian vault**. 활성 코어 플러그인 — 그래프 뷰, 백링크, 아웃고잉 링크, 태그 패널, 속성(properties). 문서를 생성·수정할 때마다 **프론트매터 태그와 백링크를 반드시 갱신**. 누락 시 그래프·태그 패널에서 문서가 고립되어 vault 기능 상실.
+
+이 스킬의 정본은 `_SKILL/_C/c-study-notes/`(볼트 내 일반 폴더). `C/.claude/skills/` 와
+`~/.claude/skills/` 는 이곳을 가리키는 심볼릭 링크. 점 폴더(`.claude/`)는 Obsidian이 배제하므로
+정본을 그곳에 두지 않음 — 상세는 `_TEMPLATE_VAULT/_SKILL/README.md` 참조.
 
 ### 프론트매터 (전 문서 필수)
 
@@ -456,7 +460,7 @@ feat: gcc 컴파일 4단계 문서 보강
 ### 실행 순서
 
 ```bash
-cd /Users/sunwoo/Documents/Codelab/C
+cd /Users/sunwoo/Documents/Obsidian/Codelab/C
 git status                      # 의도한 파일만 변경되었는지 확인
 git add docs/ CLAUDE.md         # 문서 경로만 스테이징
 git commit -m "feat: <타이틀>" -m "- <설명>"
