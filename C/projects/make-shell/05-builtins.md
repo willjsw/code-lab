@@ -62,6 +62,12 @@ int main(void) {
 gcc -Wall -Wextra -g cd_demo.c -o cd_demo && ./cd_demo
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-o cd_demo` — 출력 파일명을 `cd_demo`로 지정. 미지정 시 `a.out`
+- `&& ./cd_demo` — 컴파일 성공 시에만 실행
+
 ```
 부모 시작 cwd: /private/tmp/shell-verify
 자식 chdir 후 cwd: /private/tmp

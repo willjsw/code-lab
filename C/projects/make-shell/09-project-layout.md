@@ -249,6 +249,15 @@ cc main.o history.o -o mysh
 ./mysh
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-Iinclude` — `include` 디렉토리를 헤더 탐색 경로에 추가
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 목적 파일(`.o`) 생성
+- `-o main.o` — 출력 파일명을 `main.o`로 지정. 미지정 시 `a.out`
+- `-o history.o` — 출력 파일명을 `history.o`로 지정. 미지정 시 `a.out`
+- `-o mysh` — 출력 파일명을 `mysh`로 지정. 미지정 시 `a.out`
+
 ```
     1  ls -la
     2  cd /tmp
@@ -260,6 +269,9 @@ count=2
 ```bash
 nm -g history.o | grep history_
 ```
+
+- `-g` — 외부 노출(전역) 심볼만 출력. `static` 함수 제외
+- `| grep history_` — `history_` 접두 심볼만 필터링
 
 ```
 0000000000000000 T _history_add

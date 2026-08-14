@@ -10,6 +10,10 @@ cc -Wall -Wextra -g hello.c -o hello   # 컴파일
 echo $?                                # 종료 코드 확인
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-o hello` — 출력 파일명을 `hello`로 지정. 미지정 시 `a.out`
 - `./` 필수 — 현재 디렉토리는 `PATH`에 미포함. `hello`만 입력 시 `command not found`
 - 출력 파일명 미지정 시 `a.out` 생성
 
@@ -18,6 +22,8 @@ echo $?                                # 종료 코드 확인
 ```bash
 gcc --version
 ```
+
+- `--version` — 컴파일러 이름·버전·타깃 아키텍처 출력. 실제 컴파일 미수행
 
 ```
 Apple clang version 21.0.0 (clang-2100.1.1.101)
@@ -52,11 +58,22 @@ Target: arm64-apple-darwin25.5.0
 cc -Wall -Wextra -g -fsanitize=address main.c -o main
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-fsanitize=address` — AddressSanitizer 활성. 힙 오버플로·use-after-free 즉시 검출
+- `-o main` — 출력 파일명을 `main`로 지정. 미지정 시 `a.out`
+
 **배포 시 권장 조합**
 
 ```bash
 cc -Wall -Wextra -O2 main.c -o main
 ```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-O2` — 적극 최적화. 배포 빌드 권장 수준
+- `-o main` — 출력 파일명을 `main`로 지정. 미지정 시 `a.out`
 
 ## 경고 옵션 활용
 
@@ -75,6 +92,10 @@ int main(void) {
 ```bash
 cc -Wall -Wextra warn.c -o warn
 ```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-o warn` — 출력 파일명을 `warn`로 지정. 미지정 시 `a.out`
 
 ```
 warn.c:4:9: warning: unused variable 'y' [-Wunused-variable]
@@ -102,6 +123,11 @@ warn.c:3:10: note: initialize the variable 'x' to silence this warning
 cc -Wall -Wextra -g -Iinclude src/main.c src/util.c -o app
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-Iinclude` — `include` 디렉토리를 헤더 탐색 경로에 추가
+- `-o app` — 출력 파일명을 `app`로 지정. 미지정 시 `a.out`
 - 간단하나 매번 전체 재컴파일
 
 ### 분할 컴파일 (권장)
@@ -112,6 +138,14 @@ cc -Wall -Wextra -g -Iinclude -c src/util.c -o build/util.o
 cc build/main.o build/util.o -o app
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-Iinclude` — `include` 디렉토리를 헤더 탐색 경로에 추가
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 목적 파일(`.o`) 생성
+- `-o build/main.o` — 출력 파일명을 `build/main.o`로 지정. 미지정 시 `a.out`
+- `-o build/util.o` — 출력 파일명을 `build/util.o`로 지정. 미지정 시 `a.out`
+- `-o app` — 출력 파일명을 `app`로 지정. 미지정 시 `a.out`
 - 변경된 파일만 재컴파일 가능 → 대규모 프로젝트에서 시간 절약
 - 이 반복을 자동화한 것이 Make → [Makefile 작성법](makefile-guide.md)
 
@@ -143,6 +177,9 @@ int main(void) { printf("sqrt(2) = %.6f\n", sqrt(2.0)); return 0; }
 cc math_t.c -o math_t && ./math_t
 ```
 
+- `-o math_t` — 출력 파일명을 `math_t`로 지정. 미지정 시 `a.out`
+- `&& ./math_t` — 컴파일 성공 시에만 실행
+
 ```
 sqrt(2) = 1.414214
 ```
@@ -153,6 +190,9 @@ sqrt(2) = 1.414214
 ```bash
 cc math_t.c -o math_t -lm    # Linux에서 필요
 ```
+
+- `-o math_t` — 출력 파일명을 `math_t`로 지정. 미지정 시 `a.out`
+- `-lm` — 수학 라이브러리 링크. **Linux 필수, macOS 불필요**
 
 ### 주요 링크 옵션
 
@@ -186,6 +226,12 @@ int main(void) {
 cc dbg.c -o dbg && ./dbg
 cc -DDEBUG dbg.c -o dbg2 && ./dbg2
 ```
+
+- `-o dbg` — 출력 파일명을 `dbg`로 지정. 미지정 시 `a.out`
+- `&& ./dbg` — 컴파일 성공 시에만 실행
+- `-DDEBUG` — 매크로 `DEBUG` 정의. 소스 수정 없이 조건부 컴파일 전환
+- `-o dbg2` — 출력 파일명을 `dbg2`로 지정. 미지정 시 `a.out`
+- `&& ./dbg2` — 컴파일 성공 시에만 실행
 
 ```
 릴리스 모드
@@ -224,6 +270,10 @@ cc -DDEBUG dbg.c -o dbg2 && ./dbg2
 for O in 0 2; do cc -O$O heavy.c -o h_O$O; /usr/bin/time -p ./h_O$O; done
 ```
 
+- `-O$O` — 반복 변수로 `-O0`·`-O2` 순차 지정
+- `-o h_O$O` — 레벨별 실행 파일을 다른 이름으로 생성
+- `/usr/bin/time -p` — 실행 시간 측정. `-p` = POSIX 형식(real·user·sys) 출력
+
 ```
   -O0 크기 33448B  real 0.39
   -O2 크기 33432B  real 0.37
@@ -248,6 +298,10 @@ int main(void) {
 cc -std=c89 -Wall c89.c -o c89
 ```
 
+- `-std=c89` — C 표준을 `c89`로 지정
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-o c89` — 출력 파일명을 `c89`로 지정. 미지정 시 `a.out`
+
 ```
 c89.c:3:10: warning: GCC does not allow variable declarations in for loop initializers before C99 [-Wgcc-compat]
     3 |     for (int i = 0; i < 2; i++) printf("%d ", i);
@@ -258,6 +312,11 @@ c89.c:3:10: warning: GCC does not allow variable declarations in for loop initia
 ```bash
 cc -std=c11 -Wall c89.c -o c11 && ./c11
 ```
+
+- `-std=c11` — C 표준을 `c11`로 지정
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-o c11` — 출력 파일명을 `c11`로 지정. 미지정 시 `a.out`
+- `&& ./c11` — 컴파일 성공 시에만 실행
 
 ```
 0 1
@@ -297,6 +356,8 @@ int main(void) { missing_func(); return 0; }
 ```bash
 cc undef.c -o undef
 ```
+
+- `-o undef` — 출력 파일명을 `undef`로 지정. 미지정 시 `a.out`
 
 ```
 Undefined symbols for architecture arm64:
@@ -341,6 +402,8 @@ fatal error: 'util.h' file not found
 otool -L hello
 ```
 
+- `-L` — 실행 파일이 참조하는 동적 라이브러리 목록 출력
+
 ## 자주 쓰는 명령 모음
 
 ```bash
@@ -365,6 +428,21 @@ cc -E main.c | less
 # 어셈블리 확인
 cc -S -O2 main.c -o main.s
 ```
+
+위 조합에 쓰인 옵션 — 상세는 [필수 옵션](#필수-옵션) 표 참조
+
+- `-Wall` `-Wextra` — 경고 활성. 전 조합에 공통
+- `-g` — 디버그 심볼. 개발 빌드에만
+- `-o <이름>` — 출력 파일명. 미지정 시 `a.out`
+- `&& ./main` — 컴파일 성공 시에만 실행
+- `-fsanitize=address` — 메모리 오류 검사. 개발 빌드에만
+- `-Iinclude` — `include`를 헤더 탐색 경로에 추가
+- `-O2` — 적극 최적화. 배포 빌드
+- `-DNDEBUG` — `NDEBUG` 정의 → `assert` 전량 무효화. 배포 빌드 관례
+- `-Werror` — 경고를 오류로 승격. CI에서 경고 유입 차단
+- `-E` — 전처리 결과만 출력 (`| less`로 페이지 단위 확인)
+- `-S` — 어셈블리만 생성. `-O2`와 함께 쓰면 최적화 결과 확인 가능
+- `src/*.c` — 셸 와일드카드. `src` 하위 모든 `.c` 전달
 
 ## 함정 · 주의점
 

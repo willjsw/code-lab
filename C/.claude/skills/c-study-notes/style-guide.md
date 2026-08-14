@@ -223,7 +223,10 @@ flowchart LR
 gcc -Wall -g array_decay.c -o array_decay && ./array_decay
 ```
 
-`-Wall` 지정 시 감쇠 관련 경고 발생 → 컴파일러가 실수 지점을 직접 지목.
+- `-Wall` — 주요 경고 활성. 배열 감쇠 관련 경고를 컴파일러가 직접 지목
+- `-g` — 디버그 심볼 포함. 디버거로 스택 프레임 확인 시 필요
+- `-o array_decay` — 출력 파일명 지정. 미지정 시 `a.out`
+- `&& ./array_decay` — 컴파일 성공 시에만 실행
 
 ```
 array_decay.c: In function 'print_size':

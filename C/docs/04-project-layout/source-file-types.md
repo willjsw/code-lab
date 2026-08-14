@@ -81,6 +81,9 @@ int main(void) { return 0; }
 cc -Wall dup.c -o dup
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-o dup` — 출력 파일명을 `dup`로 지정. 미지정 시 `a.out`
+
 ```
 In file included from dup.c:2:
 ./noguard.h:1:27: error: typedef redefinition with different types ('struct Point' vs 'struct Point')
@@ -131,6 +134,10 @@ int use(void) { return public_func() + private_func(); }
 cc -Wall -c vis.c -o vis.o && nm vis.o
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 목적 파일(`.o`) 생성
+- `-o vis.o` — 출력 파일명을 `vis.o`로 지정. 미지정 시 `a.out`
+
 ```
 0000000000000038 t _private_func
 0000000000000000 T _public_func
@@ -174,6 +181,10 @@ int g_verbose = 0;          // 정의 — 실제 메모리 할당. 정확히 한
 cc -Wall -c add.c -o add.o && nm add.o
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 목적 파일(`.o`) 생성
+- `-o add.o` — 출력 파일명을 `add.o`로 지정. 미지정 시 `a.out`
+
 ```
 0000000000000000 T _add
 ```
@@ -200,6 +211,11 @@ cc -Wall -c add.c sub.c              # .o 생성
 ar rcs libmathutil.a add.o sub.o     # 아카이브 묶기
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 목적 파일(`.o`) 생성
+- `r` — 아카이브에 추가·교체
+- `c` — 아카이브 새로 생성 (없으면 경고 억제)
+- `s` — 심볼 인덱스 생성. 미지정 시 링크 실패 가능
 - **이름 규칙** — `lib<이름>.a`. 링크 시 `-l<이름>`으로 지정 (`lib`·`.a` 생략)
 - `ar` 옵션 — `r` 추가·교체, `c` 새로 생성, `s` 심볼 인덱스 생성
 
@@ -208,6 +224,8 @@ ar rcs libmathutil.a add.o sub.o     # 아카이브 묶기
 ```bash
 ar t libmathutil.a
 ```
+
+- `t` — 아카이브 내용 목록 출력
 
 ```
 __.SYMDEF SORTED
@@ -233,6 +251,11 @@ nm libmathutil.a | grep ' T '
 cc main.c -L. -lmathutil -o app_static && ./app_static
 ```
 
+- `-L.` — `.` 디렉토리를 라이브러리 탐색 경로에 추가
+- `-lmathutil` — `libmathutil` 라이브러리 링크
+- `-o app_static` — 출력 파일명을 `app_static`로 지정. 미지정 시 `a.out`
+- `&& ./app_static` — 컴파일 성공 시에만 실행
+
 ```
 8 2
 ```
@@ -249,6 +272,10 @@ cc main.c -L. -lmathutil -o app_static && ./app_static
 cc -dynamiclib -fPIC add.c sub.c -o libmathutil.dylib
 ```
 
+- `-dynamiclib` — 동적 라이브러리(`.dylib`) 생성 (macOS). Linux는 `-shared`
+- `-fPIC` — 위치 독립 코드 생성. 동적 라이브러리에 필수
+- `-o libmathutil.dylib` — 출력 파일명을 `libmathutil.dylib`로 지정. 미지정 시 `a.out`
+
 ```
 libmathutil.dylib 16816B
 ```
@@ -262,6 +289,11 @@ libmathutil.dylib 16816B
 cc main.c -L. -lmathutil -o app_dyn && ./app_dyn
 ```
 
+- `-L.` — `.` 디렉토리를 라이브러리 탐색 경로에 추가
+- `-lmathutil` — `libmathutil` 라이브러리 링크
+- `-o app_dyn` — 출력 파일명을 `app_dyn`로 지정. 미지정 시 `a.out`
+- `&& ./app_dyn` — 컴파일 성공 시에만 실행
+
 ```
 8 2
 ```
@@ -271,6 +303,8 @@ cc main.c -L. -lmathutil -o app_dyn && ./app_dyn
 ```bash
 otool -L app_dyn
 ```
+
+- `-L` — 실행 파일이 참조하는 동적 라이브러리 목록 출력
 
 ```
 app_dyn:
@@ -398,6 +432,18 @@ cc main.c -L. -lmathutil -o app
 cc -dynamiclib -fPIC add.c sub.c -o libmathutil.dylib
 cc main.c -L. -lmathutil -o app
 ```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-o app` — 출력 파일명을 `app`로 지정. 미지정 시 `a.out`
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 목적 파일(`.o`) 생성
+- `r` — 아카이브에 추가·교체
+- `c` — 아카이브 새로 생성 (없으면 경고 억제)
+- `s` — 심볼 인덱스 생성. 미지정 시 링크 실패 가능
+- `-L.` — `.` 디렉토리를 라이브러리 탐색 경로에 추가
+- `-lmathutil` — `libmathutil` 라이브러리 링크
+- `-dynamiclib` — 동적 라이브러리(`.dylib`) 생성 (macOS). Linux는 `-shared`
+- `-fPIC` — 위치 독립 코드 생성. 동적 라이브러리에 필수
+- `-o libmathutil.dylib` — 출력 파일명을 `libmathutil.dylib`로 지정. 미지정 시 `a.out`
 
 세 방식 모두 실행 결과 동일
 

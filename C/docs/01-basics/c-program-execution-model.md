@@ -63,6 +63,8 @@ int main(void) {
 cc -E hello.c | tail -8
 ```
 
+- `-E` — 전처리까지만 수행 → 헤더 전개 결과를 표준 출력으로
+
 ```
 # 2 "hello.c" 2
 
@@ -87,6 +89,9 @@ int main(void) {
 ```bash
 cc -S hello.c -o hello.s && head -12 hello.s
 ```
+
+- `-S` — 컴파일까지만 수행 → 어셈블리(`.s`) 생성
+- `-o hello.s` — 출력 파일명을 `hello.s`로 지정. 미지정 시 `a.out`
 
 ```
 	.build_version macos, 26, 0	sdk_version 26, 5
@@ -114,6 +119,9 @@ _main:                                  ; @main
 cc -c hello.c -o hello.o && file hello.o && nm hello.o
 ```
 
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 목적 파일(`.o`) 생성
+- `-o hello.o` — 출력 파일명을 `hello.o`로 지정. 미지정 시 `a.out`
+
 ```
 hello.o: Mach-O 64-bit object arm64
 0000000000000000 T _main
@@ -136,6 +144,9 @@ hello.o: Mach-O 64-bit object arm64
 cc hello.o -o hello && file hello && ./hello
 ```
 
+- `-o hello` — 출력 파일명을 `hello`로 지정. 미지정 시 `a.out`
+- `&& file hello && ./hello` — 컴파일 성공 시에만 실행
+
 ```
 hello: Mach-O 64-bit executable arm64
 Hello, C!
@@ -150,6 +161,7 @@ Hello, C!
 cc hello.c -o hello
 ```
 
+- `-o hello` — 출력 파일명을 `hello`로 지정. 미지정 시 `a.out`
 - 옵션 미지정 시 4단계 자동 수행 후 중간 파일 삭제
 - 단계별 확인이 필요할 때만 `-E`·`-S`·`-c` 사용
 
@@ -211,6 +223,12 @@ int main(void) {
 ```bash
 cc -Wall -Wextra -g layout.c -o layout && ./layout
 ```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-o layout` — 출력 파일명을 `layout`로 지정. 미지정 시 `a.out`
+- `&& ./layout` — 컴파일 성공 시에만 실행
 
 ```
 텍스트(함수)   0x100208548
@@ -310,6 +328,10 @@ int main(int argc, char *argv[]) {
 ```bash
 cc -Wall args.c -o args && ./args hello world
 ```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-o args` — 출력 파일명을 `args`로 지정. 미지정 시 `a.out`
+- `&& ./args hello world` — 컴파일 성공 시에만 실행
 
 ```
 argc = 3

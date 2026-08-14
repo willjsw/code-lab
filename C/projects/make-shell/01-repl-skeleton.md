@@ -83,6 +83,12 @@ flowchart TD
 gcc -Wall -Wextra -g main.c -o mysh && printf 'hello world\nexit\n' | ./mysh
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-o mysh` — 출력 파일명을 `mysh`로 지정. 미지정 시 `a.out`
+- `&& printf 'hello world\nexit\n' | ./mysh` — 컴파일 성공 시에만 실행. 파이프 앞부분이 표준 입력으로 전달됨
+
 ```
 mysh> echo: hello world
 mysh> 

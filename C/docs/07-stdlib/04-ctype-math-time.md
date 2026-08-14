@@ -65,6 +65,9 @@ for (size_t i = 0; s[i]; i++)
 cc main.c -o main -lm
 ```
 
+- `-o main` — 출력 파일명을 `main`로 지정. 미지정 시 `a.out`
+- `-lm` — 수학 라이브러리 링크. **Linux 필수, macOS 불필요**
+
 ### 주요 함수
 
 | 분류 | 함수 | 용도 |

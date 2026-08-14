@@ -41,6 +41,11 @@ int main(void) {
 cc -Wall -Wextra fmt.c -o fmt && ./fmt
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-o fmt` — 출력 파일명을 `fmt`로 지정. 미지정 시 `a.out`
+- `&& ./fmt` — 컴파일 성공 시에만 실행
+
 ```
 정수 -42 | 부호없음 42 | 8진 100 | 16진 ff/FF
 실수 3.141590 | 지수 3.141590e+04 | 짧은쪽 0.000123
@@ -239,6 +244,11 @@ int main(void) {
 ```bash
 cc -Wall -Wextra file.c -o file && ./file
 ```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-o file` — 출력 파일명을 `file`로 지정. 미지정 시 `a.out`
+- `&& ./file` — 컴파일 성공 시에만 실행
 
 ```
 없는파일.txt: No such file or directory

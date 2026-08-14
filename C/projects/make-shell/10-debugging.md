@@ -63,6 +63,13 @@ int main(void) {
 cc -Wall -Wextra -g -fsanitize=address bug.c -o bug && ./bug
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-fsanitize=address` — AddressSanitizer 활성. 힙 오버플로·use-after-free 즉시 검출
+- `-o bug` — 출력 파일명을 `bug`로 지정. 미지정 시 `a.out`
+- `&& ./bug` — 컴파일 성공 시에만 실행
+
 ```
 ==36843==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000000f8 at pc 0x000105466a20 bp 0x00016b14a830 sp 0x00016b149fe0
 WRITE of size 11 at 0x6020000000f8 thread T0
@@ -108,6 +115,11 @@ int main(void) {
 cc -g -fsanitize=address uaf.c -o uaf && ./uaf
 ```
 
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-fsanitize=address` — AddressSanitizer 활성. 힙 오버플로·use-after-free 즉시 검출
+- `-o uaf` — 출력 파일명을 `uaf`로 지정. 미지정 시 `a.out`
+- `&& ./uaf` — 컴파일 성공 시에만 실행
+
 ```
 ==36868==ERROR: AddressSanitizer: heap-use-after-free on address 0x6020000000f0 at pc 0x0001040c085c bp 0x00016bd3e800 sp 0x00016bd3e7f8
 READ of size 1 at 0x6020000000f0 thread T0
@@ -151,6 +163,9 @@ cc -g leak2.c -o leak2
 MallocStackLogging=1 leaks -atExit -- ./leak2 2>&1 | grep -E "leaks for|nodes malloced"
 ```
 
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-o leak2` — 출력 파일명을 `leak2`로 지정. 미지정 시 `a.out`
+
 ```
 Process 36942: 290 nodes malloced for 47 KB
 Process 36942: 100 leaks for 16000 total leaked bytes.
@@ -166,6 +181,11 @@ Process 36942: 100 leaks for 16000 total leaked bytes.
 ```bash
 MallocStackLogging=1 leaks -atExit -- ./mysh < test_input.txt 2>&1 | grep "leaks for"
 ```
+
+- `MallocStackLogging=1` — 할당 스택 기록 활성화 → 누수 발생 지점 추적 가능
+- `-atExit` — 프로세스 종료 직전 시점에 누수 검사
+- `--` — 이후 인자를 검사 대상 명령으로 전달
+- `< test_input.txt` — 파일을 표준 입력으로 공급해 대화형 입력 대체
 
 ## lldb 기본 조작
 

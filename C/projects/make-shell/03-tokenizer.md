@@ -152,6 +152,12 @@ gcc -Wall -Wextra -g -fsanitize=address main.c -o mysh
 printf 'ls -la /tmp\n   spaced   out   args\n\nexit\n' | ./mysh
 ```
 
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. lldb 추적·ASan 행 번호 표시에 필요
+- `-fsanitize=address` — AddressSanitizer 활성. 힙 오버플로·use-after-free 즉시 검출
+- `-o mysh` — 출력 파일명을 `mysh`로 지정. 미지정 시 `a.out`
+
 ```
 mysh> argc=3
   argv[0] = "ls"

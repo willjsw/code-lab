@@ -33,6 +33,8 @@
 make -f Makefile.bad
 ```
 
+- `-f Makefile.bad` — 기본 `Makefile` 대신 지정 파일 사용
+
 ```
 Makefile.bad:2: *** missing separator.  Stop.
 ```
@@ -333,6 +335,9 @@ flowchart BT
 ```bash
 make --debug=b 2>&1 | head -20
 ```
+
+- `--debug=b` — 기본(basic) 디버그 출력. 각 타겟의 재빌드 판단 근거 표시
+- `2>&1 | head -20` — 표준 오류를 표준 출력에 합쳐 앞 20줄만 확인
 
 ## 자주 쓰는 타겟 관례
 
