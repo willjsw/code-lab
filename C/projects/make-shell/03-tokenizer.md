@@ -221,3 +221,4 @@ mysh>
 
 - [[C/projects/make-shell/02-dynamic-input|02 · 동적 입력 버퍼]] — `malloc`·`realloc` 소유권 규약
 - [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼
+- [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술

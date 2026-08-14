@@ -317,3 +317,4 @@ printf '통과 %d · 실패 %d\n' "$PASS" "$FAIL"
 - [[C/projects/make-shell/02-dynamic-input|02 · 동적 입력 버퍼]] — `malloc`·`realloc` 소유권 규약
 - [[C/projects/make-shell/09-project-layout|09 · 프로젝트 구조화]] — 헤더 분리와 Make·CMake
 - [[C/projects/make-shell/README|로드맵 개요]] — 쉘 구현 10단계 커리큘럼
+- [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 범위 초과의 근원
