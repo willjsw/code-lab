@@ -30,6 +30,7 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 |---|---|
 | [gcc 컴파일 · 실행 명령어](03-build/gcc-compile-and-run.md) | 필수 옵션, 다중 파일, 라이브러리 링크, 오류 해석 |
 | [Makefile 작성법](03-build/makefile-guide.md) | 규칙·변수·자동 변수·패턴 규칙, 헤더 의존성 추적 |
+| [빌드 산출물 정리](03-build/build-artifacts-cleanup.md) | `.o`·`a.out`·`.dSYM` 종류, 수동 삭제 주의점, `.gitignore` |
 
 ### 04-project-layout — 프로젝트 구조
 
@@ -83,6 +84,8 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 |---|---|
 | `gcc` 명령이 하는 일 | [컴파일 4단계](01-basics/c-program-execution-model.md) |
 | 컴파일 오류 vs 링크 오류 | [gcc 명령어 — 오류 해석](03-build/gcc-compile-and-run.md) |
+| 빌드 후 남은 파일 지우기 | [빌드 산출물 정리](03-build/build-artifacts-cleanup.md) |
+| 소스 수정이 반영 안 될 때 | [빌드 산출물 정리 — stale `.o`](03-build/build-artifacts-cleanup.md) |
 | 헤더에 뭘 쓰나 | [소스코드 구성 요소](04-project-layout/source-file-types.md) |
 | 파일 여러 개로 나누기 | [소스코드 구성 요소](04-project-layout/source-file-types.md) · [Makefile](03-build/makefile-guide.md) |
 | `printf` 서식 | [표준 입출력](07-stdlib/01-stdio.md) |
