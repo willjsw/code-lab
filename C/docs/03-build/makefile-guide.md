@@ -200,13 +200,13 @@ demo: dep1.txt dep2.txt
 전체의존 $^ = dep1.txt dep2.txt
 ```
 
-| 변수 | 의미 | 주 용도 |
-|---|---|---|
-| `$@` | 타겟 이름 | `-o $@` |
-| `$<` | 첫 번째 의존 파일 | `-c $<` |
-| `$^` | 전체 의존 파일 (중복 제거) | 링크 명령 |
-| `$+` | 전체 의존 파일 (중복 유지) | 드묾 |
-| `$*` | 패턴 규칙의 `%` 부분 | 파일명 조작 |
+| 변수   | 의미               | 주 용도    |
+| ---- | ---------------- | ------- |
+| `$@` | 타겟 이름            | `-o $@` |
+| `$<` | 첫 번째 의존 파일       | `-c $<` |
+| `$^` | 전체 의존 파일 (중복 제거) | 링크 명령   |
+| `$+` | 전체 의존 파일 (중복 유지) | 드묾      |
+| `$*` | 패턴 규칙의 `%` 부분    | 파일명 조작  |
 
 - Makefile에서 `$` 리터럴 출력 시 `$$` 표기 필요
 
@@ -403,6 +403,7 @@ install: $(TARGET)          # 시스템 설치
 
 - 학습 목적 — Make로 빌드 원리 파악 후 CMake 사용 권장. CMake가 결국 이 과정을 대신 수행
 - CLion 사용 시 최종적으로 CMake 필요 → [프로젝트 구조화](../../projects/make-shell/09-project-layout.md) 참조
+- CMake 문법과 **Make 병행 시 충돌**(`OBJDIR` 점유·플래그 불일치) → [CMakeLists.txt 작성법](cmake-guide.md) 참조
 
 ## 검증
 
@@ -416,6 +417,7 @@ install: $(TARGET)          # 시스템 설치
 
 ## 관련 문서
 
+- [[C/docs/03-build/cmake-guide|CMakeLists.txt 작성법]] — CMake 문법과 이 Makefile 병행 시 `build/` 충돌·플래그 차이
 - [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — Makefile이 자동화하는 명령들
 - [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록

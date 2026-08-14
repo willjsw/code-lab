@@ -381,6 +381,7 @@ app
 
 - [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 컴파일 명령과 옵션 전반
 - [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화와 증분 빌드
+- [[C/docs/03-build/cmake-guide|CMakeLists.txt 작성법]] — `cmake-build-*/`·`CMakeCache.txt` 생성 주체와 out-of-source 빌드
 - [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
 - [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록

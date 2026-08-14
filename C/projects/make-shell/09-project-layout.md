@@ -202,7 +202,9 @@ target_compile_options(mysh PRIVATE -Wall -Wextra)
 
 - CLion 기본 빌드 시스템. 프로젝트 열면 자동 인식
 - 헤더 의존성 자동 추적 → Make의 한계 없음
-- 검증 미완료 — 본 환경에 `cmake` CLI 미설치. CLion 내장 CMake로 확인 필요
+- 셸 PATH에 `cmake` CLI 부재. CLion 번들 CMake(4.3.1) 경로 — `/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake`
+- `target_include_directories`·`target_compile_options` 반영 확인 완료 → [[C/docs/03-build/cmake-guide|CMakeLists.txt 작성법]]
+- **주의** — 위 Makefile과 빌드 디렉토리를 공유하면 산출물 혼재·`make clean` 시 캐시 삭제 발생. 상세는 CMake 문서의 충돌 4종 참조
 
 ASan 옵션 추가
 
@@ -389,4 +391,5 @@ DEPS    := $(OBJS:.o=.d)
 ## 관련 문서
 
 - [[C/projects/make-shell/08-signals-history|08 · 시그널 · 히스토리]] — `sigaction`과 연결 리스트
+- [[C/docs/03-build/cmake-guide|CMakeLists.txt 작성법]] — 위 CMakeLists 문법 상세와 Makefile 병행 시 충돌 4종
 - [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

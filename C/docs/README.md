@@ -43,6 +43,7 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 |---|---|
 | [gcc 컴파일 · 실행 명령어](03-build/gcc-compile-and-run.md) | 필수 옵션, 다중 파일, 라이브러리 링크, 오류 해석 |
 | [Makefile 작성법](03-build/makefile-guide.md) | 규칙·변수·자동 변수·패턴 규칙, 헤더 의존성 추적 |
+| [CMakeLists.txt 작성법](03-build/cmake-guide.md) | CMake 기본 명령, out-of-source 빌드, CLion 연동, Makefile 병행 충돌 |
 | [빌드 산출물 정리](03-build/build-artifacts-cleanup.md) | `.o`·`a.out`·`.dSYM` 종류, 수동 삭제 주의점, `.gitignore` |
 
 ### 04-project-layout — 프로젝트 구조
@@ -101,6 +102,8 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 | 소스 수정이 반영 안 될 때 | [빌드 산출물 정리 — stale `.o`](03-build/build-artifacts-cleanup.md) |
 | 헤더에 뭘 쓰나 | [소스코드 구성 요소](04-project-layout/source-file-types.md) |
 | 파일 여러 개로 나누기 | [소스코드 구성 요소](04-project-layout/source-file-types.md) · [Makefile](03-build/makefile-guide.md) |
+| CLion이 쓰는 빌드 설정 | [CMakeLists.txt 작성법](03-build/cmake-guide.md) |
+| Makefile과 CMake 같이 쓸 때 문제 | [CMakeLists.txt — 충돌 4종](03-build/cmake-guide.md) |
 | `printf` 서식 | [표준 입출력](07-stdlib/01-stdio.md) |
 | 문자열 다루기 | [문자열 처리](07-stdlib/02-string.md) |
 | `malloc` 사용법 | [메모리 · 변환](07-stdlib/03-stdlib.md) |
@@ -119,6 +122,7 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 - [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
 - [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 컴파일 명령과 옵션 전반
 - [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화와 증분 빌드
+- [[C/docs/03-build/cmake-guide|CMakeLists.txt 작성법]] — CMake 문법·out-of-source 빌드·Makefile 병행 충돌
 - [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`
 - [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
 - [[C/docs/07-stdlib/README|표준 라이브러리 시리즈]] — 빈출 함수 30선과 통합 예제
