@@ -1,3 +1,16 @@
+---
+tags:
+  - lang/c
+  - c/index
+  - index
+  - moc
+  - status/wip
+aliases:
+  - C 학습 인덱스
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # C 학습 문서 인덱스
 
 > Java 기반 개발자의 C·시스템 프로그래밍 학습 기록
@@ -100,3 +113,13 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 - 전 예제는 macOS(arm64)에서 실제 컴파일·실행 검증 후 출력 기재
 - 검증하지 못한 내용은 `검증 미완료` 명시
 - Linux와 동작이 다른 지점은 문서 내 별도 표기
+
+## 관련 문서
+
+- [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
+- [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 컴파일 명령과 옵션 전반
+- [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화와 증분 빌드
+- [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`
+- [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
+- [[C/docs/07-stdlib/README|표준 라이브러리 시리즈]] — 빈출 함수 30선과 통합 예제
+- [[C/projects/make-shell/README|make-shell 프로젝트]] — 쉘 구현 10단계 커리큘럼

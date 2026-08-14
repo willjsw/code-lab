@@ -1,3 +1,19 @@
+---
+tags:
+  - lang/c
+  - c/stdlib
+  - stdio
+  - printf
+  - file-io
+  - stream
+  - status/verified
+aliases:
+  - stdio.h
+  - printf 서식
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # `<stdio.h>` — 표준 입출력
 
 > 화면 출력·키보드 입력·파일 읽기쓰기. 서식 지정자와 `FILE *` 스트림
@@ -359,9 +375,10 @@ if (fp == NULL) perror("없는파일.txt");
 
 ## 다음 문서
 
-- [`<string.h>` 문자열 처리](02-string.md)
+- [[C/docs/07-stdlib/02-string|`<string.h>` 문자열 처리]]
 
 ## 관련 문서
 
-- [라이브러리 시리즈 개요](README.md)
-- [학습 문서 인덱스](../README.md)
+- [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
+- [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
+- [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]] — 저수준 I/O와 프로세스 시스템 콜

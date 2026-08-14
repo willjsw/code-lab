@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/system
+  - project/make-shell
+  - shell
+  - builtin
+  - chdir
+  - process
+  - status/verified
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 05 · 내장 명령
 
 > `cd`·`exit`·`pwd`를 자식이 아닌 **부모 프로세스**에서 처리. 프로세스 상태 격리 이해
@@ -221,8 +235,10 @@ flowchart LR
 
 ## 다음 단계
 
-[06 · 리다이렉션](06-redirection.md) — `open`·`dup2`로 파일 디스크립터 조작
+[[C/projects/make-shell/06-redirection|06 · 리다이렉션]] — `open`·`dup2`로 파일 디스크립터 조작
 
 ## 관련 문서
 
-- [04 · 프로세스 실행](04-process-exec.md)
+- [[C/projects/make-shell/04-process-exec|04 · 프로세스 실행]] — `fork`·`execvp`·`waitpid` 실전
+- [[C/projects/make-shell/08-signals-history|08 시그널 · 히스토리]] — `sigaction`과 연결 리스트
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

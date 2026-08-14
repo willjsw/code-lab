@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/stdlib
+  - index
+  - moc
+  - standard-library
+  - status/verified
+aliases:
+  - 표준 라이브러리 인덱스
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # C 표준 라이브러리 시리즈
 
 > 자주 사용하는 헤더별 함수 정리. 전 예제 컴파일·실행 검증 완료
@@ -215,6 +229,11 @@ printf 'the quick brown fox\njumps over the lazy dog.\nThe DOG barks! the fox ru
 
 ## 관련 문서
 
-- [C 프로그램의 동작 및 컴파일 방식](../01-basics/c-program-execution-model.md)
-- [gcc 컴파일 · 실행 명령어](../03-build/gcc-compile-and-run.md)
-- [학습 문서 인덱스](../README.md)
+- [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
+- [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 컴파일 명령과 옵션 전반
+- [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
+- [[C/docs/07-stdlib/01-stdio|표준 입출력]] — 입출력 함수와 서식 지정자
+- [[C/docs/07-stdlib/02-string|문자열 처리]] — 문자열·메모리 조작 함수
+- [[C/docs/07-stdlib/03-stdlib|메모리 · 변환]] — 동적 메모리와 변환·정렬
+- [[C/docs/07-stdlib/04-ctype-math-time|문자 · 수학 · 시간]] — 문자 분류·수학·시간 함수
+- [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]] — 저수준 I/O와 프로세스 시스템 콜

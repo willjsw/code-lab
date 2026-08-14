@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/project-layout
+  - project/make-shell
+  - shell
+  - header
+  - makefile
+  - cmake
+  - status/wip
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 09 · 프로젝트 구조화
 
 > 단일 `main.c` 분할. 헤더·소스 분리, 인클루드 가드, Make·CMake 빌드 시스템 도입
@@ -370,8 +384,9 @@ DEPS    := $(OBJS:.o=.d)
 
 ## 다음 단계
 
-[10 · 디버깅 · 검증](10-debugging.md) — ASan·lldb·회귀 테스트
+[[C/projects/make-shell/10-debugging|10 · 디버깅 · 검증]] — ASan·lldb·회귀 테스트
 
 ## 관련 문서
 
-- [08 · 시그널 · 히스토리](08-signals-history.md)
+- [[C/projects/make-shell/08-signals-history|08 · 시그널 · 히스토리]] — `sigaction`과 연결 리스트
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

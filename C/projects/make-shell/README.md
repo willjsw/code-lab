@@ -1,3 +1,18 @@
+---
+tags:
+  - lang/c
+  - c/system
+  - project/make-shell
+  - index
+  - moc
+  - shell
+  - status/verified
+aliases:
+  - make-shell 로드맵
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # make-shell — C 쉘 개발 로드맵
 
 > 직접 타이핑한 명령을 실행하는 최소 쉘을 단계적으로 구현하며 시스템 프로그래밍 필수 요소 학습
@@ -84,4 +99,14 @@ C/projects/make-shell/
 
 ## 관련 문서
 
-- [학습 문서 인덱스](../../docs/README.md)
+- [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
+- [[C/projects/make-shell/01-repl-skeleton|01 REPL 골격]] — REPL 루프와 표준 입출력
+- [[C/projects/make-shell/02-dynamic-input|02 동적 입력 버퍼]] — `malloc`·`realloc` 소유권 규약
+- [[C/projects/make-shell/03-tokenizer|03 토크나이저]] — `strtok_r`와 이중 포인터
+- [[C/projects/make-shell/04-process-exec|04 프로세스 실행]] — `fork`·`execvp`·`waitpid` 실전
+- [[C/projects/make-shell/05-builtins|05 내장 명령]] — 내장 명령과 프로세스 상태 격리
+- [[C/projects/make-shell/06-redirection|06 리다이렉션]] — `open`·`dup2` 파일 디스크립터 조작
+- [[C/projects/make-shell/07-pipes|07 파이프]] — `pipe`와 fd 닫기 규율
+- [[C/projects/make-shell/08-signals-history|08 시그널 · 히스토리]] — `sigaction`과 연결 리스트
+- [[C/projects/make-shell/09-project-layout|09 프로젝트 구조화]] — 헤더 분리와 Make·CMake
+- [[C/projects/make-shell/10-debugging|10 디버깅 · 검증]] — ASan·lldb·누수 검사

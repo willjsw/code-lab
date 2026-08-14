@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/build
+  - makefile
+  - make
+  - incremental-build
+  - status/wip
+aliases:
+  - Makefile
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # Makefile의 역할과 작성 문법
 
 > 컴파일 명령 자동화 + 변경분만 재빌드. 규칙·변수·자동 변수·패턴 규칙 문법 정리
@@ -211,15 +225,15 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 
 ### 함수
 
-| 함수 | 역할 | 예시 |
-|---|---|---|
-| `$(wildcard 패턴)` | 파일 목록 수집 | `$(wildcard src/*.c)` |
-| `$(patsubst 전,후,대상)` | 패턴 치환 | `$(patsubst src/%.c,build/%.o,$(SRCS))` |
-| `$(subst 전,후,대상)` | 문자열 치환 | `$(subst .c,.o,$(SRCS))` |
-| `$(shell 명령)` | 셸 명령 결과 | `$(shell date +%Y)` |
-| `$(notdir 경로)` | 파일명만 추출 | `$(notdir src/main.c)` → `main.c` |
-| `$(dir 경로)` | 디렉토리만 추출 | `$(dir src/main.c)` → `src/` |
-| `$(addprefix 접두,목록)` | 접두사 부착 | `$(addprefix build/,$(FILES))` |
+| 함수                   | 역할       | 예시                                      |
+| -------------------- | -------- | --------------------------------------- |
+| `$(wildcard 패턴)`     | 파일 목록 수집 | `$(wildcard src/*.c)`                   |
+| `$(patsubst 전,후,대상)` | 패턴 치환    | `$(patsubst src/%.c,build/%.o,$(SRCS))` |
+| `$(subst 전,후,대상)`    | 문자열 치환   | `$(subst .c,.o,$(SRCS))`                |
+| `$(shell 명령)`        | 셸 명령 결과  | `$(shell date +%Y)`                     |
+| `$(notdir 경로)`       | 파일명만 추출  | `$(notdir src/main.c)` → `main.c`       |
+| `$(dir 경로)`          | 디렉토리만 추출 | `$(dir src/main.c)` → `src/`            |
+| `$(addprefix 접두,목록)` | 접두사 부착   | `$(addprefix build/,$(FILES))`          |
 
 축약 표기 — `$(OBJS:.o=.d)` 는 `$(patsubst %.o,%.d,$(OBJS))`와 동일
 
@@ -402,6 +416,8 @@ install: $(TARGET)          # 시스템 설치
 
 ## 관련 문서
 
-- [gcc 컴파일 · 실행 명령어](gcc-compile-and-run.md) — Makefile이 자동화하는 명령들
-- [C 소스코드 구성 요소](../04-project-layout/source-file-types.md)
-- [학습 문서 인덱스](../README.md)
+- [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — Makefile이 자동화하는 명령들
+- [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
+- [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
+- [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
+- [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`

@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/system
+  - project/make-shell
+  - shell
+  - pipe
+  - ipc
+  - deadlock
+  - status/wip
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 07 · 파이프
 
 > `cmd1 | cmd2` 구현. `pipe`로 커널 버퍼 생성 후 두 프로세스 fd 연결. fd 닫기 규율이 핵심
@@ -192,8 +206,9 @@ N단 파이프라인 (`a | b | c | ...`) — 반복 구조로 일반화
 
 ## 다음 단계
 
-[08 · 시그널 · 히스토리](08-signals-history.md) — `Ctrl-C` 처리 및 연결 리스트 기반 히스토리
+[[C/projects/make-shell/08-signals-history|08 · 시그널 · 히스토리]] — `Ctrl-C` 처리 및 연결 리스트 기반 히스토리
 
 ## 관련 문서
 
-- [06 · 리다이렉션](06-redirection.md)
+- [[C/projects/make-shell/06-redirection|06 · 리다이렉션]] — `open`·`dup2` 파일 디스크립터 조작
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

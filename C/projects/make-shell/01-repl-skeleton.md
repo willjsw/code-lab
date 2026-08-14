@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/basics
+  - project/make-shell
+  - shell
+  - repl
+  - stdio
+  - fflush
+  - status/verified
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 01 · REPL 골격
 
 > 프롬프트 출력 → 한 줄 입력 → 되돌려주기 무한 루프. 쉘의 최소 뼈대
@@ -131,4 +145,8 @@ mysh>
 
 ## 다음 단계
 
-[02 · 동적 입력 버퍼](02-dynamic-input.md) — 고정 크기 제약 제거, `malloc`·`realloc` 도입
+[[C/projects/make-shell/02-dynamic-input|02 · 동적 입력 버퍼]] — 고정 크기 제약 제거, `malloc`·`realloc` 도입
+
+## 관련 문서
+
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

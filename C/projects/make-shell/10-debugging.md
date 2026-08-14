@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/debugging
+  - project/make-shell
+  - shell
+  - asan
+  - lldb
+  - memory-leak
+  - status/wip
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 10 · 디버깅 · 검증
 
 > ASan으로 메모리 오류 조기 발견, lldb로 중단점 추적, 스크립트로 회귀 검증. macOS 환경 제약 포함
@@ -300,6 +314,6 @@ printf '통과 %d · 실패 %d\n' "$PASS" "$FAIL"
 
 ## 관련 문서
 
-- [02 · 동적 입력 버퍼](02-dynamic-input.md)
-- [09 · 프로젝트 구조화](09-project-layout.md)
-- [로드맵 개요](README.md)
+- [[C/projects/make-shell/02-dynamic-input|02 · 동적 입력 버퍼]] — `malloc`·`realloc` 소유권 규약
+- [[C/projects/make-shell/09-project-layout|09 · 프로젝트 구조화]] — 헤더 분리와 Make·CMake
+- [[C/projects/make-shell/README|로드맵 개요]] — 쉘 구현 10단계 커리큘럼

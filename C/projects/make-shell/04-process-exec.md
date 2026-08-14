@@ -1,3 +1,18 @@
+---
+tags:
+  - lang/c
+  - c/system
+  - project/make-shell
+  - shell
+  - fork
+  - exec
+  - waitpid
+  - process
+  - status/verified
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 04 · 프로세스 실행
 
 > `fork`로 프로세스 복제, `execvp`로 이미지 교체, `waitpid`로 종료 대기. 쉘의 핵심 구간
@@ -198,8 +213,11 @@ nosuchcmd: No such file or directory
 
 ## 다음 단계
 
-[05 · 내장 명령](05-builtins.md) — `cd`·`exit`·`pwd`. 자식이 아닌 부모에서 처리해야 하는 이유
+[[C/projects/make-shell/05-builtins|05 · 내장 명령]] — `cd`·`exit`·`pwd`. 자식이 아닌 부모에서 처리해야 하는 이유
 
 ## 관련 문서
 
-- [03 · 토크나이저](03-tokenizer.md)
+- [[C/projects/make-shell/03-tokenizer|03 · 토크나이저]] — `strtok_r`와 이중 포인터
+- [[C/projects/make-shell/06-redirection|06 리다이렉션]] — `open`·`dup2` 파일 디스크립터 조작
+- [[C/projects/make-shell/08-signals-history|08 시그널 · 히스토리]] — `sigaction`과 연결 리스트
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/system
+  - project/make-shell
+  - shell
+  - file-descriptor
+  - dup2
+  - redirection
+  - status/verified
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 06 · 리다이렉션
 
 > `>`·`>>`·`<` 처리. `open`·`dup2`로 파일 디스크립터 교체. `fork`와 `exec` 사이 구간 활용
@@ -220,9 +234,10 @@ second line
 
 ## 다음 단계
 
-[07 · 파이프](07-pipes.md) — `pipe`로 프로세스 간 통신 연결
+[[C/projects/make-shell/07-pipes|07 · 파이프]] — `pipe`로 프로세스 간 통신 연결
 
 ## 관련 문서
 
-- [04 · 프로세스 실행](04-process-exec.md)
-- [05 · 내장 명령](05-builtins.md)
+- [[C/projects/make-shell/04-process-exec|04 · 프로세스 실행]] — `fork`·`execvp`·`waitpid` 실전
+- [[C/projects/make-shell/05-builtins|05 · 내장 명령]] — 내장 명령과 프로세스 상태 격리
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

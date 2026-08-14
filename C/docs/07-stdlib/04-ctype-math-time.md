@@ -1,3 +1,20 @@
+---
+tags:
+  - lang/c
+  - c/stdlib
+  - ctype
+  - math
+  - time
+  - limits
+  - status/verified
+aliases:
+  - ctype.h
+  - math.h
+  - time.h
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # `<ctype.h>` · `<math.h>` · `<time.h>` · `<limits.h>` 외
 
 > 문자 분류, 수학 함수, 시간 처리, 타입 한계값, 불리언, 단언
@@ -388,9 +405,9 @@ if (errno == ERANGE) { /* 범위 오류 */ }
 
 ## 다음 문서
 
-- [POSIX 시스템 호출](05-posix.md)
+- [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]]
 
 ## 관련 문서
 
-- [`<stdlib.h>` 메모리 · 변환](03-stdlib.md)
-- [라이브러리 시리즈 개요](README.md)
+- [[C/docs/07-stdlib/03-stdlib|`<stdlib.h>` 메모리 · 변환]] — 동적 메모리와 변환·정렬
+- [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제

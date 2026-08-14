@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/memory
+  - project/make-shell
+  - shell
+  - strtok
+  - pointer
+  - double-pointer
+  - status/verified
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 03 · 토크나이저
 
 > 입력 한 줄을 공백 기준으로 분해해 `char **argv` 구성. 이중 포인터와 NULL 종단 규약 습득
@@ -201,8 +215,9 @@ mysh>
 
 ## 다음 단계
 
-[04 · 프로세스 실행](04-process-exec.md) — `fork`·`execvp`·`waitpid`로 실제 명령 실행
+[[C/projects/make-shell/04-process-exec|04 · 프로세스 실행]] — `fork`·`execvp`·`waitpid`로 실제 명령 실행
 
 ## 관련 문서
 
-- [02 · 동적 입력 버퍼](02-dynamic-input.md)
+- [[C/projects/make-shell/02-dynamic-input|02 · 동적 입력 버퍼]] — `malloc`·`realloc` 소유권 규약
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

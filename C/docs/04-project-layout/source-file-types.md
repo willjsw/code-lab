@@ -1,3 +1,20 @@
+---
+tags:
+  - lang/c
+  - c/project-layout
+  - header
+  - object-file
+  - static-library
+  - dynamic-library
+  - linking
+  - status/verified
+aliases:
+  - 헤더와 소스 분리
+  - 정적 라이브러리
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # C 소스코드 구성 요소 — `.c` · `.h` · `.o` · `.a` · `.dylib`
 
 > 파일 종류별 역할과 생성·소비 관계. 선언과 정의 분리, 가시성 제어, 라이브러리 형태
@@ -491,7 +508,8 @@ cc main.c -L. -lmathutil -o app
 
 ## 관련 문서
 
-- [C 프로그램의 동작 및 컴파일 방식](../01-basics/c-program-execution-model.md)
-- [gcc 컴파일 · 실행 명령어](../03-build/gcc-compile-and-run.md)
-- [Makefile 작성법](../03-build/makefile-guide.md)
-- [학습 문서 인덱스](../README.md)
+- [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
+- [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 컴파일 명령과 옵션 전반
+- [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화와 증분 빌드
+- [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
+- [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`

@@ -1,3 +1,19 @@
+---
+tags:
+  - lang/c
+  - c/stdlib
+  - stdlib
+  - malloc
+  - strtol
+  - qsort
+  - status/verified
+aliases:
+  - stdlib.h
+  - 동적 메모리
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # `<stdlib.h>` — 메모리 · 변환 · 유틸리티
 
 > 동적 메모리 할당, 문자열↔숫자 변환, 정렬·탐색, 프로세스 종료, 환경변수
@@ -356,9 +372,9 @@ srand(42) 후 rand 3회: 94 23 9
 
 ## 다음 문서
 
-- [`<ctype.h>` · `<math.h>` · `<time.h>` 등](04-ctype-math-time.md)
+- [[C/docs/07-stdlib/04-ctype-math-time|`<ctype.h>` · `<math.h>` · `<time.h>` 등]]
 
 ## 관련 문서
 
-- [`<string.h>` 문자열 처리](02-string.md)
-- [라이브러리 시리즈 개요](README.md)
+- [[C/docs/07-stdlib/02-string|`<string.h>` 문자열 처리]] — 문자열·메모리 조작 함수
+- [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제

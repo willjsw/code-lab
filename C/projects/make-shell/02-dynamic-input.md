@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/memory
+  - project/make-shell
+  - shell
+  - malloc
+  - realloc
+  - ownership
+  - status/verified
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 02 · 동적 입력 버퍼
 
 > 고정 크기 배열 제거. `malloc`·`realloc`으로 임의 길이 입력 수용 및 수동 해제 습득
@@ -196,8 +210,10 @@ mysh>
 
 ## 다음 단계
 
-[03 · 토크나이저](03-tokenizer.md) — 입력 문자열을 `char **argv` 배열로 분해
+[[C/projects/make-shell/03-tokenizer|03 · 토크나이저]] — 입력 문자열을 `char **argv` 배열로 분해
 
 ## 관련 문서
 
-- [01 · REPL 골격](01-repl-skeleton.md)
+- [[C/projects/make-shell/01-repl-skeleton|01 · REPL 골격]] — REPL 루프와 표준 입출력
+- [[C/projects/make-shell/10-debugging|10 디버깅 · 검증]] — ASan·lldb·누수 검사
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

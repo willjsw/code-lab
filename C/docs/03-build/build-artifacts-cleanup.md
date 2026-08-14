@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/build
+  - build-artifacts
+  - gitignore
+  - cleanup
+  - status/verified
+aliases:
+  - 빌드 산출물
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 빌드 산출물 정리
 
 > `cc`/`gcc` 실행으로 생기는 부산물의 종류·정리 방법·수동 삭제 시 주의점
@@ -365,7 +379,8 @@ app
 
 ## 관련 문서
 
-- [gcc 컴파일 · 실행 명령어](gcc-compile-and-run.md)
-- [Makefile 작성법](makefile-guide.md)
-- [C 프로그램의 동작 및 컴파일 방식](../01-basics/c-program-execution-model.md)
-- [C 소스코드 구성 요소](../04-project-layout/source-file-types.md)
+- [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 컴파일 명령과 옵션 전반
+- [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화와 증분 빌드
+- [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
+- [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
+- [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록

@@ -1,3 +1,19 @@
+---
+tags:
+  - lang/c
+  - c/basics
+  - compilation
+  - memory-layout
+  - linking
+  - gcc
+  - status/verified
+aliases:
+  - 컴파일 4단계
+  - 메모리 세그먼트
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # C 프로그램의 동작 및 컴파일 방식
 
 > 소스 코드 → 실행 파일 4단계 변환. 실행 시 메모리 세그먼트 배치. Java의 JVM 계층 부재
@@ -368,10 +384,11 @@ argv[2] = world
 
 ## 다음 단계
 
-- [gcc 컴파일 · 실행 명령어](../03-build/gcc-compile-and-run.md) — 실무 옵션 전반
-- [Makefile 작성법](../03-build/makefile-guide.md) — 빌드 자동화
+- [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 실무 옵션 전반
+- [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화
 
 ## 관련 문서
 
-- [C 소스코드 구성 요소](../04-project-layout/source-file-types.md) — `.c`·`.h`·`.o`·`.a` 파일 역할
-- [학습 문서 인덱스](../README.md)
+- [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
+- [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
+- [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`

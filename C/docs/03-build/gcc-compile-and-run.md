@@ -1,3 +1,18 @@
+---
+tags:
+  - lang/c
+  - c/build
+  - gcc
+  - compile-options
+  - linking
+  - cli
+  - status/verified
+aliases:
+  - gcc 옵션
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # gcc 컴파일 · 실행 명령어
 
 > 단일 파일부터 다중 파일·라이브러리 링크까지. 실무에서 쓰는 옵션과 오류 메시지 해석
@@ -474,10 +489,11 @@ cc -S -O2 main.c -o main.s
 
 ## 다음 단계
 
-- [Makefile 작성법](makefile-guide.md) — 위 명령들의 자동화
+- [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 위 명령들의 자동화
 
 ## 관련 문서
 
-- [C 프로그램의 동작 및 컴파일 방식](../01-basics/c-program-execution-model.md)
-- [C 소스코드 구성 요소](../04-project-layout/source-file-types.md)
-- [학습 문서 인덱스](../README.md)
+- [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
+- [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
+- [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
+- [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`

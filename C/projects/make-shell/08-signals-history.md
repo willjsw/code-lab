@@ -1,3 +1,17 @@
+---
+tags:
+  - lang/c
+  - c/system
+  - project/make-shell
+  - shell
+  - signal
+  - sigaction
+  - linked-list
+  - status/verified
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # 08 · 시그널 · 히스토리
 
 > `Ctrl-C`로 쉘이 죽지 않게 처리. 연결 리스트로 입력 이력 관리. 비동기 처리와 자료구조 소유권
@@ -284,9 +298,11 @@ raise 후 got=1 (핸들러가 종료 대신 플래그 설정)
 
 ## 다음 단계
 
-[09 · 프로젝트 구조화](09-project-layout.md) — 단일 파일 분할, 헤더 작성, CMake 도입
+[[C/projects/make-shell/09-project-layout|09 · 프로젝트 구조화]] — 단일 파일 분할, 헤더 작성, CMake 도입
 
 ## 관련 문서
 
-- [04 · 프로세스 실행](04-process-exec.md)
-- [05 · 내장 명령](05-builtins.md)
+- [[C/projects/make-shell/04-process-exec|04 · 프로세스 실행]] — `fork`·`execvp`·`waitpid` 실전
+- [[C/projects/make-shell/05-builtins|05 · 내장 명령]] — 내장 명령과 프로세스 상태 격리
+- [[C/projects/make-shell/07-pipes|07 파이프]] — `pipe`와 fd 닫기 규율
+- [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼

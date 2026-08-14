@@ -1,3 +1,19 @@
+---
+tags:
+  - lang/c
+  - c/stdlib
+  - string
+  - strtok
+  - memcpy
+  - null-termination
+  - status/verified
+aliases:
+  - string.h
+  - 문자열 함수
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # `<string.h>` — 문자열 · 메모리 처리
 
 > C 문자열은 널(`'\0'`) 종단 `char` 배열. 길이 정보 미보유 → 모든 함수가 종단 문자에 의존
@@ -11,7 +27,7 @@
 ## C 문자열의 실체
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph M["char str[6] = &quot;hello&quot;"]
         c0["'h'"] --> c1["'e'"] --> c2["'l'"] --> c3["'l'"] --> c4["'o'"] --> c5["NUL"]
     end
@@ -26,15 +42,15 @@ flowchart LR
 
 ## Java와의 차이
 
-| 항목 | Java | C |
-|---|---|---|
-| 타입 | `String` 객체 | `char` 배열 + 널 종단 |
-| 길이 | `length()` O(1) 저장됨 | `strlen()` O(n) 계산 |
-| 불변성 | 불변 | 가변 (버퍼면) |
-| 연결 | `+` 연산자 | `strcat` (버퍼 직접 관리) |
-| 비교 | `equals()` | `strcmp() == 0` |
-| 범위 검사 | 예외 발생 | **검사 부재** → 오버플로 |
-| 메모리 | GC | 배열이면 자동, `strdup`이면 `free` |
+| 항목    | Java                | C                          |
+| ----- | ------------------- | -------------------------- |
+| 타입    | `String` 객체         | `char` 배열 + 널 종단           |
+| 길이    | `length()` O(1) 저장됨 | `strlen()` O(n) 계산         |
+| 불변성   | 불변                  | 가변 (버퍼면)                   |
+| 연결    | `+` 연산자             | `strcat` (버퍼 직접 관리)        |
+| 비교    | `equals()`          | `strcmp() == 0`            |
+| 범위 검사 | 예외 발생               | **검사 부재** → 오버플로           |
+| 메모리   | GC                  | 배열이면 자동, `strdup`이면 `free` |
 
 ## 길이 · 복사 · 연결
 
@@ -305,9 +321,9 @@ strerror(2) = No such file or directory
 
 ## 다음 문서
 
-- [`<stdlib.h>` 메모리 · 변환 · 유틸리티](03-stdlib.md)
+- [[C/docs/07-stdlib/03-stdlib|`<stdlib.h>` 메모리 · 변환 · 유틸리티]]
 
 ## 관련 문서
 
-- [`<stdio.h>` 표준 입출력](01-stdio.md)
-- [라이브러리 시리즈 개요](README.md)
+- [[C/docs/07-stdlib/01-stdio|`<stdio.h>` 표준 입출력]] — 입출력 함수와 서식 지정자
+- [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제

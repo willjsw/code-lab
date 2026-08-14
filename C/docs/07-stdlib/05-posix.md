@@ -1,15 +1,32 @@
+---
+tags:
+  - lang/c
+  - c/system
+  - posix
+  - syscall
+  - file-descriptor
+  - fork
+  - unistd
+  - status/wip
+aliases:
+  - POSIX
+  - 시스템 콜
+created: 2026-08-14
+updated: 2026-08-14
+---
+
 # POSIX 시스템 호출 — `<unistd.h>` · `<fcntl.h>` 외
 
 > 표준 C 라이브러리 밖의 OS 기능. 저수준 파일 I/O, 프로세스, 디렉토리. Unix 계열 전용
 
 ## 표준 C vs POSIX
 
-| 구분 | 표준 C | POSIX |
-|---|---|---|
-| 이식성 | 모든 플랫폼 | Unix 계열 (macOS·Linux). Windows 부분 지원 |
-| 파일 | `FILE *` (`fopen`) | 파일 디스크립터 (`open`) |
-| 버퍼링 | 라이브러리 버퍼 존재 | **버퍼 부재** — 시스템 콜 직접 |
-| 헤더 | `<stdio.h>` 등 | `<unistd.h>` `<fcntl.h>` `<sys/*.h>` |
+| 구분  | 표준 C               | POSIX                                |
+| --- | ------------------ | ------------------------------------ |
+| 이식성 | 모든 플랫폼             | Unix 계열 (macOS·Linux). Windows 부분 지원 |
+| 파일  | `FILE *` (`fopen`) | 파일 디스크립터 (`open`)                    |
+| 버퍼링 | 라이브러리 버퍼 존재        | **버퍼 부재** — 시스템 콜 직접                 |
+| 헤더  | `<stdio.h>` 등      | `<unistd.h>` `<fcntl.h>` `<sys/*.h>` |
 
 - `fopen`·`fprintf` = 고수준. 대부분 상황에서 권장
 - `open`·`write` = 저수준. 리다이렉션·파이프·정밀 제어 필요 시
@@ -377,6 +394,7 @@ while ((ent = readdir(d)) != NULL) {
 
 ## 관련 문서
 
-- [`<stdio.h>` 표준 입출력](01-stdio.md) — 고수준 대응 함수
-- [라이브러리 시리즈 개요](README.md)
-- [make-shell 프로젝트](../../projects/make-shell/README.md) — 본 문서 함수들의 실전 활용
+- [[C/docs/07-stdlib/01-stdio|`<stdio.h>` 표준 입출력]] — 고수준 대응 함수
+- [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
+- [[C/projects/make-shell/README|make-shell 프로젝트]] — 본 문서 함수들의 실전 활용
+- [[C/docs/07-stdlib/04-ctype-math-time|문자 · 수학 · 시간]] — 문자 분류·수학·시간 함수
