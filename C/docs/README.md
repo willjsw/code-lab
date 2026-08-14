@@ -60,6 +60,13 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 
 작성 예정. 현재는 [POSIX 시스템 호출](07-stdlib/05-posix.md) 및 [make-shell](../projects/make-shell/README.md) 참조
 
+### 08-syntax — 연산자 · 특수 문법
+
+| 문서 | 내용 |
+|---|---|
+| [전처리기 매크로](08-syntax/preprocessor-macro.md) | `#define` 텍스트 치환, 괄호 함정, 조건부 컴파일 |
+| [sizeof 연산자와 배열 첨자](08-syntax/sizeof-and-array-subscript.md) | `sizeof` 컴파일 시점 평가, 배열 감쇠, 포인터 산술 |
+
 ### 07-stdlib — 표준 라이브러리
 
 | 문서 | 헤더 |
@@ -107,6 +114,8 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 | `printf` 서식 | [표준 입출력](07-stdlib/01-stdio.md) |
 | 문자열 다루기 | [문자열 처리](07-stdlib/02-string.md) |
 | `malloc` 사용법 | [메모리 · 변환](07-stdlib/03-stdlib.md) |
+| `#define` 매크로 주의점 | [전처리기 매크로](08-syntax/preprocessor-macro.md) |
+| `sizeof`가 이상한 값을 줄 때 | [sizeof와 배열 첨자](08-syntax/sizeof-and-array-subscript.md) |
 | 메모리 누수 찾기 | [make-shell 10단계](../projects/make-shell/10-debugging.md) |
 | 파일 읽기쓰기 | [표준 입출력](07-stdlib/01-stdio.md) · [POSIX](07-stdlib/05-posix.md) |
 | 프로세스 실행 | [POSIX](07-stdlib/05-posix.md) · [make-shell 04단계](../projects/make-shell/04-process-exec.md) |
@@ -126,4 +135,6 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 - [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`
 - [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
 - [[C/docs/07-stdlib/README|표준 라이브러리 시리즈]] — 빈출 함수 30선과 통합 예제
+- [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — `#define` 치환과 괄호 함정
+- [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 쉘 구현 10단계 커리큘럼

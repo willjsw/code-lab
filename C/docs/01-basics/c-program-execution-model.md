@@ -392,3 +392,5 @@ argv[2] = world
 - [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
 - [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`
+- [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — 전처리 단계의 `#define` 치환 상세
+- [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술

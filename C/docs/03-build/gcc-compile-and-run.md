@@ -497,3 +497,5 @@ cc -S -O2 main.c -o main.s
 - [[C/docs/04-project-layout/source-file-types|C 소스코드 구성 요소]] — `.c`·`.h`·`.o`·`.a` 파일 역할
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
 - [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`
+- [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — `-D`·`-E` 옵션과 매크로 동작
+- [[C/docs/03-build/cmake-guide|CMake 가이드]] — CLion 기본 빌드 시스템

@@ -327,3 +327,4 @@ strerror(2) = No such file or directory
 
 - [[C/docs/07-stdlib/01-stdio|`<stdio.h>` 표준 입출력]] — 입출력 함수와 서식 지정자
 - [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
+- [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — `sizeof` vs `strlen` 차이

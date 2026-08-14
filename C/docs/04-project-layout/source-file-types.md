@@ -513,3 +513,4 @@ cc main.c -L. -lmathutil -o app
 - [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화와 증분 빌드
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
 - [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`
+- [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — 인클루드 가드의 매크로 동작
