@@ -16,19 +16,29 @@ created: 2026-08-18
 updated: 2026-08-18
 ---
 
-# lldb로 메모리 주소 값 조회하기 (CLion)
+# lldb로 메모리 주소 값 조회하기 (CLion 2026.2.1)
 
 > CLion 디버거는 **lldb 프론트엔드**. UI 버튼으로 안 되는 조회는 LLDB 콘솔에 명령 직접 입력
 
+## 검증 환경
+
+| 항목 | 값 |
+|---|---|
+| CLion 버전 | **2026.2.1** |
+| 빌드 번호 | `CL-262.9437.136` |
+| 메이저 릴리스 | 2026-07-16 |
+| 설정 디렉토리 | `~/Library/Application Support/JetBrains/CLion2026.2/` |
+| 플랫폼 | macOS (arm64) |
+
 ## 구조
 
-CLion은 자체 디버거를 보유하지 않고 번들 lldb를 구동해 결과를 UI로 표시
+CLion은 자체 디버거를 보유하지 않고 **번들 디버거**를 구동해 결과를 UI로 표시
 
 ```mermaid
 flowchart LR
-    A["CLion UI<br/>Variables · Memory View"] <-->|"명령 · 응답"| B["lldb<br/>CLion.app/Contents/bin/lldb/mac/"]
-    B <-->|"ptrace · Mach 예외"| C["디버기 프로세스<br/>target"]
-    D["LLDB 콘솔 탭<br/>명령 직접 입력"] --> B
+    A["CLion 2026.2.1 UI<br/>Variables · Memory View"] <-->|"명령 · 응답"| B["LLDBFrontend<br/>+ LLDB.framework 21.1.7"]
+    B <-->|"debugserver<br/>Mach 예외"| C["디버기 프로세스<br/>target"]
+    D["Debug 창 LLDB 탭<br/>명령 직접 입력"] --> B
 
     classDef ui fill:#e0f0ff,stroke:#06c
     classDef dbg fill:#fff0e0,stroke:#e80
@@ -36,9 +46,30 @@ flowchart LR
     class B,C dbg
 ```
 
-- CLion 번들 lldb 경로 — `/Applications/CLion.app/Contents/bin/lldb/mac/` (macOS 확인)
+### 번들 디버거 실측
+
+| 구성 요소 | 경로 · 버전 |
+|---|---|
+| lldb 본체 | `Contents/bin/lldb/mac/aarch64/LLDB.framework/Resources/lldb` |
+| lldb 버전 | **21.1.7** (JetBrains IDE bundle; build 274) |
+| 프론트엔드 | `Contents/bin/lldb/mac/aarch64/LLDBFrontend` |
+| 원격 스텁 | `LLDB.framework/Resources/debugserver` |
+| gdb (동봉) | `Contents/bin/gdb/mac/aarch64/bin/gdb` — **GNU gdb 17.1** (build 80) |
+
+- CLion 번들 lldb는 **LLVM 업스트림 21.1.7** 기반. 시스템 lldb(`/usr/bin/lldb` = Apple `lldb-2100.0.17.108`)와 **별개 바이너리**
+- 버전 차이로 출력 서식·지원 명령이 미세하게 상이 가능. 본 문서 명령은 **양쪽 모두 동작 확인 완료**
+- CLion은 gdb도 동봉 — 툴체인 설정에서 선택 가능. macOS 기본은 lldb
 - UI에서 제공하지 않는 기능도 **LLDB 콘솔로 전부 접근 가능**
 - 아래 명령은 전부 CLion의 LLDB 콘솔 탭에 그대로 입력 가능. 터미널 `lldb`와 동일
+
+번들 lldb를 터미널에서 직접 호출해 CLion과 동일 환경 재현 가능
+
+```bash
+/Applications/CLion.app/Contents/bin/lldb/mac/aarch64/LLDB.framework/Resources/lldb ./target
+```
+
+- CLion 디버그 세션과 **같은 lldb 바이너리** 사용 → 동작 차이 제거
+- 시스템 lldb와 결과가 다를 때 원인 격리에 유효
 
 ## 빌드 전제
 
@@ -343,18 +374,35 @@ frame #0: 0x00000001000005b8 target_o2`main at target.c:28:5 [opt]
 
 ## CLion UI 대응
 
-| 목적 | LLDB 콘솔 (확실) | CLion UI |
-|---|---|---|
-| 지역 변수 확인 | `frame variable` | Variables 패널 |
-| 주소 확인 | `p &x` | Variables 패널에서 포인터 값 표시 |
-| 원시 바이트 조회 | `memory read -s1 -fx -c16 <주소>` | Memory View |
-| 임의 식 평가 | `p <식>` | Evaluate Expression |
-| 값 변경 감시 | `watchpoint set variable <변수>` | 브레이크포인트 목록의 watchpoint 항목 |
+콘솔 명령은 **검증 완료**, UI 조작 경로는 화면 확인이 필요한 영역. 아래 표의 검색어로 각자 환경에서 위치·단축키 확인 권장
 
-- CLion 디버그 세션 하단에 **LLDB 콘솔 탭** 제공 → 위 명령 그대로 입력 가능
-- UI 메뉴 위치·단축키는 **CLion 버전과 keymap에 따라 상이**. 본 문서에서는 미기재
-- UI 경로가 확실하지 않을 때는 콘솔 명령이 가장 안정적 — 버전 무관 동일 동작
-- Memory View는 주소를 입력받아 16진 덤프 표시. `p &변수`로 얻은 주소를 붙여넣어 사용
+| 목적 | LLDB 콘솔 (검증 완료) | UI 기능 검색어 (영문 UI 기준) |
+|---|---|---|
+| 지역 변수 확인 | `frame variable` | Variables (디버그 창 기본 패널) |
+| 주소 확인 | `p &x` | — 포인터 값이 Variables에 직접 표시 |
+| 원시 바이트 조회 | `memory read -s1 -fx -c16 <주소>` | `Memory View` |
+| 임의 식 평가 | `p <식>` | `Evaluate Expression` |
+| 감시 목록 추가 | `frame variable <변수>` 반복 | `Add to Watches` |
+| 값 변경 감시 | `watchpoint set variable <변수>` | `View Breakpoints` 내 watchpoint 항목 |
+
+### 단축키 확인 절차
+
+CLion 2026.2.1 기준, 단축키는 **선택된 keymap에 종속**. 아래 경로에서 직접 확인이 확실
+
+1. `Settings`(macOS는 `CLion | Settings`) → `Keymap`
+2. 우측 상단 검색창에 위 표의 검색어 입력 (예: `Memory View`)
+3. 항목 우측에 현재 keymap의 단축키 표시. 부재 시 우클릭 → `Add Keyboard Shortcut`으로 지정 가능
+
+- 본 환경은 사용자 `keymap.xml` 부재 → **기본 keymap** 사용 중 (macOS 기본값)
+- 기본 keymap 단축키 목록은 앱 번들에서 추출 불가 → 문서에 **개별 단축키 미기재**. 위 절차로 확인
+- 액션명은 UI 언어 설정에 따라 번역 표시 가능 — 영문 검색어로 안 잡히면 한글명으로 재검색
+
+### 콘솔 우선 권장 이유
+
+- 버전·keymap·UI 언어와 **무관하게 동일 동작**
+- Memory View가 제공하지 않는 형식 지정(`-fc` 문자 표시 등) 사용 가능
+- 명령·출력을 그대로 문서·이슈에 인용 가능 → 재현성 확보
+- Memory View 사용 시에도 `p &변수`로 얻은 주소를 입력란에 붙여넣는 방식이 확실
 
 ## 함정 · 주의점
 
@@ -378,8 +426,10 @@ frame #0: 0x00000001000005b8 target_o2`main at target.c:28:5 [opt]
 - [x] `free` 전후 힙 블록 내용 변화 확인
 - [x] watchpoint `old value`·`new value` 및 정지 위치 확인
 - [x] `-O2`에서 브레이크포인트 행 재배치 확인
-- [x] CLion 번들 lldb 경로 확인
-- [ ] CLion UI 메뉴 경로·단축키 — 버전 종속으로 미기재
+- [x] CLion 2026.2.1 버전·빌드 번호 확인 (`CL-262.9437.136`)
+- [x] 번들 lldb 21.1.7·gdb 17.1 버전 확인
+- [x] 번들 lldb로 동일 명령 실행해 시스템 lldb와 같은 결과 확인
+- [ ] CLion UI 메뉴 위치·기본 단축키 — 앱 번들에서 추출 불가. `Settings | Keymap` 검색으로 확인 필요
 
 ## 관련 문서
 
