@@ -58,7 +58,11 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 
 ### 05-debugging — 디버깅
 
-작성 예정. 현재는 [make-shell 10단계](../projects/make-shell/10-debugging.md) 참조
+| 문서 | 내용 |
+|---|---|
+| [lldb로 메모리 주소 값 조회하기](05-debugging/lldb-memory-inspection.md) | CLion 디버거 구조, `memory read`, watchpoint, 리틀 엔디안, 구조체 패딩 |
+
+ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-debugging.md) 참조
 
 ### 06-system — 시스템 프로그래밍
 
@@ -137,6 +141,9 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 | `free` 후 메모리에 무슨 일이 일어나는지 | [`free`의 실제 동작](02-memory/heap-and-free.md) |
 | `free` 했는데 메모리 사용량이 안 줄 때 | [`free`의 실제 동작 — OS 반환 여부](02-memory/heap-and-free.md) |
 | `free` 후 접근이 우연히 되는 이유 | [`free`의 실제 동작 — 댕글링 포인터](02-memory/heap-and-free.md) |
+| 메모리 주소에 든 실제 바이트 보기 | [lldb 메모리 조회](05-debugging/lldb-memory-inspection.md) |
+| 변수 값이 언제 바뀌는지 추적 | [lldb 메모리 조회 — watchpoint](05-debugging/lldb-memory-inspection.md) |
+| 구조체 패딩이 얼마나 붙는지 | [lldb 메모리 조회 — 구조체 패딩](05-debugging/lldb-memory-inspection.md) |
 | 파일 읽기쓰기 | [표준 입출력](07-stdlib/01-stdio.md) · [POSIX](07-stdlib/05-posix.md) |
 | 프로세스 실행 | [POSIX](07-stdlib/05-posix.md) · [make-shell 04단계](../projects/make-shell/04-process-exec.md) |
 
@@ -150,6 +157,7 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 
 - [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
 - [[C/docs/02-memory/heap-and-free|free의 실제 동작]] — 힙 할당자 구조와 해제 후 메모리 상태
+- [[C/docs/05-debugging/lldb-memory-inspection|lldb로 메모리 주소 값 조회하기]] — CLion 디버거로 실제 바이트 확인
 - [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 컴파일 명령과 옵션 전반
 - [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화와 증분 빌드
 - [[C/docs/03-build/cmake-guide|CMakeLists.txt 작성법]] — CMake 문법·out-of-source 빌드·Makefile 병행 충돌
