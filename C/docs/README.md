@@ -77,6 +77,7 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | [static 키워드](08-syntax/static-keyword.md) | 링키지·저장 기간, 정적 지역변수, **Java `static`과 의미 전도** |
 | [size_t 타입](08-syntax/size-t-type.md) | 부호 없는 크기 타입, 언더플로, `%zu`, `ssize_t` |
 | [문자 리터럴과 문자열 리터럴](08-syntax/character-literal.md) | `'x'`는 `int` 상수, `"x"`는 주소, 이스케이프 시퀀스 |
+| [이중 포인터 `**`](08-syntax/double-pointer.md) | out-parameter, `char **argv`, 성장 버퍼, 연결 리스트, 2차원 배열 |
 
 ### 07-stdlib — 표준 라이브러리
 
@@ -137,6 +138,9 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | `fgetc` 읽기가 중간에 끊길 때 | [표준 입출력 — `EOF`와 반환 타입](07-stdlib/01-stdio.md) |
 | `'x'`와 `"x"`의 차이 | [문자 리터럴과 문자열 리터럴](08-syntax/character-literal.md) |
 | `int` 변수를 `'\n'`과 비교해도 되는지 | [문자 리터럴 — 정수 비교](08-syntax/character-literal.md) |
+| `**`가 왜 필요한지 | [이중 포인터](08-syntax/double-pointer.md) |
+| 함수에서 할당했는데 호출자가 `NULL`일 때 | [이중 포인터 — out-parameter](08-syntax/double-pointer.md) |
+| `char **argv` 구조 | [이중 포인터 — 문자열 배열](08-syntax/double-pointer.md) · [make-shell 03단계](../projects/make-shell/03-tokenizer.md) |
 | 메모리 누수 찾기 | [make-shell 10단계](../projects/make-shell/10-debugging.md) |
 | `free` 후 메모리에 무슨 일이 일어나는지 | [`free`의 실제 동작](02-memory/heap-and-free.md) |
 | `free` 했는데 메모리 사용량이 안 줄 때 | [`free`의 실제 동작 — OS 반환 여부](02-memory/heap-and-free.md) |
@@ -170,4 +174,5 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 - [[C/docs/08-syntax/static-keyword|static 키워드]] — 링키지·저장 기간과 Java `static`과의 의미 차이
 - [[C/docs/08-syntax/size-t-type|size_t 타입]] — 부호 없는 크기 타입과 언더플로 함정
 - [[C/docs/08-syntax/character-literal|문자 리터럴과 문자열 리터럴]] — `'x'`의 타입이 `int`인 이유와 이스케이프 시퀀스
+- [[C/docs/08-syntax/double-pointer|이중 포인터]] — 포인터 자체를 바꿔야 할 때의 유일한 수단
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 쉘 구현 10단계 커리큘럼

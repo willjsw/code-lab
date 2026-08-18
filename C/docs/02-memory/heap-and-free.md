@@ -414,6 +414,7 @@ freed by thread T0 here:
 - [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 스택·힙·데이터 세그먼트 배치
 - [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — 크래시 시 출력이 유실되는 이유
 - [[C/docs/08-syntax/size-t-type|size_t 타입]] — `malloc` 인자의 곱셈 오버플로
+- [[C/docs/08-syntax/double-pointer|이중 포인터]] — 해제·재할당 시 호출자 포인터를 갱신하는 구조
 - [[C/docs/05-debugging/lldb-memory-inspection|lldb로 메모리 주소 값 조회하기]] — 해제 전후 블록을 디버거로 직접 관찰
 - [[C/projects/make-shell/10-debugging|10 디버깅 · 검증]] — ASan·`leaks` 실전 적용
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
