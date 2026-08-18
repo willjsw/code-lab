@@ -9,7 +9,7 @@ tags:
 aliases:
   - 빌드 산출물
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-19
 ---
 
 # 빌드 산출물 정리
@@ -230,6 +230,53 @@ hello
 
 `-g`로 빌드해도 macOS는 디버그 정보를 실행 파일이 아닌 **별도 `.dSYM` 번들**에 배치. 번들 삭제 시 소스 레벨 디버깅 불가
 
+#### 생성 조건 — 단일 명령일 때만
+
+`-g` 지정만으로 항상 생기지 않음. **컴파일과 링크를 한 명령으로 수행할 때만** 부수 생성
+
+```bash
+cc main.c -o main                                    # A. -g 없음
+cc -g -c main.c -o main.o && cc -g main.o -o main    # B. 분리 컴파일 후 링크
+cc -g main.c -o main                                 # C. 단일 명령
+```
+
+- `-g` — 디버그 심볼 포함. `.dSYM` 생성 여부를 가르는 조건
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 목적 파일(`.o`) 생성
+- `-o main.o` · `-o main` — 출력 파일명 지정. 미지정 시 `a.out`
+- `&&` — 앞 명령 성공 시에만 다음 실행
+
+| 방식 | `.dSYM` |
+|---|---|
+| A. `-g` 미지정 | **부재** |
+| B. `-g` + 분리 컴파일 | **부재** |
+| C. `-g` + 단일 명령 | **생성** (20K 내외) |
+
+이유 — 단일 명령은 중간 `.o`가 임시 파일이라 링크 후 삭제됨. 디버그 정보 유실 방지 목적으로 `dsymutil` 자동 실행해 번들 보존. 분리 컴파일은 `.o`가 남으므로 불요
+
+`.dSYM` 부재 상태에서도 `.o` 보존 시 디버깅 정상
+
+```bash
+cc -g -c main.c -o main.o && cc -g main.o -o main
+lldb -b -o "breakpoint set -f main.c -l 40" -o "run" -o "frame variable cap" ./main
+```
+
+- `-g` — 디버그 심볼 포함. `.o` 안에 배치
+- `-c` — 링크 생략. `.o` 생성
+- `-o main.o` · `-o main` — 출력 파일명 지정
+- `lldb -b` — 배치 모드. 명령 수행 후 자동 종료
+- `-o "<명령>"` — 시작 시 실행할 lldb 명령
+- `breakpoint set -f main.c -l 40` — `main.c` 40행에 브레이크포인트
+- `run` — 실행
+- `frame variable cap` — 지역 변수 `cap` 출력
+
+```
+Breakpoint 1: where = main`read_line + 56 at main.c:40:5, address = 0x0000000100000618
+(size_t) cap = 16
+```
+
+- 소스 행(`main.c:40`)·변수값 정상 표시 → `.dSYM` 없이도 **`.o` 경유 심볼 해석**
+- 단 `.o` 삭제 시 심볼 상실 → 배포·이관 시에는 `.dSYM` 보존이 안전
+
 `.dSYM` 삭제 후 lldb 실행
 
 ```bash
@@ -369,6 +416,38 @@ app
 
 - `*.dSYM/` — 후행 `/` 지정 시 디렉토리만 매치
 - 확장자 없는 실행 파일은 패턴 매치 불가 → **파일명 개별 등록** 또는 `build/` 하위 배치로 일괄 해결
+
+### 함정 — `.dSYM` 미등록 시 번들 일부만 추적
+
+`*.dSYM/` 누락 상태에서 실행 파일명(`main`)만 등록하면 **번들이 쪼개져** 추적됨
+
+```bash
+git check-ignore -v src/main.dSYM/Contents/Resources/DWARF/main
+git check-ignore -v src/main.dSYM/Contents/Info.plist
+```
+
+- `git check-ignore` — 지정 경로가 어느 규칙으로 무시되는지 조회
+- `-v` — 매치된 `.gitignore` 파일·행 번호·패턴 함께 출력. 미매치 시 출력 부재
+
+```
+.gitignore:15:main	src/main.dSYM/Contents/Resources/DWARF/main
+```
+
+- `DWARF/main` — 파일명이 `main`이라 **실행 파일 규칙에 걸려 무시**
+- `Info.plist`·`Relocations/aarch64/main.yml` — 매치 규칙 부재 → **추적 대상**
+- 결과 — 정작 디버그 정보 본체(`DWARF/main`)는 빠지고 **껍데기만 커밋**. 저장소 오염 + 무용지물
+- `.gitignore` 규칙이 파일명 기준이라 **번들 내부까지 개별 적용**되는 데서 발생
+- 예방 — `*.dSYM/`을 명시 등록해 번들 전체를 일괄 제외
+
+이미 스테이징된 경우 인덱스에서만 제거 (작업 파일 보존)
+
+```bash
+git rm -r --cached src/main.dSYM
+```
+
+- `git rm` — 추적 목록에서 제거
+- `-r` — 디렉토리 재귀 처리. `.dSYM`은 디렉토리이므로 필수
+- `--cached` — **인덱스에서만** 제거. 작업 디렉토리 파일은 유지
 
 ## CLion 팁
 
