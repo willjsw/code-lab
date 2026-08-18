@@ -240,4 +240,5 @@ c >= '0' && c <= '9'   /* 숫자 판별 */
 - [[C/docs/07-stdlib/02-string|문자열 처리]] — 널 종단과 `strcmp` 비교
 - [[C/docs/07-stdlib/04-ctype-math-time|문자 · 수학 · 시간]] — `isdigit`·`tolower` 문자 분류 함수
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 `sizeof` 평가
+- [[C/docs/08-syntax/pointer-types|포인터 자료형]] — 리터럴을 `char *`로 받아 수정 시 크래시하는 이유
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록

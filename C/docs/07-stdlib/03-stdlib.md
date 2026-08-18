@@ -381,3 +381,4 @@ srand(42) 후 rand 3회: 94 23 9
 - [[C/docs/08-syntax/size-t-type|size_t 타입]] — `malloc` 인자 타입의 부호 없음 특성과 곱셈 오버플로
 - [[C/docs/02-memory/heap-and-free|free의 실제 동작]] — 해제 후 블록 상태·OS 미반환·use-after-free 검출
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — `realloc` 주소 이동 시 호출자 포인터 갱신 방법
+- [[C/docs/08-syntax/pointer-types|포인터 자료형]] — `malloc`·`qsort`가 `void *`를 쓰는 구조

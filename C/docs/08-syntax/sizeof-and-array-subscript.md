@@ -219,6 +219,7 @@ strlen(p)   // 2
 - [[C/docs/08-syntax/size-t-type|size_t 타입]] — `sizeof` 반환 타입의 부호 없음 특성과 언더플로
 - [[C/docs/08-syntax/character-literal|문자 리터럴과 문자열 리터럴]] — `sizeof('x')`와 `sizeof("x")`의 차이
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — 배열 감쇠로 `char *[]`가 `char **`가 되는 지점
+- [[C/docs/08-syntax/pointer-types|포인터 자료형]] — `sizeof(포인터)`와 `sizeof(대상)`의 구분과 산술 보폭
 - [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — 배열 크기 매크로 정의
 - [[C/docs/07-stdlib/02-string|문자열 처리]] — `strlen`과 널 종단
 - [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 스택 배열의 메모리 배치

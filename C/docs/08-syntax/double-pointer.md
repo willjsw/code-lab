@@ -259,6 +259,97 @@ flowchart LR
 
 배열은 **주소만** 보관. 문자열 실체는 별도 영역 — 2단계 구조가 이중 포인터가 필요한 이유
 
+## 핵심 표현 해부 — `malloc(cap * sizeof(char *))`
+
+문자열 배열을 동적으로 만드는 정석 공식. `make-shell`의 `tokenize`가 이 형태
+
+```c
+char **toks = malloc(cap * sizeof(char *));
+```
+
+네 조각으로 분해
+
+| 조각 | 의미 |
+|---|---|
+| `sizeof(char *)` | **포인터 하나**의 크기 = 8바이트 (64비트) |
+| `cap * sizeof(char *)` | 포인터 `cap`개분 총 바이트 수 |
+| `malloc(...)` | 그만큼 힙에 확보 |
+| `char **toks =` | 확보한 **배열의 시작 주소**를 보관 |
+
+- 확보되는 것 — 문자열 **실체가 아니라 주소를 담을 칸 `cap`개**
+- `cap = 8`이면 8 × 8 = **64바이트**. 각 칸에 문자열 시작 주소 하나씩 대입 가능
+- 문자열 실체는 별도 위치(원본 버퍼·리터럴 영역·별도 `malloc`)에 존재
+- `toks`가 `char **`인 근거 — 담긴 값이 **`char *`들의 배열 주소** → 2단계 참조
+
+```mermaid
+flowchart LR
+    T["char **toks<br/>= malloc(cap * 8)"] --> B
+
+    subgraph B["힙 — cap × 8 바이트"]
+        direction TB
+        c0["toks[0]<br/>8바이트 칸"]
+        c1["toks[1]<br/>8바이트 칸"]
+        c2["toks[2]<br/>8바이트 칸"]
+        cn["… cap개"]
+    end
+
+    c0 -->|"대입된 주소"| s0["문자열 실체<br/>(별도 위치)"]
+    c1 -->|"대입된 주소"| s1["문자열 실체<br/>(별도 위치)"]
+
+    classDef slot fill:#e0f0ff,stroke:#06c
+    classDef str fill:#f0f0f0,stroke:#888
+    class c0,c1,c2,cn slot
+    class s0,s1 str
+```
+
+`malloc`이 확보하는 범위는 파란 부분뿐. 회색 문자열 실체는 **별도 관리**
+
+### `sizeof(char)` 오기 — 8배 부족
+
+가장 빈번한 실수. `sizeof(char)`는 1이므로 필요량의 **1/8만 확보**
+
+```c
+size_t cap = 4;
+char **ok  = malloc(cap * sizeof(char *));   /* 32바이트 — 올바름 */
+char **bad = malloc(cap * sizeof(char));     /*  4바이트 — 잘못됨 */
+bad[0] = "boom";                             /* 8바이트 기록 → 이미 초과 */
+```
+
+```bash
+cc -Wall -Wextra -g -fsanitize=address sizebug.c -o sizebug && ./sizebug
+```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. ASan 리포트에 행 번호 표시에 필요
+- `-fsanitize=address` — 메모리 오류 검사 코드 삽입. 경계 초과 검출 목적
+- `-o sizebug` — 출력 파일명을 `sizebug`로 지정. 미지정 시 `a.out`
+- `&& ./sizebug` — 컴파일 성공 시에만 실행
+
+```
+==42864==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000000f0
+WRITE of size 8 at 0x6020000000f0 thread T0
+    #0 0x0001048c8a94 in main sizebug.c:24
+
+0x6020000000f4 is located 0 bytes after 4-byte region [0x6020000000f0,0x6020000000f4)
+allocated by thread T0 here:
+    #1 0x0001048c8820 in main sizebug.c:11
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow sizebug.c:24 in main
+```
+
+- `WRITE of size 8` vs `4-byte region` — **8바이트 기록을 4바이트 공간에** 시도한 상황 명시
+- **컴파일 경고 0건** — 타입은 맞고 크기만 틀리므로 컴파일러 미검출
+- 원소 1개 대입만으로 이미 초과 → 조용히 인접 메모리 손상 가능
+- 예방 관용 표현 — 타입명 대신 **역참조 표기** 사용
+
+```c
+char **toks = malloc(cap * sizeof *toks);    /* sizeof(char *)와 동등 */
+```
+
+- `sizeof *toks` — `toks`가 가리키는 대상(`char *`)의 크기. 타입 변경 시에도 자동 정합
+- `int **`로 바꿔도 수정 불필요 → 실수 여지 제거
+
 ## 용법 3 — `realloc` 성장 버퍼
 
 `realloc`이 **주소를 옮길 수 있으므로** 호출자 포인터 갱신 필수. `make-shell`의 `read_line`이 이 구조
@@ -465,6 +556,154 @@ free(m);
 - **해제 순서** — 행 먼저, 배열 나중. 역순 시 행 주소 유실 → 누수
 - 연속 메모리가 필요하면 1차원 할당 후 `m[i * cols + j]` 색인 방식이 유리
 
+## 실전 — `tokenize` 전체 분석
+
+`make-shell`의 토크나이저. 지금까지의 용법이 한 함수에 모두 등장
+
+```c
+static char **tokenize(char *line, size_t *out_count) {
+    size_t cap = INIT_CAP;
+    size_t n = 0;
+    char **toks = malloc(cap * sizeof(char *));      /* ① 주소 칸 cap개 */
+    if (toks == NULL) return NULL;
+
+    char *saveptr;                                   /* ② 분해 상태 보관 */
+    char *tok = strtok_r(line, " \t", &saveptr);
+
+    while (tok != NULL) {
+        if (n + 1 >= cap) {                          /* +1 = NULL 종단 자리 */
+            cap *= 2;
+            char **tmp = realloc(toks, cap * sizeof(char *));
+            if (tmp == NULL) { free(toks); return NULL; }
+            toks = tmp;                              /* ③ 주소 이동 대응 */
+        }
+        toks[n++] = tok;                             /* ④ 주소만 복사 */
+        tok = strtok_r(NULL, " \t", &saveptr);
+    }
+    toks[n] = NULL;                                  /* ⑤ NULL 종단 */
+    if (out_count) *out_count = n;                   /* ⑥ 개수 반환 */
+    return toks;
+}
+```
+
+### 이중 포인터가 등장하는 3곳
+
+| 위치 | 타입 | 이유 |
+|---|---|---|
+| `char **toks` | 반환·지역 | `char *`들의 배열을 지시 |
+| `char **tmp` | `realloc` 수신 | 같은 배열 타입 유지 |
+| `size_t *out_count` | 매개변수 | 호출자 변수에 개수 기록 (이중 포인터는 아니나 동일 원리) |
+
+`out_count`는 `size_t *` — **값을 밖으로 내보내는 out-parameter**. `char **`와 동기가 같음
+
+### `strtok_r`의 파괴적 동작
+
+`strtok_r`은 구분자를 `'\0'`으로 **덮어써서** 원본을 조각냄. 새 문자열 할당 부재
+
+```
+호출 전 line: [l][s][ ][-][l][ ][/][t][m][p][\0]
+호출 후 line: [l][s][\0][-][l][\0][/][t][m][p][\0]
+                     ↑          ↑
+                  덮어써짐    덮어써짐
+```
+
+- `toks[0]`·`toks[1]`·`toks[2]` — 각각 `line` 내부의 `l`·`-`·`/` 위치를 가리킴
+- **별도 할당 부재** → 메모리 절약. 대신 `line`과 수명이 묶임
+- `saveptr` — 다음 탐색 시작 위치 보관. 2회차부터 첫 인자를 `NULL`로 전달
+- `strtok`(비-`_r`)은 이 상태를 전역에 보관 → **재진입 불가**. `strtok_r` 사용이 정석
+
+### 소유권 구조
+
+```mermaid
+flowchart LR
+    L["line<br/>(read_line의 malloc)"] --> LB["[l][s][\\0][-][l][\\0][/tmp][\\0]"]
+
+    subgraph TB["toks 배열 — 별도 malloc"]
+        t0["toks[0]"]
+        t1["toks[1]"]
+        t2["toks[2]"]
+        t3["toks[3] = NULL"]
+    end
+
+    t0 -.->|"line 내부 지시"| LB
+    t1 -.->|"line 내부 지시"| LB
+    t2 -.->|"line 내부 지시"| LB
+
+    F1["free(line)"] -.->|"해제 대상"| LB
+    F2["free(toks)"] -.->|"해제 대상"| TB
+
+    classDef own fill:#e0ffe0,stroke:#0a0
+    classDef ref fill:#e0f0ff,stroke:#06c
+    classDef nul fill:#ffe0e0,stroke:#c00
+    class LB,TB own
+    class t0,t1,t2 ref
+    class t3 nul
+```
+
+- `malloc` 호출 **2회** → `free` 호출 **2회**: `free(toks)`·`free(line)`
+- `toks[i]`는 `line` 내부 주소 → **개별 `free` 금지**. 별도 할당이 아니므로 힙 손상 유발
+- 해제 순서 — `toks` 먼저든 `line` 먼저든 무관. 단 **해제 후 `toks[i]` 접근 금지**
+- `line`을 먼저 해제하면 `toks[i]` 전부 댕글링 → 사용 종료 후 해제 원칙 유지
+
+### `NULL` 종단과 `n + 1 >= cap`
+
+```c
+if (n + 1 >= cap) { ... }      /* n번째 대입 + 종단 NULL 한 칸 확보 */
+toks[n] = NULL;
+```
+
+- `execvp(path, argv)` 규약 — `argv` 마지막 원소가 **`NULL`이어야 함**. 개수 인자 부재
+- `n + 1`의 `+1` — 종단 `NULL` 자리 예약. `n >= cap`으로 쓰면 `toks[n] = NULL`이 경계 초과
+- 종단 덕분에 호출자가 개수 없이 순회 가능 → `for (char **p = argv; *p; p++)`
+
+### 실행 확인
+
+```bash
+cc -Wall -Wextra -g -fsanitize=address src/main.c -o mysh
+printf 'ls -l /tmp\nhello   world\nexit\n' | ./mysh
+```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-g` — 디버그 심볼 포함. ASan 리포트 행 번호 표시에 필요
+- `-fsanitize=address` — 누수·경계 초과 검사. 소유권 규약 검증 목적
+- `-o mysh` — 출력 파일명을 `mysh`로 지정. 미지정 시 `a.out`
+- `printf '...' | ./mysh` — 3줄을 표준 입력으로 주입. 대화형 입력 없이 재현
+
+```
+mysh>argc=3
+ argv[0] = "ls"
+ argv[1] = "-l"
+ argv[2] = "/tmp"
+echo: ls (len=2)
+mysh>argc=2
+ argv[0] = "hello"
+ argv[1] = "world"
+echo: hello (len=5)
+mysh>
+```
+
+- 분해 정상 — 연속 공백(`hello   world`)도 토큰 2개로 처리. `strtok_r`이 연속 구분자를 묶어 취급
+- **`echo: ls (len=2)`** — 입력이 `ls -l /tmp`였음에도 `line`이 `"ls"`로 출력
+- 원인 — `strtok_r`이 첫 공백을 `'\0'`으로 덮어씀 → `line`이 `"ls"`에서 종단
+- `strlen(line)`도 2 — 파괴적 동작의 직접 증거
+- 원본 보존이 필요하면 **`strdup`으로 사본을 만들어 분해** 필요
+- ASan 오류·누수 0건 — 소유권 규약(`free(toks)`·`free(line)`, `toks[i]` 미해제) 정합 확인
+
+### 읽기 전용 문자열 전달 금지
+
+`strtok_r`이 원본에 기록하므로 **쓰기 가능한 버퍼만** 전달 가능
+
+```c
+char **t = tokenize("ls -l", &n);          /* ← 리터럴 → SIGBUS/SIGSEGV */
+
+char buf[] = "ls -l";
+char **t2 = tokenize(buf, &n);             /* ← 배열 복사 → 정상 */
+```
+
+- 리터럴은 읽기 전용 영역 → 수정 시 크래시. 상세 → [[C/docs/08-syntax/pointer-types|포인터 자료형 — 함정 2]]
+- `make-shell`은 `read_line`이 `malloc` 버퍼를 반환 → 쓰기 가능. 설계 정합
+
 ## Java와의 차이
 
 Java에 이중 포인터가 없는 이유 — **참조 재대입을 메서드가 할 수 없도록** 설계됨
@@ -519,10 +758,14 @@ String alloc() { return "GOOD"; }      // 반환값으로 해결 — Java의 정
 - [x] `realloc` 주소 이동 실증 (in-place 확장이 우연임을 확인)
 - [x] 연결 리스트 첫 노드·중간 노드 동일 코드 삭제 확인
 - [x] 2차원 배열 행 주소 불연속 확인
+- [x] `sizeof(char)` 오기 시 ASan `heap-buffer-overflow` 검출 확인
+- [x] `tokenize` 실행으로 분해·`NULL` 종단·소유권 규약 확인
+- [x] `strtok_r` 파괴적 동작 확인 (`strlen(line)`이 2로 축소)
 - [x] 전 예제 ASan 무오류·무누수 통과
 
 ## 관련 문서
 
+- [[C/docs/08-syntax/pointer-types|포인터 자료형]] — `sizeof(char *)`가 8인 근거와 `char **`의 보폭
 - [[C/projects/make-shell/03-tokenizer|03 토크나이저]] — `char **argv` 구성 실전 적용
 - [[C/projects/make-shell/02-dynamic-input|02 동적 입력 버퍼]] — `realloc` 성장 버퍼와 소유권 규약
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술

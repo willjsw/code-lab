@@ -222,4 +222,5 @@ mysh>
 - [[C/projects/make-shell/02-dynamic-input|02 · 동적 입력 버퍼]] — `malloc`·`realloc` 소유권 규약
 - [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술
-- [[C/docs/08-syntax/double-pointer|이중 포인터]] — `char **`가 필요한 이유와 연결 리스트·성장 버퍼 용법 전반
+- [[C/docs/08-syntax/double-pointer|이중 포인터]] — `char **`가 필요한 이유, `malloc` 표현 해부, `tokenize` 전체 분석
+- [[C/docs/08-syntax/pointer-types|포인터 자료형]] — `sizeof(char *)`가 8인 근거와 읽기 전용 문자열 전달 금지

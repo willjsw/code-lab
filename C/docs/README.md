@@ -77,7 +77,8 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | [static 키워드](08-syntax/static-keyword.md) | 링키지·저장 기간, 정적 지역변수, **Java `static`과 의미 전도** |
 | [size_t 타입](08-syntax/size-t-type.md) | 부호 없는 크기 타입, 언더플로, `%zu`, `ssize_t` |
 | [문자 리터럴과 문자열 리터럴](08-syntax/character-literal.md) | `'x'`는 `int` 상수, `"x"`는 주소, 이스케이프 시퀀스 |
-| [이중 포인터 `**`](08-syntax/double-pointer.md) | out-parameter, `char **argv`, 성장 버퍼, 연결 리스트, 2차원 배열 |
+| [이중 포인터 `**`](08-syntax/double-pointer.md) | out-parameter, `char **argv`, 성장 버퍼, 연결 리스트, `tokenize` 분석 |
+| [포인터 자료형](08-syntax/pointer-types.md) | 크기는 동일·보폭은 상이, `void *`, 읽기 전용 문자열, 스택 주소 반환 |
 
 ### 07-stdlib — 표준 라이브러리
 
@@ -141,6 +142,12 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | `**`가 왜 필요한지 | [이중 포인터](08-syntax/double-pointer.md) |
 | 함수에서 할당했는데 호출자가 `NULL`일 때 | [이중 포인터 — out-parameter](08-syntax/double-pointer.md) |
 | `char **argv` 구조 | [이중 포인터 — 문자열 배열](08-syntax/double-pointer.md) · [make-shell 03단계](../projects/make-shell/03-tokenizer.md) |
+| `malloc(cap * sizeof(char *))` 해석 | [이중 포인터 — 핵심 표현 해부](08-syntax/double-pointer.md) |
+| `char *`와 `int *`의 차이 | [포인터 자료형](08-syntax/pointer-types.md) |
+| `p + 1`이 몇 바이트 움직이는지 | [포인터 자료형 — 보폭](08-syntax/pointer-types.md) |
+| `void *`는 왜 쓰는지 | [포인터 자료형 — void 포인터](08-syntax/pointer-types.md) |
+| 문자열 수정하려니 죽을 때 | [포인터 자료형 — 읽기 전용 문자열](08-syntax/pointer-types.md) |
+| 함수가 반환한 문자열이 깨질 때 | [포인터 자료형 — 스택 주소 반환](08-syntax/pointer-types.md) |
 | 메모리 누수 찾기 | [make-shell 10단계](../projects/make-shell/10-debugging.md) |
 | `free` 후 메모리에 무슨 일이 일어나는지 | [`free`의 실제 동작](02-memory/heap-and-free.md) |
 | `free` 했는데 메모리 사용량이 안 줄 때 | [`free`의 실제 동작 — OS 반환 여부](02-memory/heap-and-free.md) |
@@ -175,4 +182,5 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 - [[C/docs/08-syntax/size-t-type|size_t 타입]] — 부호 없는 크기 타입과 언더플로 함정
 - [[C/docs/08-syntax/character-literal|문자 리터럴과 문자열 리터럴]] — `'x'`의 타입이 `int`인 이유와 이스케이프 시퀀스
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — 포인터 자체를 바꿔야 할 때의 유일한 수단
+- [[C/docs/08-syntax/pointer-types|포인터 자료형]] — 역참조 폭과 산술 보폭을 정하는 타입의 역할
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 쉘 구현 10단계 커리큘럼
