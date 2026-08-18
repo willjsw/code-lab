@@ -451,3 +451,4 @@ if (fp == NULL) perror("없는파일.txt");
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
 - [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]] — 저수준 I/O와 프로세스 시스템 콜
 - [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — 출력이 즉시 나가지 않는 이유와 플러시 제어
+- [[C/docs/08-syntax/character-literal|문자 리터럴과 문자열 리터럴]] — `'\n'`이 `int` 상수인 이유와 `EOF` 정수 비교

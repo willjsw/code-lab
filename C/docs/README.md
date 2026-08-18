@@ -68,6 +68,7 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 | [sizeof 연산자와 배열 첨자](08-syntax/sizeof-and-array-subscript.md) | `sizeof` 컴파일 시점 평가, 배열 감쇠, 포인터 산술 |
 | [static 키워드](08-syntax/static-keyword.md) | 링키지·저장 기간, 정적 지역변수, **Java `static`과 의미 전도** |
 | [size_t 타입](08-syntax/size-t-type.md) | 부호 없는 크기 타입, 언더플로, `%zu`, `ssize_t` |
+| [문자 리터럴과 문자열 리터럴](08-syntax/character-literal.md) | `'x'`는 `int` 상수, `"x"`는 주소, 이스케이프 시퀀스 |
 
 ### 07-stdlib — 표준 라이브러리
 
@@ -126,6 +127,8 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 | 뺄셈 결과가 거대한 양수로 나올 때 | [size_t 타입 — 언더플로](08-syntax/size-t-type.md) |
 | `for` 역순 순회가 안 끝날 때 | [size_t 타입 — 역순 순회](08-syntax/size-t-type.md) |
 | `fgetc` 읽기가 중간에 끊길 때 | [표준 입출력 — `EOF`와 반환 타입](07-stdlib/01-stdio.md) |
+| `'x'`와 `"x"`의 차이 | [문자 리터럴과 문자열 리터럴](08-syntax/character-literal.md) |
+| `int` 변수를 `'\n'`과 비교해도 되는지 | [문자 리터럴 — 정수 비교](08-syntax/character-literal.md) |
 | 메모리 누수 찾기 | [make-shell 10단계](../projects/make-shell/10-debugging.md) |
 | 파일 읽기쓰기 | [표준 입출력](07-stdlib/01-stdio.md) · [POSIX](07-stdlib/05-posix.md) |
 | 프로세스 실행 | [POSIX](07-stdlib/05-posix.md) · [make-shell 04단계](../projects/make-shell/04-process-exec.md) |
@@ -150,4 +153,5 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술
 - [[C/docs/08-syntax/static-keyword|static 키워드]] — 링키지·저장 기간과 Java `static`과의 의미 차이
 - [[C/docs/08-syntax/size-t-type|size_t 타입]] — 부호 없는 크기 타입과 언더플로 함정
+- [[C/docs/08-syntax/character-literal|문자 리터럴과 문자열 리터럴]] — `'x'`의 타입이 `int`인 이유와 이스케이프 시퀀스
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 쉘 구현 10단계 커리큘럼
