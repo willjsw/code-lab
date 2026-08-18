@@ -77,22 +77,22 @@ flowchart TD
 
 ## 주제별 빠른 참조
 
-| 알고 싶은 것 | 문서 |
-|---|---|
-| 따옴표 없는 식별자가 소문자로 바뀌는 이유 | [[PostgreSQL/01-BASICS\|01. 기본 문법과 데이터 타입]] |
-| 테이블·인덱스·시퀀스 생성 문법 | [[PostgreSQL/02-DDL\|02. DDL]] |
-| UPSERT (`ON CONFLICT`) 작성법 | [[PostgreSQL/03-DML\|03. DML]] |
-| 재귀 CTE로 계층 데이터 조회 | [[PostgreSQL/04-JOIN-SUBQUERY\|04. JOIN, 서브쿼리, CTE]] |
-| 날짜 계산·문자열 가공 함수 | [[PostgreSQL/05-FUNCTIONS\|05. 내장 함수]] |
-| 그룹별 순위·직전 행 값 구하기 | [[PostgreSQL/06-WINDOW\|06. 윈도우 함수]] |
-| 저장 프로시저 작성·예외 처리 | [[PostgreSQL/07-PLPGSQL\|07. PL/pgSQL]] |
-| `SELECT`로 호출할지 `CALL`로 호출할지 | [[PostgreSQL/08-CALLING\|08. 호출 방법]] |
-| JSONB·배열 다루기 | [[PostgreSQL/09-POSTGRES-ONLY\|09. PostgreSQL 고유 기능]] |
-| 격리 수준 선택·락 경합 | [[PostgreSQL/10-TRANSACTION\|10. 트랜잭션, 격리 수준, 락]] |
-| 인덱스를 만들었는데 안 타는 경우 | [[PostgreSQL/11-PERFORMANCE\|11. 성능]] |
-| 네이밍 규칙·마이그레이션 안전 수칙 | [[PostgreSQL/12-CONVENTIONS\|12. 코딩 컨벤션과 안티패턴]] |
-| Oracle 쿼리를 PostgreSQL로 이관 | [[PostgreSQL/13-ORACLE-MYSQL-DIFF\|13. Oracle / MySQL 대비 차이점]] |
-| 느린 DB를 어디부터 손댈지 | [[PostgreSQL/14-TUNING\|14. DB 튜닝 방법론]] |
+| 알고 싶은 것                     | 문서                                                             |
+| --------------------------- | -------------------------------------------------------------- |
+| 따옴표 없는 식별자가 소문자로 바뀌는 이유     | [[PostgreSQL/01-BASICS\|01. 기본 문법과 데이터 타입]]                    |
+| 테이블·인덱스·시퀀스 생성 문법           | [[PostgreSQL/02-DDL\|02. DDL]]                                 |
+| UPSERT (`ON CONFLICT`) 작성법  | [[PostgreSQL/03-DML\|03. DML]]                                 |
+| 재귀 CTE로 계층 데이터 조회           | [[PostgreSQL/04-JOIN-SUBQUERY\|04. JOIN, 서브쿼리, CTE]]           |
+| 날짜 계산·문자열 가공 함수             | [[PostgreSQL/05-FUNCTIONS\|05. 내장 함수]]                         |
+| 그룹별 순위·직전 행 값 구하기           | [[PostgreSQL/06-WINDOW\|06. 윈도우 함수]]                           |
+| 저장 프로시저 작성·예외 처리            | [[PostgreSQL/07-PLPGSQL\|07. PL/pgSQL]]                        |
+| `SELECT`로 호출할지 `CALL`로 호출할지 | [[PostgreSQL/08-CALLING\|08. 호출 방법]]                           |
+| JSONB·배열 다루기                | [[PostgreSQL/09-POSTGRES-ONLY\|09. PostgreSQL 고유 기능]]          |
+| 격리 수준 선택·락 경합               | [[PostgreSQL/10-TRANSACTION\|10. 트랜잭션, 격리 수준, 락]]              |
+| 인덱스를 만들었는데 안 타는 경우          | [[PostgreSQL/11-PERFORMANCE\|11. 성능]]                          |
+| 네이밍 규칙·마이그레이션 안전 수칙         | [[PostgreSQL/12-CONVENTIONS\|12. 코딩 컨벤션과 안티패턴]]                |
+| Oracle 쿼리를 PostgreSQL로 이관   | [[PostgreSQL/13-ORACLE-MYSQL-DIFF\|13. Oracle / MySQL 대비 차이점]] |
+| 느린 DB를 어디부터 손댈지             | [[PostgreSQL/14-TUNING\|14. DB 튜닝 방법론]]                        |
 
 ## 빠른 확인 쿼리
 
