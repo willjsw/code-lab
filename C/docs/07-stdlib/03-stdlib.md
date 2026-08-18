@@ -379,3 +379,4 @@ srand(42) 후 rand 3회: 94 23 9
 - [[C/docs/07-stdlib/02-string|`<string.h>` 문자열 처리]] — 문자열·메모리 조작 함수
 - [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
 - [[C/docs/08-syntax/size-t-type|size_t 타입]] — `malloc` 인자 타입의 부호 없음 특성과 곱셈 오버플로
+- [[C/docs/02-memory/heap-and-free|free의 실제 동작]] — 해제 후 블록 상태·OS 미반환·use-after-free 검출

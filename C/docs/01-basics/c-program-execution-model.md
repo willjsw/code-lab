@@ -395,3 +395,4 @@ argv[2] = world
 - [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — 전처리 단계의 `#define` 치환 상세
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술
 - [[C/docs/08-syntax/static-keyword|static 키워드]] — 데이터·BSS 세그먼트에 배치되는 정적 지역변수
+- [[C/docs/02-memory/heap-and-free|free의 실제 동작]] — 힙 세그먼트 관리 주체와 해제 후 상태

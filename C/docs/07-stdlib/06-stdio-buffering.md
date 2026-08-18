@@ -571,4 +571,5 @@ while ((c = getchar()) != '\n' && c != EOF)
 - [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]] — `write`·`fsync`·`fork` 등 저수준 계층
 - [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
 - [[C/projects/make-shell/01-repl-skeleton|REPL 골격]] — 프롬프트 플러시의 실전 적용
+- [[C/docs/02-memory/heap-and-free|free의 실제 동작]] — 크래시 시 미플러시 버퍼가 유실되는 실제 사례
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
