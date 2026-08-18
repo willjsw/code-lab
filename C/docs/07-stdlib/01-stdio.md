@@ -170,6 +170,73 @@ if (fgets(line, sizeof(line), stdin) != NULL) {
 - `fgetc` 반환을 `char`로 받으면 EOF(-1) 판별 실패 → `int` 필수
 - `fgets`는 개행 문자 포함 → `s[strcspn(s, "\n")] = '\0';`로 제거
 
+### `EOF`와 `fgetc` 반환 타입
+
+`EOF` — `<stdio.h>` 정의 매크로. 값 **`-1`**. 파일 끝·오류를 나타내는 **문자 아닌 신호**
+
+`fgetc`가 `int`를 반환하는 이유 — 0~255 바이트 값 **전부**와 `EOF`(-1)를 **구분 가능한 범위** 필요. `char`(-128~127)로는 표현 충돌 발생
+
+```c
+#include <stdio.h>
+#include <limits.h>
+
+int main(void) {
+    printf("EOF     = %d\n", EOF);
+    printf("CHAR_MIN= %d, CHAR_MAX = %d\n", CHAR_MIN, CHAR_MAX);
+
+    unsigned char data[] = {'A', 0xFF, 'B'};      /* 0xFF = 중간에 낀 바이트 */
+    FILE *fp = fopen("bin.dat", "wb");
+    fwrite(data, 1, sizeof(data), fp);
+    fclose(fp);
+
+    int count = 0;
+    fp = fopen("bin.dat", "rb");
+    char c;                                       /* ← 잘못된 타입 */
+    while ((c = fgetc(fp)) != EOF) count++;
+    fclose(fp);
+    printf("char로 받은 경우: %d개 (실제 3개)\n", count);
+
+    count = 0;
+    fp = fopen("bin.dat", "rb");
+    int ci;                                       /* ← 올바른 타입 */
+    while ((ci = fgetc(fp)) != EOF) count++;
+    fclose(fp);
+    printf("int으로 받은 경우: %d개\n", count);
+
+    remove("bin.dat");
+    return 0;
+}
+```
+
+```bash
+cc -Wall -Wextra eofdemo.c -o eofdemo && ./eofdemo
+```
+
+- `-Wall` — 주요 경고 활성. 미초기화 변수·타입 불일치 등 검출
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-o eofdemo` — 출력 파일명을 `eofdemo`로 지정. 미지정 시 `a.out`
+- `&& ./eofdemo` — 컴파일 성공 시에만 실행
+
+```
+EOF     = -1
+CHAR_MIN= -128, CHAR_MAX = 127
+char로 받은 경우: 1개 (실제 3개)
+int으로 받은 경우: 3개
+```
+
+- `char`(부호 있음)로 받으면 바이트 `0xFF` → **`-1`로 변환** → `EOF`와 동일 → 2번째 바이트에서 조기 중단
+- 결과 1개 — `'A'`만 읽고 데이터 중간에서 종료. **데이터 유실이 조용히 발생**
+- `int`으로 받으면 `0xFF`가 `255`로 보존 → `EOF`(-1)와 구분 → 3개 정상
+- **`-Wall -Wextra`로도 미검출** — 컴파일러 경고 부재. 타입 선택으로만 방어
+
+| 타입 | 0xFF 바이트 | EOF 구분 |
+|---|---|---|
+| `char` (부호 있음) | `-1` | **불가** — 충돌 |
+| `int` | `255` | 가능 |
+
+- 텍스트 전용 처리에서는 우연히 동작 → 이진 데이터·UTF-8 한글에서 발현. 한글은 `0xEC` 등 상위 바이트 사용
+- `EOF` 확인 후 원인 구분 — `feof(fp)`(정상 끝) vs `ferror(fp)`(오류). `fgetc` 반환만으로는 판별 불가
+
 ## 표준 스트림
 
 | 이름 | fd | 용도 | 버퍼링 |

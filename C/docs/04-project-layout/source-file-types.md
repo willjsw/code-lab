@@ -12,7 +12,7 @@ aliases:
   - 헤더와 소스 분리
   - 정적 라이브러리
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-18
 ---
 
 # C 소스코드 구성 요소 — `.c` · `.h` · `.o` · `.a` · `.dylib`
@@ -163,7 +163,7 @@ cc -Wall -c vis.c -o vis.o && nm vis.o
 
 - **`T` 대문자** = 외부 노출 전역 심볼. 다른 `.c`에서 호출 가능
 - **`t` 소문자** = 파일 내부 한정. 링커가 외부에 미노출
-- Java 대응 — `static` ≈ `private`, 미지정 ≈ `public`
+- Java 대응 — `static` ≈ `private`, 미지정 ≈ `public`. 의미 전도·정적 지역변수 상세 → [static 키워드](../08-syntax/static-keyword.md)
 
 `static` 사용 권장 상황
 
@@ -514,3 +514,4 @@ cc main.c -L. -lmathutil -o app
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
 - [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`
 - [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — 인클루드 가드의 매크로 동작
+- [[C/docs/08-syntax/static-keyword|static 키워드]] — 링키지·저장 기간 상세와 Java `static`과의 의미 차이

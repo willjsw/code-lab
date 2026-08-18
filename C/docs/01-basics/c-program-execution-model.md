@@ -11,7 +11,7 @@ aliases:
   - 컴파일 4단계
   - 메모리 세그먼트
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-18
 ---
 
 # C 프로그램의 동작 및 컴파일 방식
@@ -394,3 +394,4 @@ argv[2] = world
 - [[C/docs/03-build/build-artifacts-cleanup|빌드 산출물 정리]] — 빌드 산출물 정리와 `.gitignore`
 - [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — 전처리 단계의 `#define` 치환 상세
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술
+- [[C/docs/08-syntax/static-keyword|static 키워드]] — 데이터·BSS 세그먼트에 배치되는 정적 지역변수

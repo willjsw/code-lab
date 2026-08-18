@@ -11,7 +11,7 @@ aliases:
   - stdlib.h
   - 동적 메모리
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-18
 ---
 
 # `<stdlib.h>` — 메모리 · 변환 · 유틸리티
@@ -26,12 +26,12 @@ updated: 2026-08-14
 
 ## 동적 메모리 할당
 
-| 함수 | 시그니처 | 초기화 | 용도 |
-|---|---|---|---|
-| `malloc` | `void *malloc(size_t n)` | **없음** (쓰레기 값) | 기본 할당 |
-| `calloc` | `void *calloc(size_t cnt, size_t sz)` | **0으로 채움** | 배열 할당 |
-| `realloc` | `void *realloc(void *p, size_t n)` | 기존 내용 보존 | 크기 변경 |
-| `free` | `void free(void *p)` | — | 해제 |
+| 함수        | 시그니처                                  | 초기화            | 용도    |
+| --------- | ------------------------------------- | -------------- | ----- |
+| `malloc`  | `void *malloc(size_t n)`              | **없음** (쓰레기 값) | 기본 할당 |
+| `calloc`  | `void *calloc(size_t cnt, size_t sz)` | **0으로 채움**     | 배열 할당 |
+| `realloc` | `void *realloc(void *p, size_t n)`    | 기존 내용 보존       | 크기 변경 |
+| `free`    | `void free(void *p)`                  | —              | 해제    |
 
 ```c
 int *p = malloc(3 * sizeof(int));
@@ -91,15 +91,15 @@ flowchart LR
 
 ## 문자열 → 숫자 변환
 
-| 함수 | 반환 | 오류 검출 | 권장 |
-|---|---|---|---|
-| `atoi` | `int` | **불가** | 아니오 |
-| `atol` `atoll` | `long` `long long` | 불가 | 아니오 |
-| `atof` | `double` | 불가 | 아니오 |
-| `strtol` | `long` | **가능** | **예** |
-| `strtoul` | `unsigned long` | 가능 | 예 |
-| `strtoll` `strtoull` | `long long` 계열 | 가능 | 예 |
-| `strtod` `strtof` | `double` `float` | 가능 | 예 |
+| 함수                   | 반환                 | 오류 검출  | 권장    |
+| -------------------- | ------------------ | ------ | ----- |
+| `atoi`               | `int`              | **불가** | 아니오   |
+| `atol` `atoll`       | `long` `long long` | 불가     | 아니오   |
+| `atof`               | `double`           | 불가     | 아니오   |
+| `strtol`             | `long`             | **가능** | **예** |
+| `strtoul`            | `unsigned long`    | 가능     | 예     |
+| `strtoll` `strtoull` | `long long` 계열     | 가능     | 예     |
+| `strtod` `strtof`    | `double` `float`   | 가능     | 예     |
 
 ```c
 printf("atoi(\"42abc\") = %d\n", atoi("42abc"));
@@ -378,3 +378,4 @@ srand(42) 후 rand 3회: 94 23 9
 
 - [[C/docs/07-stdlib/02-string|`<string.h>` 문자열 처리]] — 문자열·메모리 조작 함수
 - [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
+- [[C/docs/08-syntax/size-t-type|size_t 타입]] — `malloc` 인자 타입의 부호 없음 특성과 곱셈 오버플로

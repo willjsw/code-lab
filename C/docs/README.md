@@ -66,6 +66,8 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 |---|---|
 | [전처리기 매크로](08-syntax/preprocessor-macro.md) | `#define` 텍스트 치환, 괄호 함정, 조건부 컴파일 |
 | [sizeof 연산자와 배열 첨자](08-syntax/sizeof-and-array-subscript.md) | `sizeof` 컴파일 시점 평가, 배열 감쇠, 포인터 산술 |
+| [static 키워드](08-syntax/static-keyword.md) | 링키지·저장 기간, 정적 지역변수, **Java `static`과 의미 전도** |
+| [size_t 타입](08-syntax/size-t-type.md) | 부호 없는 크기 타입, 언더플로, `%zu`, `ssize_t` |
 
 ### 07-stdlib — 표준 라이브러리
 
@@ -120,6 +122,10 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 | `malloc` 사용법 | [메모리 · 변환](07-stdlib/03-stdlib.md) |
 | `#define` 매크로 주의점 | [전처리기 매크로](08-syntax/preprocessor-macro.md) |
 | `sizeof`가 이상한 값을 줄 때 | [sizeof와 배열 첨자](08-syntax/sizeof-and-array-subscript.md) |
+| `static`이 Java와 뭐가 다른지 | [static 키워드](08-syntax/static-keyword.md) |
+| 뺄셈 결과가 거대한 양수로 나올 때 | [size_t 타입 — 언더플로](08-syntax/size-t-type.md) |
+| `for` 역순 순회가 안 끝날 때 | [size_t 타입 — 역순 순회](08-syntax/size-t-type.md) |
+| `fgetc` 읽기가 중간에 끊길 때 | [표준 입출력 — `EOF`와 반환 타입](07-stdlib/01-stdio.md) |
 | 메모리 누수 찾기 | [make-shell 10단계](../projects/make-shell/10-debugging.md) |
 | 파일 읽기쓰기 | [표준 입출력](07-stdlib/01-stdio.md) · [POSIX](07-stdlib/05-posix.md) |
 | 프로세스 실행 | [POSIX](07-stdlib/05-posix.md) · [make-shell 04단계](../projects/make-shell/04-process-exec.md) |
@@ -142,4 +148,6 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 - [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — 버퍼링 모드와 플러시 시점 제어
 - [[C/docs/08-syntax/preprocessor-macro|전처리기 매크로]] — `#define` 치환과 괄호 함정
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술
+- [[C/docs/08-syntax/static-keyword|static 키워드]] — 링키지·저장 기간과 Java `static`과의 의미 차이
+- [[C/docs/08-syntax/size-t-type|size_t 타입]] — 부호 없는 크기 타입과 언더플로 함정
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 쉘 구현 10단계 커리큘럼
