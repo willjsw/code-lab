@@ -11,7 +11,7 @@ aliases:
   - stdio.h
   - printf 서식
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-18
 ---
 
 # `<stdio.h>` — 표준 입출력
@@ -184,6 +184,7 @@ fprintf(stderr, "stderr 출력\n");
 
 - 오류·진단 메시지는 `stderr` — 리다이렉션(`> file`) 시 분리 가능, 즉시 출력
 - 프롬프트처럼 개행 없는 `stdout` 출력 → `fflush(stdout)` 필요
+- 버퍼링 모드 결정 규칙·플러시 시점 상세 → [06 표준 입출력 버퍼링](06-stdio-buffering.md)
 
 ## 파일 입출력
 
@@ -199,7 +200,7 @@ fprintf(stderr, "stderr 출력\n");
 | `ftell` | `long ftell(FILE *fp)` | 현재 위치 |
 | `rewind` | `void rewind(FILE *fp)` | 처음으로 |
 | `feof` / `ferror` | | 상태 확인 |
-| `fflush` | `int fflush(FILE *fp)` | 버퍼 강제 출력 |
+| `fflush` | `int fflush(FILE *fp)` | 버퍼 강제 출력. 상세 → [06 버퍼링](06-stdio-buffering.md) |
 | `remove` | `int remove(const char *path)` | 파일 삭제 |
 | `rename` | `int rename(const char *old, const char *new)` | 이름 변경 |
 
@@ -382,3 +383,4 @@ if (fp == NULL) perror("없는파일.txt");
 - [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록
 - [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]] — 저수준 I/O와 프로세스 시스템 콜
+- [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — 출력이 즉시 나가지 않는 이유와 플러시 제어

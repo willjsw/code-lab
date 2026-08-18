@@ -9,7 +9,7 @@ tags:
   - fflush
   - status/verified
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-18
 ---
 
 # 01 · REPL 골격
@@ -150,3 +150,4 @@ mysh>
 ## 관련 문서
 
 - [[C/projects/make-shell/README|make-shell 로드맵]] — 쉘 구현 10단계 커리큘럼
+- [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — 프롬프트 플러시가 필요한 이유와 버퍼링 모드 전반

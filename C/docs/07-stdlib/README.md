@@ -9,7 +9,7 @@ tags:
 aliases:
   - 표준 라이브러리 인덱스
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-18
 ---
 
 # C 표준 라이브러리 시리즈
@@ -25,6 +25,7 @@ updated: 2026-08-14
 | [03 메모리 · 변환](03-stdlib.md) | `<stdlib.h>` | `malloc`, `strtol`, `qsort` |
 | [04 문자 · 수학 · 시간](04-ctype-math-time.md) | `<ctype.h>` `<math.h>` `<time.h>` `<limits.h>` 외 | 분류·연산·시각·한계값 |
 | [05 POSIX 시스템 호출](05-posix.md) | `<unistd.h>` `<fcntl.h>` 외 | 저수준 I/O, 프로세스, 디렉토리 |
+| [06 표준 입출력 버퍼링](06-stdio-buffering.md) | `<stdio.h>` 심화 | `fflush`·`setvbuf`, 버퍼링 모드, 플러시 시점 |
 
 ## 헤더 선택 기준
 
@@ -63,6 +64,8 @@ flowchart TD
 | `fgets` | stdio | 한 줄 입력 (크기 제한) |
 | `fopen` `fclose` | stdio | 파일 열기·닫기 |
 | `perror` | stdio | 오류 메시지 출력 |
+| `fflush` | stdio | 출력 버퍼 강제 방출 |
+| `setvbuf` | stdio | 버퍼링 모드 지정 (첫 I/O 이전) |
 | `strlen` | string | 문자열 길이 |
 | `strcmp` | string | 문자열 비교 (**0=같음**) |
 | `strncpy` | string | 복사 (**널 종단 수동**) |
@@ -218,6 +221,7 @@ printf 'the quick brown fox\njumps over the lazy dog.\nThe DOG barks! the fox ru
 3. [03 메모리 · 변환](03-stdlib.md) — 동적 할당 규율
 4. [04 문자 · 수학 · 시간](04-ctype-math-time.md) — 필요 시 참조
 5. [05 POSIX](05-posix.md) — 시스템 프로그래밍 진입
+6. [06 표준 입출력 버퍼링](06-stdio-buffering.md) — 출력 시점 이상·`fork` 중복 해결
 
 ## 공통 안전 규칙
 
@@ -237,3 +241,4 @@ printf 'the quick brown fox\njumps over the lazy dog.\nThe DOG barks! the fox ru
 - [[C/docs/07-stdlib/03-stdlib|메모리 · 변환]] — 동적 메모리와 변환·정렬
 - [[C/docs/07-stdlib/04-ctype-math-time|문자 · 수학 · 시간]] — 문자 분류·수학·시간 함수
 - [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]] — 저수준 I/O와 프로세스 시스템 콜
+- [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — 버퍼링 모드와 플러시 시점 제어

@@ -12,7 +12,7 @@ aliases:
   - POSIX
   - 시스템 콜
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-18
 ---
 
 # POSIX 시스템 호출 — `<unistd.h>` · `<fcntl.h>` 외
@@ -398,3 +398,4 @@ while ((ent = readdir(d)) != NULL) {
 - [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 본 문서 함수들의 실전 활용
 - [[C/docs/07-stdlib/04-ctype-math-time|문자 · 수학 · 시간]] — 문자 분류·수학·시간 함수
+- [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — `fork` 버퍼 복제·`_exit` 미플러시·`fsync` 계층 상세
