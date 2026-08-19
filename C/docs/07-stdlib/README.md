@@ -26,6 +26,7 @@ updated: 2026-08-18
 | [04 문자 · 수학 · 시간](04-ctype-math-time.md) | `<ctype.h>` `<math.h>` `<time.h>` `<limits.h>` 외 | 분류·연산·시각·한계값 |
 | [05 POSIX 시스템 호출](05-posix.md) | `<unistd.h>` `<fcntl.h>` 외 | 저수준 I/O, 프로세스, 디렉토리 |
 | [06 표준 입출력 버퍼링](06-stdio-buffering.md) | `<stdio.h>` 심화 | `fflush`·`setvbuf`, 버퍼링 모드, 플러시 시점 |
+| [07 strtok 내부 동작](07-strtok-internals.md) | `<string.h>` 심화 | 구분자 치환 추적, `strtok` vs `strtok_r`, `strsep` |
 
 ## 헤더 선택 기준
 
@@ -222,6 +223,7 @@ printf 'the quick brown fox\njumps over the lazy dog.\nThe DOG barks! the fox ru
 4. [04 문자 · 수학 · 시간](04-ctype-math-time.md) — 필요 시 참조
 5. [05 POSIX](05-posix.md) — 시스템 프로그래밍 진입
 6. [06 표준 입출력 버퍼링](06-stdio-buffering.md) — 출력 시점 이상·`fork` 중복 해결
+7. [07 strtok 내부 동작](07-strtok-internals.md) — 문자열 분해가 원본을 바꾸는 구조
 
 ## 공통 안전 규칙
 
@@ -242,3 +244,4 @@ printf 'the quick brown fox\njumps over the lazy dog.\nThe DOG barks! the fox ru
 - [[C/docs/07-stdlib/04-ctype-math-time|문자 · 수학 · 시간]] — 문자 분류·수학·시간 함수
 - [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]] — 저수준 I/O와 프로세스 시스템 콜
 - [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — 버퍼링 모드와 플러시 시점 제어
+- [[C/docs/07-stdlib/07-strtok-internals|strtok · strtok_r 내부 동작과 차이]] — 파괴적 분해 구조와 재진입성

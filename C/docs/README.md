@@ -92,6 +92,7 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | [04 문자 · 수학 · 시간](07-stdlib/04-ctype-math-time.md) | `<ctype.h>` `<math.h>` `<time.h>` `<limits.h>` 외 |
 | [05 POSIX 시스템 호출](07-stdlib/05-posix.md) | `<unistd.h>` `<fcntl.h>` `<sys/*.h>` |
 | [06 표준 입출력 버퍼링](07-stdlib/06-stdio-buffering.md) | `<stdio.h>` 심화 — `fflush`·`setvbuf` |
+| [07 strtok 내부 동작](07-stdlib/07-strtok-internals.md) | `<string.h>` 심화 — `strtok` vs `strtok_r`·`strsep` |
 
 ## 프로젝트
 
@@ -131,6 +132,9 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | 프롬프트가 입력 후에 뜰 때 | [버퍼링 — 프롬프트 실험](07-stdlib/06-stdio-buffering.md) |
 | `fork` 후 출력이 두 번 찍힐 때 | [버퍼링 — `fork` 버퍼 복제](07-stdlib/06-stdio-buffering.md) |
 | 문자열 다루기 | [문자열 처리](07-stdlib/02-string.md) |
+| `strtok` 이 원본을 망가뜨릴 때 | [strtok 내부 동작](07-stdlib/07-strtok-internals.md) |
+| `strtok` 중첩 분해가 안 될 때 | [strtok 내부 동작 — 중첩 분해](07-stdlib/07-strtok-internals.md) |
+| 빈 필드를 보존해 분해하려면 | [strtok 내부 동작 — `strsep`](07-stdlib/07-strtok-internals.md) |
 | `malloc` 사용법 | [메모리 · 변환](07-stdlib/03-stdlib.md) |
 | `#define` 매크로 주의점 | [전처리기 매크로](08-syntax/preprocessor-macro.md) |
 | `sizeof`가 이상한 값을 줄 때 | [sizeof와 배열 첨자](08-syntax/sizeof-and-array-subscript.md) |

@@ -11,7 +11,7 @@ aliases:
   - string.h
   - 문자열 함수
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-19
 ---
 
 # `<string.h>` — 문자열 · 메모리 처리
@@ -212,8 +212,9 @@ strtok_r: [a] [b] [c]
 - **원본을 파괴적으로 수정** — 구분자를 `'\0'`으로 치환
 - 2회차부터 첫 인자 `NULL`
 - 문자열 리터럴 전달 금지 → 읽기 전용 영역 수정 → 크래시
-- `strtok`(`_r` 없음)은 내부 정적 상태 사용 → 중첩·스레드 불가. **`strtok_r` 권장**
-- 연속 구분자는 자동 건너뜀 → 빈 필드 미생성 (CSV 파싱 시 주의)
+- `strtok`(`_r` 없음)은 내부 상태 사용 → **중첩 호출 불가**. 스레드 안전성도 표준 미보장 → **`strtok_r` 권장**
+- 연속 구분자는 자동 건너뜀 → 빈 필드 미생성 (CSV 파싱 시 주의). 빈 필드 보존은 `strsep`
+- 내부 동작 단계별 추적·중첩 실패 재현·`strsep` 비교 → [07 strtok 내부 동작](07-strtok-internals.md)
 
 ## 메모리 조작
 
@@ -328,3 +329,4 @@ strerror(2) = No such file or directory
 - [[C/docs/07-stdlib/01-stdio|`<stdio.h>` 표준 입출력]] — 입출력 함수와 서식 지정자
 - [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — `sizeof` vs `strlen` 차이
+- [[C/docs/07-stdlib/07-strtok-internals|strtok · strtok_r 내부 동작과 차이]] — 구분자 치환 추적·중첩 실패 재현·`strsep` 비교

@@ -224,3 +224,4 @@ mysh>
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — `char **`가 필요한 이유, `malloc` 표현 해부, `tokenize` 전체 분석
 - [[C/docs/08-syntax/pointer-types|포인터 자료형]] — `sizeof(char *)`가 8인 근거와 읽기 전용 문자열 전달 금지
+- [[C/docs/07-stdlib/07-strtok-internals|strtok · strtok_r 내부 동작과 차이]] — 구분자 치환 추적과 `strtok` 중첩 실패 재현
