@@ -1,0 +1,2 @@
+# 원서 PDF 는 추적 제외 (19MB). download.sh 로 재수집
+*.pdf

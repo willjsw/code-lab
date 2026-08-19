@@ -1,0 +1,6 @@
+cpu
+mem
+threads
+io
+*.o
+*.dSYM/

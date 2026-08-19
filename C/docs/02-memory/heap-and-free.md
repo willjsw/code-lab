@@ -13,7 +13,7 @@ aliases:
   - 힙 할당자
   - dangling pointer
 created: 2026-08-18
-updated: 2026-08-18
+updated: 2026-08-19
 ---
 
 # `free`의 실제 동작
@@ -521,4 +521,5 @@ freed by thread T0 here:
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — 해제·재할당 시 호출자 포인터를 갱신하는 구조
 - [[C/docs/05-debugging/lldb-memory-inspection|lldb로 메모리 주소 값 조회하기]] — 해제 전후 블록을 디버거로 직접 관찰
 - [[C/projects/make-shell/10-debugging|10 디버깅 · 검증]] — ASan·`leaks` 실전 적용
+- [[OS/ostep/projects/01-intro-four-pieces/README|OSTEP 실습 1. 네 조각 프로그램]] — `mem.c` 가 `malloc` 으로 힙에 할당한 주소를 프로세스별로 관찰
 - [[C/docs/README|학습 문서 인덱스]] — 카테고리별 전체 문서 목록

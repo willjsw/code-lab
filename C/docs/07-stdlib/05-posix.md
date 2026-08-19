@@ -451,3 +451,4 @@ while ((ent = readdir(d)) != NULL) {
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 본 문서 함수들의 실전 활용
 - [[C/docs/07-stdlib/04-ctype-math-time|문자 · 수학 · 시간]] — 문자 분류·수학·시간 함수
 - [[C/docs/07-stdlib/06-stdio-buffering|표준 입출력 버퍼링과 fflush]] — `fork` 버퍼 복제·`_exit` 미플러시·`fsync` 계층 상세
+- [[OS/ostep/projects/01-intro-four-pieces/README|OSTEP 실습 1. 네 조각 프로그램]] — `open`·`write`·`close`·`fsync`·`getpid` 를 OS 관점에서 실행 관찰
