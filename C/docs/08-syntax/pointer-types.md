@@ -434,6 +434,7 @@ char *p = (char *)0x123456;    /* 숫자를 주소로 강제 해석 */
 ## 관련 문서
 
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — `char **`가 필요한 이유와 `sizeof(char *)` 할당 공식
+- [[C/docs/08-syntax/function-parameters|함수 인자 전달]] — 값·포인터·`const` 포인터 선택 기준과 복사 비용
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 첨자·산술 등가 관계
 - [[C/docs/08-syntax/character-literal|문자 리터럴과 문자열 리터럴]] — `'x'`와 `"x"`의 타입 차이
 - [[C/docs/02-memory/heap-and-free|free의 실제 동작]] — 해제 후 포인터 상태와 경계 초과 검출

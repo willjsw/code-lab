@@ -766,6 +766,7 @@ String alloc() { return "GOOD"; }      // 반환값으로 해결 — Java의 정
 ## 관련 문서
 
 - [[C/docs/08-syntax/pointer-types|포인터 자료형]] — `sizeof(char *)`가 8인 근거와 `char **`의 보폭
+- [[C/docs/08-syntax/function-parameters|함수 인자 전달]] — 값 전달 원칙과 `const T *`·`T *`·`T **` 선택 기준
 - [[C/projects/make-shell/03-tokenizer|03 토크나이저]] — `char **argv` 구성 실전 적용
 - [[C/projects/make-shell/02-dynamic-input|02 동적 입력 버퍼]] — `realloc` 성장 버퍼와 소유권 규약
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 배열 감쇠와 포인터 산술

@@ -79,6 +79,7 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | [문자 리터럴과 문자열 리터럴](08-syntax/character-literal.md) | `'x'`는 `int` 상수, `"x"`는 주소, 이스케이프 시퀀스 |
 | [이중 포인터 `**`](08-syntax/double-pointer.md) | out-parameter, `char **argv`, 성장 버퍼, 연결 리스트, `tokenize` 분석 |
 | [포인터 자료형](08-syntax/pointer-types.md) | 크기는 동일·보폭은 상이, `void *`, 읽기 전용 문자열, 스택 주소 반환 |
+| [함수 인자 전달 — 값 vs 포인터](08-syntax/function-parameters.md) | 값 전달 원칙, 구조체 복사, `const T *`, 배열 감쇠, 판단 기준 |
 
 ### 07-stdlib — 표준 라이브러리
 
@@ -139,6 +140,9 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | `fgetc` 읽기가 중간에 끊길 때 | [표준 입출력 — `EOF`와 반환 타입](07-stdlib/01-stdio.md) |
 | `'x'`와 `"x"`의 차이 | [문자 리터럴과 문자열 리터럴](08-syntax/character-literal.md) |
 | `int` 변수를 `'\n'`과 비교해도 되는지 | [문자 리터럴 — 정수 비교](08-syntax/character-literal.md) |
+| 값으로 넘길지 포인터로 넘길지 | [함수 인자 전달](08-syntax/function-parameters.md) |
+| 구조체를 넘겼는데 원본이 안 바뀔 때 | [함수 인자 전달 — 구조체 값 전달](08-syntax/function-parameters.md) |
+| `const` 를 언제 붙이는지 | [함수 인자 전달 — `const T *`](08-syntax/function-parameters.md) |
 | `**`가 왜 필요한지 | [이중 포인터](08-syntax/double-pointer.md) |
 | 함수에서 할당했는데 호출자가 `NULL`일 때 | [이중 포인터 — out-parameter](08-syntax/double-pointer.md) |
 | `char **argv` 구조 | [이중 포인터 — 문자열 배열](08-syntax/double-pointer.md) · [make-shell 03단계](../projects/make-shell/03-tokenizer.md) |
@@ -183,4 +187,5 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 - [[C/docs/08-syntax/character-literal|문자 리터럴과 문자열 리터럴]] — `'x'`의 타입이 `int`인 이유와 이스케이프 시퀀스
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — 포인터 자체를 바꿔야 할 때의 유일한 수단
 - [[C/docs/08-syntax/pointer-types|포인터 자료형]] — 역참조 폭과 산술 보폭을 정하는 타입의 역할
+- [[C/docs/08-syntax/function-parameters|함수 인자 전달]] — 값 전달 원칙과 포인터 선택 기준
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 쉘 구현 10단계 커리큘럼
