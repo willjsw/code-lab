@@ -10,7 +10,7 @@ tags:
   - process
   - status/verified
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-19
 ---
 
 # 04 · 프로세스 실행
@@ -196,6 +196,8 @@ nosuchcmd: No such file or directory
 - `fork` 반환값 미검사 → 실패(`-1`) 시 자식 분기 미진입, 부모가 `waitpid(-1, ...)` 호출 → 의도 이탈
 - `execv` 사용 → `PATH` 미탐색 → 절대 경로 필요. 쉘 용도에는 `execvp`
 - 자식이 `line`·`argv` 해제 미수행해도 무방 — `exec` 성공 시 주소 공간 전체 교체. 단 `exec` 실패 경로에서는 즉시 `_exit`이므로 역시 불필요
+- **`<sys/wait.h>` 누락** → macOS는 `<stdlib.h>`가 간접 제공해 **컴파일 통과**. `<unistd.h>`만으로는 오류이며 Linux 이식 시 실패 가능 → 정본 헤더 명시 포함. 실측 → [[C/docs/07-stdlib/05-posix|POSIX 시스템 호출]]
+- `run_command` 반환값 미사용 → `-Wunused-variable` 경고. 종료 코드를 `$?`로 노출할 계획이면 셸 상태 변수에 보관, 아니면 반환값 미수신
 
 ## CLion 팁
 
@@ -205,9 +207,9 @@ nosuchcmd: No such file or directory
 
 ## 검증
 
-- [ ] `ls`·`pwd` 등 외부 명령 정상 실행
-- [ ] 미존재 명령 입력 시 오류 메시지 출력 후 쉘 유지 (종료 금지)
-- [ ] 명령 실행 후 프롬프트 정상 복귀
+- [x] `ls`·`pwd` 등 외부 명령 정상 실행
+- [x] 미존재 명령 입력 시 오류 메시지 출력 후 쉘 유지 (종료 금지)
+- [x] 명령 실행 후 프롬프트 정상 복귀
 - [ ] `ps` 확인 시 좀비(`Z`) 프로세스 부재
 - [ ] 종료 코드 0 / 1 / 127 구분 확인
 

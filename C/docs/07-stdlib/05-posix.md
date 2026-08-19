@@ -12,7 +12,7 @@ aliases:
   - POSIX
   - 시스템 콜
 created: 2026-08-14
-updated: 2026-08-18
+updated: 2026-08-19
 ---
 
 # POSIX 시스템 호출 — `<unistd.h>` · `<fcntl.h>` 외
@@ -217,6 +217,58 @@ printf("자식 종료코드 = %d\n", WEXITSTATUS(status));
 | `WTERMSIG(st)` | 종료시킨 시그널 번호 |
 
 - 상세 내용 — [make-shell 04단계](../../projects/make-shell/04-process-exec.md)
+
+### 함정 — `<sys/wait.h>` 누락이 macOS에서 드러나지 않음
+
+`waitpid`·`WIFEXITED` 계열의 정본 헤더는 **`<sys/wait.h>`**. 그러나 macOS는 `<stdlib.h>`가 이를 간접 제공 → **누락 상태로도 컴파일 통과**
+
+포함 헤더별 동작 비교
+
+```c
+/* A */ #include <stdlib.h>
+/* B */ #include <unistd.h>
+/* C */ (헤더 없음)
+int main(void) { int st; waitpid(1, &st, 0); return WIFEXITED(st); }
+```
+
+```bash
+cc -Wall -Wextra -c a.c -o a.o
+```
+
+- `-Wall` — 주요 경고 활성. **암시적 함수 선언 검출에 필요**
+- `-Wextra` — `-Wall` 미포함 추가 경고 활성
+- `-c` — 컴파일까지만 수행하고 링크 생략 → 선언 여부만 검사
+- `-o a.o` — 출력 파일명을 `a.o`로 지정. 미지정 시 `a.out`
+
+| 포함 헤더 | macOS 결과 |
+|---|---|
+| `<stdlib.h>` | **통과** — `waitpid`·`WIFEXITED` 전부 사용 가능 |
+| `<unistd.h>` | **오류** |
+| 없음 | **오류** |
+
+`<unistd.h>`만 포함한 경우
+
+```
+error: call to undeclared function 'waitpid'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+error: call to undeclared function 'WIFEXITED'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+```
+
+- `<unistd.h>`는 `fork`·`execvp`·`_exit`·`pid_t`를 제공하나 **`waitpid`는 미제공**
+- macOS `<stdlib.h>`가 내부적으로 `<sys/wait.h>` 상당 선언을 노출 → 우연한 통과
+- **Linux(glibc)에서는 `<stdlib.h>`가 이를 제공하지 않음** → 같은 코드가 컴파일 실패 (본 환경 미검증, POSIX 명세 기준)
+- 예방 — 사용하는 함수의 **정본 헤더를 명시 포함**. 간접 포함에 의존 금지
+
+함수별 정본 헤더
+
+| 함수·매크로 | 정본 헤더 |
+|---|---|
+| `fork` · `execvp` · `_exit` · `pid_t` | `<unistd.h>` |
+| `waitpid` · `wait` · `WIFEXITED` · `WEXITSTATUS` · `WIFSIGNALED` · `WTERMSIG` | **`<sys/wait.h>`** |
+| `perror` | `<stdio.h>` |
+| `exit` · `malloc` · `free` | `<stdlib.h>` |
+
+- 컴파일이 통과한다는 사실이 **헤더가 올바르다는 근거는 아님**
+- `-Wimplicit-function-declaration`은 C99 이후 기본 오류 → 경고 0건 유지가 1차 방어선. 단 간접 포함은 이 검사도 통과
 
 ### 기타 프로세스 함수
 
