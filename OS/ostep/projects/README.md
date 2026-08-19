@@ -53,7 +53,7 @@ flowchart LR
 | [04-memory-api](04-memory-api/) | 14 | 완료 | 오류 9종 재현 — 6종이 종료 코드 0 으로 "성공", ASan·`leaks` 검출 범위 비교 |
 | [05-free-space](05-free-space/) | 17 | 완료 | 헤더·프리 리스트 임베딩·분할·병합·fit 정책 3종 구현 |
 | [06-tlb-measure](06-tlb-measure/) | 19 | 완료 | TLB 경계 실측 — 원서의 "계단"이 아닌 경사·회복 곡선 관찰 |
-| `07-page-replacement` | 22 | 예정 | FIFO·LRU·클럭 교체 정책 시뮬레이터 |
+| [07-page-replacement](07-page-replacement/) | 22 | 완료 | 정책 5종 구현 — 원서 Figure 22.1~22.9 재현, Belady 역설 검증 |
 
 ## 파트 2 — 병행성
 

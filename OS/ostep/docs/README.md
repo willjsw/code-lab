@@ -53,11 +53,11 @@ updated: 2026-08-19
 | 17 | [17-free-space-management.md](01-virtualization/17-free-space-management.md) | 완료 | 프리 리스트, 분할·병합, fit 정책 |
 | 18 | [18-introduction-to-paging.md](01-virtualization/18-introduction-to-paging.md) | 완료 | 페이지·프레임, 선형 페이지 테이블 |
 | 19 | [19-tlb.md](01-virtualization/19-tlb.md) | 완료 | TLB 알고리즘, 지역성, ASID |
-| 20 | `20-advanced-page-tables.md` | 예정 | 멀티 레벨 페이지 테이블 |
-| 21 | `21-swapping-mechanisms.md` | 예정 | 스왑 공간, present 비트, 페이지 폴트 |
-| 22 | `22-swapping-policies.md` | 예정 | 최적·FIFO·LRU·클럭, 스래싱 |
-| 23 | `23-case-study-vax.md` | 예정 | VAX/VMS 종합 사례 |
-| 24 | `24-summary.md` | 예정 | 메모리 가상화 요약 |
+| 20 | [20-advanced-page-tables.md](01-virtualization/20-advanced-page-tables.md) | 완료 | 큰 페이지·혼합 방식·멀티 레벨·역페이지 테이블 |
+| 21 | [21-swapping-mechanisms.md](01-virtualization/21-swapping-mechanisms.md) | 완료 | 스왑 공간·present 비트·페이지 폴트·워터마크 |
+| 22 | [22-swapping-policies.md](01-virtualization/22-swapping-policies.md) | 완료 | AMAT·OPT·FIFO·LRU·클럭 근사·스래싱 |
+| 23 | [23-complete-vm-systems.md](01-virtualization/23-complete-vm-systems.md) | 완료 | VAX/VMS·Linux·COW·대형 페이지·NX·ASLR |
+| 24 | [24-summary-dialogue.md](01-virtualization/24-summary-dialogue.md) | 완료 | 정신 모형 정리, 파트 1 완결 |
 
 ## 파트 2 — 병행성 (`02-concurrency/`)
 
