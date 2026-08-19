@@ -9,7 +9,7 @@ tags:
 aliases:
   - 표준 라이브러리 인덱스
 created: 2026-08-14
-updated: 2026-08-18
+updated: 2026-08-19
 ---
 
 # C 표준 라이브러리 시리즈
