@@ -2,9 +2,12 @@
 #
 # 레시피 줄은 반드시 탭 문자로 시작. 공백 8개는 에러("missing separator")
 # make 는 타깃의 의존 파일이 타깃보다 새로우면 레시피 재실행
+#
+# -Wno-unused-parameter — 원서 코드가 main(int argc, char *argv[]) · worker(void *arg) 원형을
+#   유지하면서 인자를 쓰지 않는 경우가 있음. 원형 보존을 위해 이 경고만 끈다
 
 CC      = gcc
-CFLAGS  = -Wall -Wextra -g
+CFLAGS  = -Wall -Wextra -Wno-unused-parameter -g
 TARGETS = cpu mem threads io
 
 # 첫 타깃이 기본 타깃 → 인자 없는 `make` 는 all 실행

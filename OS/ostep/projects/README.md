@@ -48,7 +48,7 @@ flowchart LR
 
 | 프로젝트 | 대응 챕터 | 상태 | 다루는 것 |
 |---|---|---|---|
-| `02-process-api` | 5 | 예정 | `fork` · `wait` · `exec` · 리다이렉션 |
+| [02-process-api](02-process-api/) | 5 | 완료 | `fork` · `wait` · `exec` · 출력 리다이렉션, `fork` 버퍼 복제 함정 |
 | `03-address-space` | 13 | 예정 | 코드·스택·힙 주소 출력, 주소 공간 배치 관찰 |
 | `04-memory-api` | 14 | 예정 | 메모리 오류 6종 재현, ASan·`leaks` 검출 |
 | `05-free-space` | 17 | 예정 | 프리 리스트 기반 할당기 직접 구현 |
@@ -79,7 +79,7 @@ flowchart LR
 ## 공용 규약
 
 - 빌드 — 각 디렉토리 `Makefile`. `make` 로 전체 빌드, `make clean` 으로 산출물 제거
-- 컴파일 옵션 기본값 — `-Wall -Wextra -g`
+- 컴파일 옵션 기본값 — `-Wall -Wextra -Wno-unused-parameter -g`. `-Wno-unused-parameter` 는 원서 코드의 `main(int argc, char *argv[])` 원형을 보존하기 위한 것
 - 산출물(실행 파일·`*.o`)은 git 추적 제외
 - 원서 공식 코드 저장소 — [ostep-code](https://github.com/remzi-arpacidusseau/ostep-code). 본 실습은 이를 기준으로 주석·설명·검증 출력을 덧붙인 것
 

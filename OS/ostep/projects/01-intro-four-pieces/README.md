@@ -77,30 +77,20 @@ make
 - 옵션 없는 단순 실행. 기본 타깃 `all` → `cpu mem threads io` 4개 빌드
 
 ```text
-gcc -Wall -Wextra -g -o cpu cpu.c
-gcc -Wall -Wextra -g -o mem mem.c
-gcc -Wall -Wextra -g -pthread -o threads threads.c
-threads.c:25:20: warning: unused parameter 'arg' [-Wunused-parameter]
-   25 | void *worker(void *arg) {
-      |                    ^
-1 warning generated.
-gcc -Wall -Wextra -g -o io io.c
-io.c:17:14: warning: unused parameter 'argc' [-Wunused-parameter]
-   17 | int main(int argc, char *argv[]) {
-      |              ^
-io.c:17:26: warning: unused parameter 'argv' [-Wunused-parameter]
-   17 | int main(int argc, char *argv[]) {
-      |                          ^
-2 warnings generated.
+gcc -Wall -Wextra -Wno-unused-parameter -g -o cpu cpu.c
+gcc -Wall -Wextra -Wno-unused-parameter -g -o mem mem.c
+gcc -Wall -Wextra -Wno-unused-parameter -g -pthread -o threads threads.c
+gcc -Wall -Wextra -Wno-unused-parameter -g -o io io.c
 ```
 
 - `-Wall` — 주요 경고 활성
-- `-Wextra` — 추가 경고 활성. 위 `unused parameter` 3건이 이 옵션 때문에 노출
+- `-Wextra` — 추가 경고 활성
+- `-Wno-unused-parameter` — 미사용 매개변수 경고만 비활성. 원서 코드가 `main(int argc, char *argv[])` · `worker(void *arg)` 원형을 유지하면서 인자를 쓰지 않으므로, **원형 보존을 위해 이 경고만 끔**
 - `-g` — 디버그 심볼 포함. lldb 행 번호 표시에 필요
 - `-pthread` — POSIX 스레드 지원. `threads` 타깃에만 지정
 - `-o <이름>` — 출력 실행 파일명 지정
 
-경고 3건은 **정상이며 의도된 상태**. 대응은 아래 함정 절 참조.
+경고 없이 빌드 완료. `-Wno-unused-parameter` 를 빼면 `worker(void *arg)` 1건, `io.c` 의 `main` 인자 2건이 노출됨.
 
 ```bash
 make clean
@@ -288,8 +278,8 @@ hello world
 
 | 증상 | 원인 | 대응 |
 |---|---|---|
-| `warning: unused parameter 'arg'` | `worker` 의 시그니처는 `void *(*)(void *)` 로 고정. 인자를 안 써도 매개변수는 있어야 함 | 함수 첫 줄에 `(void) arg;` 추가하면 경고 소거. 원서 코드 원형 유지를 위해 본 실습은 경고를 남겨 둠 |
-| `warning: unused parameter 'argc'` | `io.c` 가 명령행 인자를 사용하지 않음 | `int main(void)` 로 변경 가능. 원형 유지 목적으로 미변경 |
+| `warning: unused parameter 'arg'` (`-Wno-unused-parameter` 제거 시) | `worker` 의 시그니처는 `void *(*)(void *)` 로 고정. 인자를 안 써도 매개변수는 있어야 함 | 함수 첫 줄에 `(void) arg;` 추가하거나 `-Wno-unused-parameter` 유지. 원서 코드 원형 보존을 위해 후자 선택 |
+| `warning: unused parameter 'argc'` (`-Wno-unused-parameter` 제거 시) | `io.c` 가 명령행 인자를 사용하지 않음 | `int main(void)` 로 변경 가능. 원형 유지 목적으로 미변경 |
 | 파이프로 넘기면 출력이 안 나옴 | `stdout` 이 파이프일 때 `printf` 가 **전체 버퍼링**(4096바이트)으로 전환. 1초에 2바이트씩 쌓이면 첫 flush 까지 30분 이상 소요 | `script -q /dev/null <명령>` 으로 pty 할당 → 행 버퍼링. 또는 코드에 `setvbuf(stdout, NULL, _IOLBF, 0)` 추가 |
 | `make: *** missing separator` | Makefile 레시피 줄이 **탭이 아닌 공백**으로 시작 | 레시피 첫 문자를 탭으로 교체. `cat -A Makefile` 로 `^I` 확인 |
 | `mem` 주소가 원서와 다름 | macOS ASLR 강제 활성 | 정상. 위 ASIDE 참조 |

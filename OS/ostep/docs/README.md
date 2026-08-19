@@ -31,15 +31,15 @@ updated: 2026-08-19
 
 | 챕터 | 문서 | 상태 | 핵심 |
 |---|---|---|---|
-| 3 | `03-dialogue.md` | 예정 | 복숭아 비유로 본 가상화 |
-| 4 | `04-processes.md` | 예정 | 프로세스 추상·상태 전이·PCB |
-| 5 | `05-process-api.md` | 예정 | `fork` · `wait` · `exec` 조합 |
-| 6 | `06-direct-execution.md` | 예정 | 제한적 직접 실행·트랩·문맥 교환 |
-| 7 | `07-cpu-scheduling.md` | 예정 | FIFO·SJF·STCF·RR, 반환·응답 시간 |
-| 8 | `08-multi-level-feedback.md` | 예정 | MLFQ 규칙 5개와 개선 3단계 |
-| 9 | `09-lottery-scheduling.md` | 예정 | 추첨·보폭 스케줄링, CFS |
-| 10 | `10-multi-cpu-scheduling.md` | 예정 | 캐시 친화성, 단일 큐 vs 다중 큐 |
-| 11 | `11-summary.md` | 예정 | CPU 가상화 요약 |
+| 3 | [03-dialogue.md](01-virtualization/03-dialogue.md) | 완료 | 복숭아 비유로 본 가상화 |
+| 4 | [04-processes.md](01-virtualization/04-processes.md) | 완료 | 프로세스 추상·상태 전이·PCB |
+| 5 | [05-process-api.md](01-virtualization/05-process-api.md) | 완료 | `fork` · `wait` · `exec` 조합 |
+| 6 | [06-direct-execution.md](01-virtualization/06-direct-execution.md) | 완료 | 제한적 직접 실행·트랩·문맥 교환 |
+| 7 | [07-cpu-scheduling.md](01-virtualization/07-cpu-scheduling.md) | 완료 | FIFO·SJF·STCF·RR, 반환·응답 시간 |
+| 8 | [08-multi-level-feedback.md](01-virtualization/08-multi-level-feedback.md) | 완료 | MLFQ 규칙 5개와 개선 3단계 |
+| 9 | [09-lottery-scheduling.md](01-virtualization/09-lottery-scheduling.md) | 완료 | 추첨·보폭 스케줄링, CFS |
+| 10 | [10-multi-cpu-scheduling.md](01-virtualization/10-multi-cpu-scheduling.md) | 완료 | 캐시 친화성, 단일 큐 vs 다중 큐 |
+| 11 | [11-summary.md](01-virtualization/11-summary.md) | 완료 | CPU 가상화 요약 |
 
 ### 메모리 가상화 (ch 12~24)
 
