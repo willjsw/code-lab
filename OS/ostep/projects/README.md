@@ -49,10 +49,10 @@ flowchart LR
 | 프로젝트 | 대응 챕터 | 상태 | 다루는 것 |
 |---|---|---|---|
 | [02-process-api](02-process-api/) | 5 | 완료 | `fork` · `wait` · `exec` · 출력 리다이렉션, `fork` 버퍼 복제 함정 |
-| `03-address-space` | 13 | 예정 | 코드·스택·힙 주소 출력, 주소 공간 배치 관찰 |
-| `04-memory-api` | 14 | 예정 | 메모리 오류 6종 재현, ASan·`leaks` 검출 |
-| `05-free-space` | 17 | 예정 | 프리 리스트 기반 할당기 직접 구현 |
-| `06-tlb-measure` | 19 | 예정 | 스트라이드 접근으로 TLB 미스 비용 측정 |
+| [03-address-space](03-address-space/) | 13 | 완료 | 세그먼트별 주소 실측, 스택 성장 방향 실증, ASLR |
+| [04-memory-api](04-memory-api/) | 14 | 완료 | 오류 9종 재현 — 6종이 종료 코드 0 으로 "성공", ASan·`leaks` 검출 범위 비교 |
+| [05-free-space](05-free-space/) | 17 | 완료 | 헤더·프리 리스트 임베딩·분할·병합·fit 정책 3종 구현 |
+| [06-tlb-measure](06-tlb-measure/) | 19 | 완료 | TLB 경계 실측 — 원서의 "계단"이 아닌 경사·회복 곡선 관찰 |
 | `07-page-replacement` | 22 | 예정 | FIFO·LRU·클럭 교체 정책 시뮬레이터 |
 
 ## 파트 2 — 병행성

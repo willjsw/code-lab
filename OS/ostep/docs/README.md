@@ -45,14 +45,14 @@ updated: 2026-08-19
 
 | 챕터 | 문서 | 상태 | 핵심 |
 |---|---|---|---|
-| 12 | `12-dialogue.md` | 예정 | 메모리 가상화 도입 대화 |
-| 13 | `13-address-spaces.md` | 예정 | 주소 공간 추상, 투명성·효율·보호 |
-| 14 | `14-memory-api.md` | 예정 | `malloc`/`free`, 대표 메모리 오류 6종 |
-| 15 | `15-address-translation.md` | 예정 | 베이스·바운드, MMU |
-| 16 | `16-segmentation.md` | 예정 | 세그먼트별 베이스·바운드, 외부 단편화 |
-| 17 | `17-free-space-management.md` | 예정 | 프리 리스트, 분할·병합, fit 정책 |
-| 18 | `18-introduction-to-paging.md` | 예정 | 페이지·프레임, 선형 페이지 테이블 |
-| 19 | `19-tlb.md` | 예정 | TLB 알고리즘, 지역성, ASID |
+| 12 | [12-dialogue.md](01-virtualization/12-dialogue.md) | 완료 | 메모리 가상화 도입 대화 |
+| 13 | [13-address-spaces.md](01-virtualization/13-address-spaces.md) | 완료 | 주소 공간 추상, 투명성·효율·보호 |
+| 14 | [14-memory-api.md](01-virtualization/14-memory-api.md) | 완료 | `malloc`/`free`, 대표 메모리 오류 6종 |
+| 15 | [15-address-translation.md](01-virtualization/15-address-translation.md) | 완료 | 베이스·바운드, MMU |
+| 16 | [16-segmentation.md](01-virtualization/16-segmentation.md) | 완료 | 세그먼트별 베이스·바운드, 외부 단편화 |
+| 17 | [17-free-space-management.md](01-virtualization/17-free-space-management.md) | 완료 | 프리 리스트, 분할·병합, fit 정책 |
+| 18 | [18-introduction-to-paging.md](01-virtualization/18-introduction-to-paging.md) | 완료 | 페이지·프레임, 선형 페이지 테이블 |
+| 19 | [19-tlb.md](01-virtualization/19-tlb.md) | 완료 | TLB 알고리즘, 지역성, ASID |
 | 20 | `20-advanced-page-tables.md` | 예정 | 멀티 레벨 페이지 테이블 |
 | 21 | `21-swapping-mechanisms.md` | 예정 | 스왑 공간, present 비트, 페이지 폴트 |
 | 22 | `22-swapping-policies.md` | 예정 | 최적·FIFO·LRU·클럭, 스래싱 |
