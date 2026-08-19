@@ -8,7 +8,7 @@ tags:
 aliases:
   - C 학습 인덱스
 created: 2026-08-14
-updated: 2026-08-18
+updated: 2026-08-19
 ---
 
 # C 학습 문서 인덱스
