@@ -11,7 +11,7 @@ aliases:
   - string.h
   - 문자열 함수
 created: 2026-08-14
-updated: 2026-08-19
+updated: 2026-08-24
 ---
 
 # `<string.h>` — 문자열 · 메모리 처리
@@ -130,6 +130,189 @@ dst[sizeof(dst) - 1] = '\0';
 // 금지 — 크기 검사 부재
 strcpy(dst, src);
 ```
+
+### 안티패턴 — `strncpy(dst, src, strlen(src))`
+
+`n` 자리에 **소스 길이**를 넣으면 상한이 소스 크기가 됨 → `strcpy` 와 완전히 동일. 이름만 안전해 보이는 가장 흔한 위장 형태
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char dst[8];
+    const char *src = "abcdefghijklmnop";   // 16자, dst 보다 김
+
+    memset(dst, 0, sizeof(dst));
+    /* 안티패턴 — 상한이 src 길이라서 dst 크기를 전혀 보지 않음 */
+    strncpy(dst, src, strlen(src));          // ← strcpy 와 동일. 8바이트 버퍼에 16바이트
+    printf("도달\n");
+    return 0;
+}
+```
+
+```bash
+cc -Wall -Wextra -g -fsanitize=address antipattern.c -o antipattern && ./antipattern
+```
+
+- `-Wall` — 주요 경고 활성
+- `-Wextra` — 추가 경고 활성
+- `-g` — 디버그 심볼 포함. ASan 행 번호 표시에 필요
+- `-fsanitize=address` — 메모리 오류 검사 코드 삽입. 스택 오버플로 즉시 탐지
+- `-o antipattern` — 출력 파일명 지정
+
+```
+=================================================================
+==51777==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x00016d89df48 at pc 0x000102e871b0 bp 0x00016d89df10 sp 0x00016d89d6c0
+WRITE of size 16 at 0x00016d89df48 thread T0
+    #0 0x000102e871ac in strncpy+0x414 (libclang_rt.asan_osx_dynamic.dylib:arm64e+0x3b1ac)
+    #1 0x000102560928 in main antipattern.c:10
+```
+
+- `WRITE of size 16` — `dst[8]` 에 16바이트 기록. **상한이 전혀 작동하지 않음**
+- `-Wall -Wextra` 만으로는 경고 부재 → 눈으로 잡아야 하는 패턴
+- 판별 기준 — `strncpy`·`strncat`·`memcpy` 의 `n` 이 **목적지 크기에서 유도되지 않으면 전부 의심**
+
+동일 구조의 변형:
+
+```c
+strncpy(dst, src, strlen(src));      // 상한 = 소스 길이
+strncat(dst, src, strlen(src));      // 동일
+memcpy(dst, src, strlen(src) + 1);   // 동일
+dst[strlen(src)] = '\0';             // 종단 위치까지 소스 기준 → 범위 밖 쓰기
+```
+
+`n` 은 항상 `sizeof(dst)` 또는 `sizeof(dst) - 1` 에서 출발해야 함.
+
+### 안티패턴 — `snprintf` 누적 시 크기 인자 고정
+
+버퍼에 여러 조각을 이어 붙일 때, 두 번째 인자를 **매번 `sizeof(buf) - 1` 로 고정**하면 남은 공간을 반영하지 못함
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char buf[16];
+    int n = 0;
+
+    memset(buf, 0, sizeof(buf));
+
+    /* 안티패턴 — 두 번째 인자가 매번 sizeof(buf)-1 고정. 남은 공간을 반영 못 함 */
+    n += snprintf(buf + n, sizeof(buf) - 1, "%s", "AAAAAAAA");    // 8자, n=8
+    printf("1회차 n=%d buf=\"%s\"\n", n, buf);
+    n += snprintf(buf + n, sizeof(buf) - 1, "%s", "BBBBBBBB");    // ← buf+8 에 15바이트 허용
+    printf("2회차 n=%d buf=\"%s\"\n", n, buf);
+
+    return 0;
+}
+```
+
+```bash
+cc -Wall -Wextra -g -fsanitize=address snprintf_acc.c -o snprintf_acc && ./snprintf_acc
+```
+
+- 옵션 역할은 위 블록과 동일
+
+```
+=================================================================
+==51813==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x00016fbd9f50 at pc 0x0001008df378 bp 0x00016fbd9ec0 sp 0x00016fbd9670
+WRITE of size 9 at 0x00016fbd9f50 thread T0
+    #0 0x0001008df374 in vsnprintf+0x28c
+    #1 0x0001008dfb5c in snprintf+0x44
+    #2 0x0001002249a0 in main snprintf_acc.c:13
+```
+
+- 1회차는 `n == 0` 이라 우연히 맞음 → **첫 호출만 보면 정상으로 보임**
+- 2회차에서 `buf + 8` 에 최대 15바이트 허용 → 총 23바이트. `buf[16]` 초과
+- ASan 없이 컴파일해도 스택 보호 장치가 종료 코드 `134`(SIGABRT) 로 중단. 다만 진단 메시지 부재
+
+올바른 형태 — 남은 공간을 계산하고 잘림 여부를 반환값으로 확인:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char buf[16];
+    int n = 0, r;
+
+    memset(buf, 0, sizeof(buf));
+
+    /* 올바른 형태 — 남은 공간 sizeof(buf)-n 을 넘기고, 잘림 여부를 반환값으로 확인 */
+    r = snprintf(buf + n, sizeof(buf) - n, "%s", "AAAAAAAA");
+    if (r < 0 || (size_t)r >= sizeof(buf) - n) { printf("잘림 발생\n"); }
+    n += r;
+    printf("1회차 n=%d buf=\"%s\"\n", n, buf);
+
+    r = snprintf(buf + n, sizeof(buf) - n, "%s", "BBBBBBBB");
+    if (r < 0 || (size_t)r >= sizeof(buf) - n) { printf("잘림 발생 (요청 %d, 남은 %zu)\n", r, sizeof(buf) - n); }
+    printf("2회차 buf=\"%s\"\n", buf);
+
+    return 0;
+}
+```
+
+```bash
+cc -Wall -Wextra -g -fsanitize=address snprintf_ok.c -o snprintf_ok && ./snprintf_ok
+```
+
+- 옵션 역할은 위 블록과 동일
+
+```
+1회차 n=8 buf="AAAAAAAA"
+잘림 발생 (요청 8, 남은 8)
+2회차 buf="AAAAAAAABBBBBBB"
+```
+
+- 오버플로 부재. 대신 **잘림 발생**을 반환값으로 탐지
+- `snprintf` 반환값 = **잘림이 없었다면 필요했을 길이**. 실제 기록 바이트 수가 아님
+- 판정식 — `r >= 남은_크기` 이면 잘림. `r < 0` 은 인코딩 오류
+
+### 안티패턴 — 배열에 대한 `== NULL` 검사
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char buf[32] = {0};
+
+    if (buf == NULL) {              // ← 배열 주소는 절대 NULL 아님
+        printf("도달 불가\n");
+        return 1;
+    }
+    printf("항상 여기로 옴\n");
+    return 0;
+}
+```
+
+```bash
+cc -Wall -Wextra -Waddress -g deadnull.c -o deadnull && ./deadnull
+```
+
+- `-Wall` — 주요 경고 활성
+- `-Wextra` — 추가 경고 활성
+- `-Waddress` — 주소 비교가 항상 참·거짓인 경우 경고
+- `-g` — 디버그 심볼 포함
+- `-o deadnull` — 출력 파일명 지정
+
+```
+deadnull.c:6:9: warning: comparison of array 'buf' equal to a null pointer is always false [-Wtautological-pointer-compare]
+    6 |     if (buf == NULL) {              // ← 배열 주소는 절대 NULL 아님
+      |         ^~~    ~~~~
+1 warning generated.
+항상 여기로 옴
+```
+
+- 배열명은 첫 원소 주소로 감쇠 → **주소가 존재하므로 항상 참**
+- 함수 실패 검사를 의도한 코드라면 **검사 대상이 잘못됨**. 아래 중 하나로 교체
+
+```c
+if (buf[0] == '\0') { /* 내용이 비었는지 */ }
+if (some_fill(buf, sizeof(buf)) < 0) { /* 함수 반환값으로 판정 */ }
+```
+
+- 이 형태가 남아 있으면 **오류 처리가 통째로 죽어 있다는 신호**. 경고를 켜서 전수 검색 권장
 
 ## 비교
 
@@ -283,6 +466,9 @@ strerror(2) = No such file or directory
 
 - `strcpy`·`strcat`·`sprintf` — 크기 검사 부재. 버퍼 오버플로 주원인
 - `strncpy` 널 종단 미보장 → 수동 종단 필수 (위 실증 참조)
+- `strncpy(dst, src, strlen(src))` → 상한이 소스 기준. `strcpy` 와 동일한 오버플로 (위 실증 참조)
+- `snprintf` 누적 시 크기 인자를 `sizeof(buf) - 1` 로 고정 → 첫 호출만 정상. `sizeof(buf) - n` 필요
+- 배열에 대한 `== NULL` 검사 → 항상 거짓. 오류 처리가 죽어 있는 신호. `-Waddress` 로 전수 검색
 - 버퍼 크기 계산 시 **널 종단 자리 누락** → `char buf[5]`에 `"hello"`(6B) 복사 시 오버플로
 - `strcmp` 반환 0을 "거짓"으로 오해 → `if (strcmp(a,b))`는 "다를 때 참"
 - `strlen`을 루프 조건에 배치 → 매 반복 O(n) 재계산
@@ -319,6 +505,10 @@ strerror(2) = No such file or directory
 - [ ] `memmove` 겹침 처리 확인
 - [ ] `sizeof` vs `strlen` 차이 확인
 - [ ] 문자열 리터럴 수정 시 크래시 재현
+- [x] `strncpy(dst, src, strlen(src))` 가 8바이트 버퍼에 16바이트 기록함을 ASan으로 확인
+- [x] `snprintf` 크기 인자 고정 시 2회차에서 스택 오버플로 발생 확인
+- [x] `sizeof(buf) - n` 형태에서 오버플로 부재·잘림 탐지 동작 확인
+- [x] 배열 `== NULL` 검사에 `-Wtautological-pointer-compare` 경고 발생 확인
 
 ## 다음 문서
 
@@ -330,3 +520,5 @@ strerror(2) = No such file or directory
 - [[C/docs/07-stdlib/README|라이브러리 시리즈 개요]] — 빈출 함수 30선과 통합 예제
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — `sizeof` vs `strlen` 차이
 - [[C/docs/07-stdlib/07-strtok-internals|strtok · strtok_r 내부 동작과 차이]] — 구분자 치환 추적·중첩 실패 재현·`strsep` 비교
+- [[C/docs/02-memory/api-ownership-convention|반환 포인터 소유권 규약]] — `strdup` 등 할당형 반환값의 해제 책임
+- [[C/docs/08-syntax/flexible-array-member|가변 길이 구조체]] — 직렬화 버퍼 크기 계산과 `memcpy` 상한

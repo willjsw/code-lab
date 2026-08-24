@@ -13,7 +13,7 @@ aliases:
   - 인자 전달 방식
   - const 포인터
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-24
 ---
 
 # 함수 인자 전달 — 값 vs 포인터
@@ -347,6 +347,8 @@ flowchart TD
 - [ ] 소형 구조체의 레지스터 전달 여부 — 어셈블리 확인 미실시
 
 ## 관련 문서
+
+- [[C/docs/02-memory/api-ownership-convention|반환 포인터 소유권 규약]] — `const T *` 로 해제 의도를 차단하는 규약
 
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — 포인터 자체를 바꿔야 할 때의 전달 방식
 - [[C/docs/08-syntax/pointer-types|포인터 자료형]] — 포인터 크기와 역참조 규칙

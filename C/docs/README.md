@@ -8,7 +8,7 @@ tags:
 aliases:
   - C 학습 인덱스
 created: 2026-08-14
-updated: 2026-08-19
+updated: 2026-08-24
 ---
 
 # C 학습 문서 인덱스
@@ -38,6 +38,7 @@ C 기본 문법만 아는 상태에서 **CLI 프로그램을 직접 컴파일·�
 | 문서 | 내용 |
 |---|---|
 | [`free`의 실제 동작](02-memory/heap-and-free.md) | 할당자 3계층, OS 미반환, 블록 재사용, 댕글링 포인터, ASan 검출 |
+| [반환 포인터 소유권 규약](02-memory/api-ownership-convention.md) | 할당형 vs 참조형, 누수와 bad free, ASan 판별, `const` 규약 |
 
 동적 입력 버퍼 실전 적용은 [make-shell 02단계](../projects/make-shell/02-dynamic-input.md) 참조
 
@@ -80,6 +81,8 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | [이중 포인터 `**`](08-syntax/double-pointer.md) | out-parameter, `char **argv`, 성장 버퍼, 연결 리스트, `tokenize` 분석 |
 | [포인터 자료형](08-syntax/pointer-types.md) | 크기는 동일·보폭은 상이, `void *`, 읽기 전용 문자열, 스택 주소 반환 |
 | [함수 인자 전달 — 값 vs 포인터](08-syntax/function-parameters.md) | 값 전달 원칙, 구조체 복사, `const T *`, 배열 감쇠, 판단 기준 |
+| [가변 길이 구조체](08-syntax/flexible-array-member.md) | C99 `arr[]` vs 레거시 `arr[N]` placeholder, `HDR_SZ` 계산, 직렬화 |
+| [함수 포인터 테이블](08-syntax/function-pointer-table.md) | 디스패치 테이블, 인덱스·NULL 검사, 지정 초기화자, `switch` 선택 기준 |
 
 ### 07-stdlib — 표준 라이브러리
 
@@ -157,6 +160,15 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 | 문자열 수정하려니 죽을 때 | [포인터 자료형 — 읽기 전용 문자열](08-syntax/pointer-types.md) |
 | 함수가 반환한 문자열이 깨질 때 | [포인터 자료형 — 스택 주소 반환](08-syntax/pointer-types.md) |
 | 메모리 누수 찾기 | [make-shell 10단계](../projects/make-shell/10-debugging.md) |
+| 라이브러리가 준 포인터를 `free` 해야 하는지 | [반환 포인터 소유권 규약](02-memory/api-ownership-convention.md) |
+| `free` 했는데 abort 로 죽을 때 | [반환 포인터 소유권 규약 — bad free](02-memory/api-ownership-convention.md) |
+| 헤더 뒤에 가변 길이 본문을 붙이려면 | [가변 길이 구조체](08-syntax/flexible-array-member.md) |
+| `sizeof(struct)` 가 헤더 크기와 다를 때 | [가변 길이 구조체 — placeholder](08-syntax/flexible-array-member.md) |
+| `switch` 대신 배열로 분기하려면 | [함수 포인터 테이블](08-syntax/function-pointer-table.md) |
+| 상태 값으로 핸들러 부르다 SIGSEGV 날 때 | [함수 포인터 테이블 — 인덱스 안전성](08-syntax/function-pointer-table.md) |
+| `strncpy` 를 썼는데도 오버플로 날 때 | [문자열 처리 — `strlen(src)` 안티패턴](07-stdlib/02-string.md) |
+| `snprintf` 로 이어 붙이다 버퍼가 깨질 때 | [문자열 처리 — 누적 크기 인자](07-stdlib/02-string.md) |
+| `if (buf == NULL)` 이 안 걸릴 때 | [문자열 처리 — 배열 NULL 검사](07-stdlib/02-string.md) |
 | `free` 후 메모리에 무슨 일이 일어나는지 | [`free`의 실제 동작](02-memory/heap-and-free.md) |
 | `free` 했는데 메모리 사용량이 안 줄 때 | [`free`의 실제 동작 — OS 반환 여부](02-memory/heap-and-free.md) |
 | `free` 후 접근이 우연히 되는 이유 | [`free`의 실제 동작 — 댕글링 포인터](02-memory/heap-and-free.md) |
@@ -176,6 +188,7 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 
 - [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 소스가 실행 파일이 되는 과정
 - [[C/docs/02-memory/heap-and-free|free의 실제 동작]] — 힙 할당자 구조와 해제 후 메모리 상태
+- [[C/docs/02-memory/api-ownership-convention|반환 포인터 소유권 규약]] — 할당형·참조형 구분과 누수·bad free 판별
 - [[C/docs/05-debugging/lldb-memory-inspection|lldb로 메모리 주소 값 조회하기]] — CLion 디버거로 실제 바이트 확인
 - [[C/docs/03-build/gcc-compile-and-run|gcc 컴파일 · 실행 명령어]] — 컴파일 명령과 옵션 전반
 - [[C/docs/03-build/makefile-guide|Makefile 작성법]] — 빌드 자동화와 증분 빌드
@@ -192,4 +205,6 @@ ASan·`leaks` 실전 적용은 [make-shell 10단계](../projects/make-shell/10-d
 - [[C/docs/08-syntax/double-pointer|이중 포인터]] — 포인터 자체를 바꿔야 할 때의 유일한 수단
 - [[C/docs/08-syntax/pointer-types|포인터 자료형]] — 역참조 폭과 산술 보폭을 정하는 타입의 역할
 - [[C/docs/08-syntax/function-parameters|함수 인자 전달]] — 값 전달 원칙과 포인터 선택 기준
+- [[C/docs/08-syntax/flexible-array-member|가변 길이 구조체]] — 고정 헤더 + 가변 본문을 한 덩어리로 다루는 관용구
+- [[C/docs/08-syntax/function-pointer-table|함수 포인터 테이블]] — 배열 첨자 디스패치와 범위·NULL 검사
 - [[C/projects/make-shell/README|make-shell 프로젝트]] — 쉘 구현 10단계 커리큘럼

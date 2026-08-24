@@ -13,7 +13,7 @@ aliases:
   - 힙 할당자
   - dangling pointer
 created: 2026-08-18
-updated: 2026-08-19
+updated: 2026-08-24
 ---
 
 # `free`의 실제 동작
@@ -513,6 +513,8 @@ freed by thread T0 here:
 - [ ] glibc(Linux)의 `free` 후 내용 잔존·`munmap` 반환 동작 — 미검증
 
 ## 관련 문서
+
+- [[C/docs/02-memory/api-ownership-convention|반환 포인터 소유권 규약]] — 라이브러리 반환 포인터를 해제해야 하는지 판별하는 기준
 
 - [[C/docs/07-stdlib/03-stdlib|메모리 · 변환]] — `malloc`·`calloc`·`realloc`·`free` API 사용 규칙
 - [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 스택·힙·데이터 세그먼트 배치

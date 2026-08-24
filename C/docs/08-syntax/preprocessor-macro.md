@@ -10,7 +10,7 @@ aliases:
   - "#define"
   - 매크로
 created: 2026-08-14
-updated: 2026-08-14
+updated: 2026-08-24
 ---
 
 # 전처리기 매크로 — `#define`
@@ -192,6 +192,8 @@ cc -E macro.c | tail -20
 - [ ] `-DDEBUG` 유무에 따른 동작 전환 확인
 
 ## 관련 문서
+
+- [[C/docs/08-syntax/flexible-array-member|가변 길이 구조체]] — `HDR_SZ` 크기 계산 매크로의 실전 사용
 
 - [[C/docs/08-syntax/sizeof-and-array-subscript|sizeof 연산자와 배열 첨자]] — 매크로로 정의한 배열 크기 다루기
 - [[C/docs/01-basics/c-program-execution-model|C 프로그램의 동작 및 컴파일 방식]] — 전처리가 속한 컴파일 4단계

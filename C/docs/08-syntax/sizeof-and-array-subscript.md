@@ -11,7 +11,7 @@ aliases:
   - sizeof 연산자
   - 배열 첨자
 created: 2026-08-14
-updated: 2026-08-18
+updated: 2026-08-24
 ---
 
 # `sizeof` 연산자와 배열 첨자 `[]`
@@ -215,6 +215,9 @@ strlen(p)   // 2
 - [ ] `sizeof` vs `strlen` 차이 확인
 
 ## 관련 문서
+
+- [[C/docs/08-syntax/flexible-array-member|가변 길이 구조체]] — `sizeof(struct) - N` 로 헤더 크기를 유도하는 관용구
+- [[C/docs/08-syntax/function-pointer-table|함수 포인터 테이블]] — `sizeof(arr)/sizeof(arr[0])` 로 원소 수 산출
 
 - [[C/docs/08-syntax/size-t-type|size_t 타입]] — `sizeof` 반환 타입의 부호 없음 특성과 언더플로
 - [[C/docs/08-syntax/character-literal|문자 리터럴과 문자열 리터럴]] — `sizeof('x')`와 `sizeof("x")`의 차이
