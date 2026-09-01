@@ -11,7 +11,7 @@ aliases:
   - PostgreSQL 학습 인덱스
   - PostgreSQL 문법 총정리
 created: 2026-08-15
-updated: 2026-08-15
+updated: 2026-09-01
 ---
 
 # PostgreSQL 문법 총정리
@@ -38,12 +38,13 @@ flowchart TD
     A --> L["09 PostgreSQL 고유 기능"]
     A --> M["13 Oracle · MySQL 차이"]
     B --> N["12 컨벤션 · 안티패턴"]
+    G --> O["15 권한 체계"]
 
     classDef core fill:#e0f0ff,stroke:#06c
     classDef perf fill:#fff0e0,stroke:#c60
     classDef ref fill:#f0f0f0,stroke:#888
     class A,B,C,D,E,F,G,H core
-    class I,J,K perf
+    class I,J,K,O perf
     class L,M,N ref
 ```
 
@@ -69,6 +70,7 @@ flowchart TD
 | [[PostgreSQL/12-CONVENTIONS\|12. 코딩 컨벤션과 안티패턴]] | 네이밍·포맷팅 규칙, 안티패턴, 마이그레이션 안전 수칙, 스키마 설계 기본형, 리뷰 체크리스트 |
 | [[PostgreSQL/13-ORACLE-MYSQL-DIFF\|13. Oracle / MySQL 대비 차이점]] | 식별자 대소문자, 문법 대응표, 계층 쿼리 변환, 함수·타입 대응, 트랜잭션 동작 차이, 이관 체크리스트 |
 | [[PostgreSQL/14-TUNING\|14. DB 튜닝 방법론]] | 튜닝 순서, 측정 → 쿼리/인덱스 → 스키마 → 서버 파라미터, VACUUM·통계 유지보수, 대량 작업 |
+| [[PostgreSQL/15-AUTHORITY\|15. 권한 체계 — Role, Owner, GRANT, SECURITY DEFINER]] | 롤·소유권·상속, GRANT 2단 관문, SECURITY DEFINER 수칙, PARTITION OF 권한 요건 실증, 파티션 프로시저 사례 연구 |
 
 ## 11 vs 14 구분
 
@@ -93,6 +95,8 @@ flowchart TD
 | 네이밍 규칙·마이그레이션 안전 수칙         | [[PostgreSQL/12-CONVENTIONS\|12. 코딩 컨벤션과 안티패턴]]                |
 | Oracle 쿼리를 PostgreSQL로 이관   | [[PostgreSQL/13-ORACLE-MYSQL-DIFF\|13. Oracle / MySQL 대비 차이점]] |
 | 느린 DB를 어디부터 손댈지             | [[PostgreSQL/14-TUNING\|14. DB 튜닝 방법론]]                        |
+| PARTITION OF가 권한 에러로 실패할 때    | [[PostgreSQL/15-AUTHORITY\|15. 권한 체계]]                          |
+| SECURITY DEFINER 안전 작성법        | [[PostgreSQL/15-AUTHORITY\|15. 권한 체계]]                          |
 
 ## 빠른 확인 쿼리
 

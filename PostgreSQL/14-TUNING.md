@@ -17,7 +17,7 @@ created: 2026-08-15
 updated: 2026-08-15
 ---
 
-> **인덱스** [[PostgreSQL/00-INDEX|PostgreSQL 문법 총정리]]  ·  **이전** [[PostgreSQL/13-ORACLE-MYSQL-DIFF|13. Oracle / MySQL 대비 차이점]]
+> **인덱스** [[PostgreSQL/00-INDEX|PostgreSQL 문법 총정리]]  ·  **이전** [[PostgreSQL/13-ORACLE-MYSQL-DIFF|13. Oracle / MySQL 대비 차이점]]  ·  **다음** [[PostgreSQL/15-AUTHORITY|15. 권한 체계]]
 
 # 14. DB 튜닝 방법론
 
