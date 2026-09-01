@@ -597,8 +597,16 @@ DEFINER는 양립하지 않는다. 둘 다 필요하면 구조를 나눈다:
 
 ### 6.7 그 밖의 주의점
 
-- **DEFINER 함수 안에서 `SET ROLE`을 하지 말 것.** 권한 모델이 이중으로
-  꼬이고, 예외 발생 시 롤이 원복되지 않을 수 있다.
+- **DEFINER 함수 안에서는 `SET ROLE`을 아예 쓸 수 없다.** 권고가 아니라
+  언어 차원의 제약이다 (실증 W3):
+
+  ```
+  ERROR:  cannot set parameter "role" within security-definer function
+  ```
+
+  `SET LOCAL ROLE`도 마찬가지로 막힌다. INVOKER 함수에서는 정상 동작한다.
+  따라서 "DEFINER로 권한을 얻은 뒤 내부에서 다른 롤로 갈아타는" 설계는
+  불가능하고, **필요한 권한은 함수 소유자 자신이 갖고 있어야 한다.**
 - **소유자를 superuser로 두지 말 것.** DEFINER의 소유자는 "그 일에 필요한
   최소 권한만 가진 전용 롤"이어야 한다.
 - **소유자 변경은 곧 실행 권한 변경.** `ALTER FUNCTION ... OWNER TO`는
@@ -835,6 +843,12 @@ V계열은 별도 시나리오로 구성했다.
 | V4 | DEFINER + search_path 미고정 탈취 | ✅ 재현 — 반환값 `HIJACKED as victim` |
 | V5 | RLS: 소유자 / FORCE 후 / 일반 롤 / BYPASSRLS | 2행 → 1행 → 1행 → 2행 |
 | V6 | `ALTER DEFAULT PRIVILEGES FOR ROLE` | 부여자가 만든 테이블만 적용 (`by_owner` ✅ / `by_other` ❌) |
+| W1 | 부모 소유 롤을 함수 소유자에게 멤버십 부여 (INHERIT) | ✅ 생성 성공, 단 **무관한 객체까지 접근 가능해짐** |
+| W2 | 부모는 그대로, DEFINER 함수 소유자만 부모 소유자로 | ✅ 생성 + OWNER/ACL 승계 정상, **격리 유지** |
+| W3 | DEFINER 함수 안에서 `SET ROLE` / INVOKER 함수에서 `SET ROLE` | ❌ `cannot set parameter "role"` / ✅ 동작 |
+| W4 | PG17 `MAINTAIN` 권한만 부여하고 `PARTITION OF` | ❌ `must be owner` — ATTACH는 MAINTAIN 범위 밖 |
+| W5 | 독립 테이블 생성 후 `ATTACH PARTITION` | ❌ ATTACH도 부모 소유권 필요 |
+| W6 | `DEFAULT` 파티션으로 범위 밖 데이터 흡수 후 정식 파티션 생성 | ⚠️ 흡수는 되나 생성 시 제약 위배로 실패 |
 
 ## 11. 사례 연구 — CTI 통계 DB 파티션 유지관리의 3단 권한 실패
 
@@ -1054,8 +1068,129 @@ GRANT SELECT ON TABLE cc_cti_stat_pipeline.st_vdn_mi_tot TO cc_cti_admin_rs;
    skip될 수 있다.
 7. **psql 변수는 `:"var"`(큰따옴표)로 쓰면 대소문자가 보존된다.** 롤명 설정값의
    대소문자가 흔들리면 유령 롤이 생긴다.
+8. **소유권 이전이 유일한 해법은 아니다.** 운영 DB에서 부모 테이블 28개의
+   소유자를 한꺼번에 바꾸는 것이 부담스럽다면, DEFINER 루틴의 소유자만
+   부모 소유자로 바꾸는 대안이 있다 → §12.
 
-## 12. 체크리스트 — 파티션 생성 프로시저에 필요한 권한
+## 12. 소유권을 옮기지 않고 파티션 생성 권한을 확보하는 법
+
+§11의 실패 ②를 정공법으로 풀면 부모 테이블 28개의 소유권 이전이다. 그러나
+운영 DB에서 소유권 일괄 변경은 되돌리기 부담스럽고 승인도 오래 걸린다.
+**"부모 소유권은 그대로 두고 파티션만 만들 수 없나"** 에 대한 검증 결과다.
+
+전제: PostgreSQL에는 **GRANT 가능한 "ALTER 권한"이 없다.** DDL 위임 수단은
+소유권 이전 · 롤 멤버십 · DEFINER 셋뿐이고, 아래는 그 조합의 전수 검토다.
+
+```mermaid
+flowchart TD
+    Q["부모 OWNER 를 바꾸지 않고<br/>PARTITION OF 를 실행하려면?"] --> A["A안: 부모 소유 롤을<br/>함수 소유자에게 멤버십 부여"]
+    Q --> B["B안: DEFINER 함수의<br/>소유자를 부모 소유자로"]
+    Q --> C["C안: MAINTAIN 등<br/>세분 권한 부여"]
+    Q --> D["D안: 독립 생성 후<br/>ATTACH 만 위임"]
+    Q --> E["E안: DEFAULT 파티션으로<br/>버티기"]
+
+    A --> A1["✅ 동작"]
+    A1 --> A2["❌ 부모 소유 롤의<br/>모든 객체에 접근 가능<br/>= 권한 과다"]
+    B --> B1["✅ 동작 + 격리 유지"]
+    B1 --> B2["⚠️ 함수 재배포에<br/>소유자 권한 필요"]
+    C --> C1["❌ ATTACH 는<br/>MAINTAIN 범위 밖"]
+    D --> D1["❌ ATTACH 도<br/>부모 소유권 필요"]
+    E --> E1["⚠️ 나중에 그 범위<br/>파티션을 만들 수 없음"]
+
+    classDef ok fill:#e0f0ff,stroke:#06c
+    classDef bad fill:#ffe0e0,stroke:#c00
+    classDef warn fill:#fff0e0,stroke:#c60
+    class B1 ok
+    class A2,C1,D1 bad
+    class A1,B2,E1 warn
+```
+
+| 안 | 방법 | 결과 | 실증 |
+|---|---|---|---|
+| **A** | `GRANT parent_owner TO func_owner` | ✅ 동작 · ❌ 권한 과다 노출 | W1 |
+| **B** | **DEFINER 함수 소유자만 부모 소유자로** | ✅ **동작 + 격리 유지 — 권장** | W2 |
+| A2 | `WITH INHERIT FALSE, SET TRUE` + 함수 내 `SET ROLE` | ❌ DEFINER 안에서 `SET ROLE` 금지 | W3 |
+| C | `GRANT MAINTAIN`(PG17+) 등 세분 권한 | ❌ `must be owner` | W4 |
+| D | 독립 테이블 생성 후 `ATTACH PARTITION` | ❌ ATTACH도 부모 소유권 필요 | W5 |
+| E | `DEFAULT` 파티션 하나로 버티기 | ⚠️ 문제를 미래로 미룸 | W6 |
+
+### B안 — 권장
+
+부모 테이블은 손대지 않고 **함수·프로시저의 소유자만** 부모 소유자로 바꾼다.
+DEFINER는 실행 시 `current_user`를 함수 소유자로 전환하므로 소유권 검사를
+통과한다. 변경 범위가 테이블 28개에서 루틴 4개로 줄고, 되돌리기도 한 줄이다.
+
+```sql
+-- 부모 소유자(또는 superuser)가 실행
+ALTER FUNCTION  app.fn_ensure_partition(text,text,text,date,uuid) OWNER TO parent_owner;
+ALTER PROCEDURE app.sp_run_partition_maintenance(uuid)            OWNER TO parent_owner;
+```
+
+실증 결과 — 파티션 생성, 부모 OWNER 승계, 부모 ACL 승계, 로그 적재까지 전부 정상:
+
+```
+ relname | owner |                 relacl
+---------+-------+----------------------------------------
+ p_b     | dba50 | {dba50=arwdDxtm/dba50,app_rw=ar/dba50}
+```
+
+함수 안의 `ALTER TABLE ... OWNER TO 부모소유자`는 no-op이 되고,
+`aclexplode` 승계 루프는 그대로 동작한다. 코드 수정이 전혀 필요 없다.
+
+**감수할 점 2가지:**
+
+1. **함수 재배포에 소유자 권한이 필요해진다.** 기존 배포 롤은 더 이상
+   `CREATE OR REPLACE`를 못 한다 (`must be owner of function`). 배포 스크립트
+   말미에 `ALTER FUNCTION ... OWNER TO` 를 넣고 소유자 권한으로 실행하는
+   절차로 굳혀야 한다. 빠뜨리면 소유자가 되돌아가 다시 실패한다.
+2. **정책 테이블이 권한 경계가 된다.** 함수가 부모 소유자 권한으로 돌면서
+   대상 테이블명을 정책 테이블에서 읽으므로, **그 테이블에 행을 넣을 수 있는
+   사람 = 부모 소유자 권한으로 DDL을 실행할 수 있는 사람**이 된다. 유지관리
+   프로시저는 보존기간 초과분을 `DROP TABLE` 하므로 특히 그렇다.
+   정책 테이블의 INSERT/UPDATE/DELETE 권한을 좁히고 SELECT만 남기는 것을
+   함께 검토할 것.
+
+### A안 — 동작하지만 권장하지 않음
+
+```sql
+GRANT parent_owner TO func_owner;   -- 소유권 검사는 멤버십으로도 통과
+```
+
+소유권 검사는 통과하지만, 멤버십은 **그 롤이 소유한 모든 객체에 대한 접근**을
+함께 준다. 실증에서 무관한 스키마의 테이블이 그대로 읽혔다:
+
+```
+--- A안: func_owner 가 parent_owner 의 무관한 테이블을 읽을 수 있는가?
+ other.secret 읽기
+-------------------
+                 1            ← 읽힘
+
+--- B안: 동일 시도
+ERROR:  permission denied for schema other     ← 격리 유지
+```
+
+부모 소유자가 배포 DBA 계정이면 사실상 DBA 권한을 상시 부여하는 셈이다.
+PG16+의 `WITH INHERIT FALSE, SET TRUE`로 노출을 좁히는 방법도 **DEFINER 안에서
+`SET ROLE`이 금지**되어 쓸 수 없고(W3), PG15 이하는 그 옵션 자체가 없다.
+
+### E안 — DEFAULT 파티션은 해결이 아니라 유예
+
+```sql
+CREATE TABLE app.log_tbl_default PARTITION OF app.log_tbl DEFAULT;
+```
+
+범위 밖 데이터를 받아주므로 INSERT 실패는 막는다. 그러나 나중에 그 기간의
+정식 파티션을 만들려 하면 막힌다 (W6):
+
+```
+ERROR:  updated partition constraint for default partition "log_tbl_default"
+        would be violated by some row
+```
+
+DEFAULT를 비우거나 DETACH해야 하는데 그 역시 부모 소유자 권한이라,
+문제를 미래로 미루면서 더 크게 만든다. 긴급 상황의 임시 방편 이상으로 쓰지 말 것.
+
+## 13. 체크리스트 — 파티션 생성 프로시저에 필요한 권한
 
 **DEFINER 소유자 롤 (스키마당 1개):**
 

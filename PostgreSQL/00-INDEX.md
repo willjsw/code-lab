@@ -100,6 +100,7 @@ flowchart TD
 | `must be owner` vs `permission denied` 구분 | [[PostgreSQL/15-AUTHORITY\|15. 권한 체계]]                    |
 | 롤 멤버십·상속이 어디까지 미치는지        | [[PostgreSQL/15-AUTHORITY\|15. 권한 체계]]                          |
 | RLS로 행 단위 접근 제어                | [[PostgreSQL/15-AUTHORITY\|15. 권한 체계]]                          |
+| 소유권 안 바꾸고 DDL 권한 위임하기        | [[PostgreSQL/15-AUTHORITY\|15. 권한 체계]]                          |
 
 ## 빠른 확인 쿼리
 
