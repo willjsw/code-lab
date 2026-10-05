@@ -11,7 +11,7 @@ aliases:
   - PostgreSQL 학습 인덱스
   - PostgreSQL 문법 총정리
 created: 2026-08-15
-updated: 2026-09-01
+updated: 2026-10-05
 ---
 
 # PostgreSQL 문법 총정리
@@ -71,6 +71,11 @@ flowchart TD
 | [[PostgreSQL/13-ORACLE-MYSQL-DIFF\|13. Oracle / MySQL 대비 차이점]] | 식별자 대소문자, 문법 대응표, 계층 쿼리 변환, 함수·타입 대응, 트랜잭션 동작 차이, 이관 체크리스트 |
 | [[PostgreSQL/14-TUNING\|14. DB 튜닝 방법론]] | 튜닝 순서, 측정 → 쿼리/인덱스 → 스키마 → 서버 파라미터, VACUUM·통계 유지보수, 대량 작업 |
 | [[PostgreSQL/15-AUTHORITY\|15. 권한 체계 — Role, Owner, GRANT, SECURITY DEFINER]] | 권한 검사 4관문, 롤·소유권·ACL·멤버십 상속, 시스템 카탈로그 구조, GRANT/REVOKE, SECURITY DEFINER 정의와 탈취 재현, RLS, PARTITION OF 권한 요건 실증, 파티션 프로시저 3단 실패 사례 연구 |
+
+## 내부 구조 분석서
+
+사용법이 아니라 서버 자체(개발 언어·프로세스·저장 구조·MVCC·쿼리 처리·카탈로그·함수 실행 경로)를
+해부하는 별도 시리즈 → [[PostgreSQL/INTERNALS/00-INDEX|PostgreSQL 내부 구조 분석서]] (9편)
 
 ## 11 vs 14 구분
 
